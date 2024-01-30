@@ -76,15 +76,15 @@ namespace Simulador
 
                 rich.AppendText("\n \n" + "       PROMEDIO:\n  ");
                 //promedio pierna IZQUIERDA
-                rich.AppendText("\n PROMEDIO IZQUIERDA: " + decimal.Round((TotalIzquierda / contador), 2) + ";");
+                rich.AppendText("\n PROMEDIO IZQUIERDA: " + decimal.Round((TotalIzquierda / contador), 2) );
                 //promedio pierna DERECHA
-                rich.AppendText("\n PROMEDIO DERECHA: " + decimal.Round((Totalderecha / contador), 2) + ";");
+                rich.AppendText("\n PROMEDIO DERECHA: " + decimal.Round((Totalderecha / contador), 2) );
 
 
                 decimal fpromIzq = decimal.Round((TotalIzquierda / contador), 2);
                 decimal fpromDere = decimal.Round((Totalderecha / contador), 2);
                 decimal fPromTOTAL = fpromIzq + fpromDere;
-                rich.AppendText("\n PROMEDIO TOTAL: " + decimal.Round(fPromTOTAL, 2) + ";");
+                rich.AppendText("\n PROMEDIO TOTAL: " + decimal.Round(fPromTOTAL, 2) );
                 potencia(fpromIzq, fpromDere, fPromTOTAL);
             }
             catch
