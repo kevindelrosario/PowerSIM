@@ -32,28 +32,42 @@ namespace Simulador
         private void button1_Click(object sender, EventArgs e)
         {
             limpiaChart();
-
-            if (checkDerecha.Checked ==true)
+            try
             {
-                derecho(rutaArchivo);
+                if (checkDerecha.Checked == true)
+                {
+                    derecho(rutaArchivo);
+                }
+                if (checkIzquierda.Checked == true)
+                {
+                    izquierda(rutaArchivo);
+                }
+                if (checkCombinada.Checked == true)
+                {
+                    combinacion(rutaArchivo);
+                }
+                if (checkVelocidad.Checked == true)
+                {
+                    velocidad(rutaArchivo);
+                }
             }
-            if (checkIzquierda.Checked == true)
+            catch
             {
-                izquierda(rutaArchivo);
+                MessageBox.Show("Verificar que se ha indicado correctamente la ruta del archivo.");
+               
+                chart1.Series["Derecha"].Points.AddXY(0, 0);
+                chart1.Series["Izquierda"].Points.AddXY(0, 0);
+                chart1.Series["Velocidad"].Points.AddXY(0, 0);
+                chart1.Series["Combinada"].Points.AddXY(0, 0);
+                this.Close();
             }
-            if (checkCombinada.Checked == true)
-            {
-                combinacion(rutaArchivo);
-            }
-            if (checkVelocidad.Checked == true)
-            {
-                velocidad(rutaArchivo);
-            }
+          
         }
 
 
         public void derecho(string rutaArchivo)
         {
+
             SLDocument sl = new SLDocument(rutaArchivo);
             int iRow = 1;
 

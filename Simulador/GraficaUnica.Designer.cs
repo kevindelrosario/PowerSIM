@@ -57,7 +57,7 @@
             legend1.Name = "Legend1";
             this.chart1.Legends.Add(legend1);
             this.chart1.Location = new System.Drawing.Point(0, -2);
-            this.chart1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.chart1.Margin = new System.Windows.Forms.Padding(2);
             this.chart1.Name = "chart1";
             this.chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Berry;
             series1.BorderWidth = 3;
@@ -98,57 +98,68 @@
             // button1
             // 
             this.button1.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.button1.Location = new System.Drawing.Point(-11, 95);
+            this.button1.BackColor = System.Drawing.Color.MediumSpringGreen;
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.ForeColor = System.Drawing.Color.Black;
+            this.button1.Location = new System.Drawing.Point(-11, 93);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(137, 26);
+            this.button1.Size = new System.Drawing.Size(137, 21);
             this.button1.TabIndex = 9;
             this.button1.Text = "Dibujar";
-            this.button1.UseVisualStyleBackColor = true;
+            this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // checkDerecha
             // 
             this.checkDerecha.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkDerecha.AutoSize = true;
-            this.checkDerecha.Location = new System.Drawing.Point(1, 3);
+            this.checkDerecha.BackColor = System.Drawing.Color.Transparent;
+            this.checkDerecha.ForeColor = System.Drawing.Color.Black;
+            this.checkDerecha.Location = new System.Drawing.Point(1, 1);
             this.checkDerecha.Name = "checkDerecha";
             this.checkDerecha.Size = new System.Drawing.Size(67, 17);
             this.checkDerecha.TabIndex = 10;
             this.checkDerecha.Text = "Derecha";
-            this.checkDerecha.UseVisualStyleBackColor = true;
+            this.checkDerecha.UseVisualStyleBackColor = false;
             // 
             // checkIzquierda
             // 
             this.checkIzquierda.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkIzquierda.AutoSize = true;
-            this.checkIzquierda.Location = new System.Drawing.Point(1, 26);
+            this.checkIzquierda.BackColor = System.Drawing.Color.Transparent;
+            this.checkIzquierda.ForeColor = System.Drawing.Color.Black;
+            this.checkIzquierda.Location = new System.Drawing.Point(1, 24);
             this.checkIzquierda.Name = "checkIzquierda";
             this.checkIzquierda.Size = new System.Drawing.Size(69, 17);
             this.checkIzquierda.TabIndex = 11;
             this.checkIzquierda.Text = "Izquierda";
-            this.checkIzquierda.UseVisualStyleBackColor = true;
+            this.checkIzquierda.UseVisualStyleBackColor = false;
             // 
             // checkCombinada
             // 
             this.checkCombinada.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkCombinada.AutoSize = true;
-            this.checkCombinada.Location = new System.Drawing.Point(1, 49);
+            this.checkCombinada.BackColor = System.Drawing.Color.Transparent;
+            this.checkCombinada.ForeColor = System.Drawing.Color.Black;
+            this.checkCombinada.Location = new System.Drawing.Point(1, 47);
             this.checkCombinada.Name = "checkCombinada";
             this.checkCombinada.Size = new System.Drawing.Size(79, 17);
             this.checkCombinada.TabIndex = 12;
             this.checkCombinada.Text = "Combinada";
-            this.checkCombinada.UseVisualStyleBackColor = true;
+            this.checkCombinada.UseVisualStyleBackColor = false;
             // 
             // checkVelocidad
             // 
             this.checkVelocidad.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.checkVelocidad.AutoSize = true;
-            this.checkVelocidad.Location = new System.Drawing.Point(1, 72);
+            this.checkVelocidad.BackColor = System.Drawing.Color.Transparent;
+            this.checkVelocidad.ForeColor = System.Drawing.Color.Black;
+            this.checkVelocidad.Location = new System.Drawing.Point(1, 70);
             this.checkVelocidad.Name = "checkVelocidad";
             this.checkVelocidad.Size = new System.Drawing.Size(73, 17);
             this.checkVelocidad.TabIndex = 13;
             this.checkVelocidad.Text = "Velocidad";
-            this.checkVelocidad.UseVisualStyleBackColor = true;
+            this.checkVelocidad.UseVisualStyleBackColor = false;
             // 
             // panel1
             // 
@@ -162,7 +173,7 @@
             this.panel1.Controls.Add(this.button1);
             this.panel1.Location = new System.Drawing.Point(1026, 272);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(119, 118);
+            this.panel1.Size = new System.Drawing.Size(119, 115);
             this.panel1.TabIndex = 14;
             // 
             // GraficaUnica

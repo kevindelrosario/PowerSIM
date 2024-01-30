@@ -13,21 +13,31 @@ namespace Simulador
 {
     public partial class Multigrafico : Form
     {
+        public string rutaArchivo = string.Empty;
         public Multigrafico(Form1.Ruta ruta)
         {
             InitializeComponent();
-            chartDerecha.Series["Derecha"].Points.AddXY(0, 0);
-            chartIzquierda.Series["Izquierda"].Points.AddXY(0, 0);
-            chartVelocidad.Series["Velocidad"].Points.AddXY(0, 0);
-            chartCombinacion.Series["Combinacion"].Points.AddXY(0, 0);
+           
 
-            string rutaArchivo = string.Empty;
-            rutaArchivo = ruta.ruta;
-            limpiaChart();
-            derecho(rutaArchivo);
-            combinacion(rutaArchivo);
-            izquierda(rutaArchivo);
-            velocidad(rutaArchivo);
+        //    string rutaArchivo = string.Empty;
+           
+
+          
+                chartDerecha.Series["Derecha"].Points.AddXY(0, 0);
+                chartIzquierda.Series["Izquierda"].Points.AddXY(0, 0);
+                chartVelocidad.Series["Velocidad"].Points.AddXY(0, 0);
+                chartCombinacion.Series["Combinacion"].Points.AddXY(0, 0);
+                rutaArchivo = ruta.ruta;
+            /*   
+                limpiaChart();
+                derecho(rutaArchivo);
+                combinacion(rutaArchivo);
+                izquierda(rutaArchivo);
+                velocidad(rutaArchivo);
+            */
+
+
+
 
         }
 
@@ -96,5 +106,21 @@ namespace Simulador
             chartCombinacion.Series["Combinacion"].Points.Clear();
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                derecho(rutaArchivo);
+                combinacion(rutaArchivo);
+                izquierda(rutaArchivo);
+                velocidad(rutaArchivo);
+            }
+            catch
+            {
+                MessageBox.Show("Verificar ruta del archivo.");
+                this.Close();
+            }
+           
+        }
     }
 }

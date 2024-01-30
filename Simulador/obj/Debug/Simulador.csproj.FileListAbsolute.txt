@@ -18,3 +18,4 @@ C:\Personal KEVIN\Simulador\Simulador\bin\Debug\System.IO.Packaging.xml
 C:\Personal KEVIN\Simulador\Simulador\obj\Debug\Simulador.csproj.CopyComplete
 C:\Personal KEVIN\Simulador\Simulador\obj\Debug\Simulador.Multigrafico.resources
 C:\Personal KEVIN\Simulador\Simulador\obj\Debug\Simulador.GraficaUnica.resources
+C:\Personal KEVIN\Simulador\Simulador\obj\Debug\Simulador.Calculos.resources

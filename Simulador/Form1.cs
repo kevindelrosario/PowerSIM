@@ -11,6 +11,7 @@ using System.IO;
 using SpreadsheetLight;
 using System.Windows;
 using DocumentFormat.OpenXml.Bibliography;
+using static Simulador.Form1;
 
 namespace Simulador
 {
@@ -18,6 +19,8 @@ namespace Simulador
 
     public partial class Form1 : Form
     {
+
+       
         public Form1()
         {
             InitializeComponent();
@@ -45,8 +48,8 @@ namespace Simulador
             {
                 rutaArchivo = openFileDialog.FileName;
                 txtRutaArchivo1.Text = rutaArchivo; // Obtiene la ruta del archivo con la que vamos a trabajar
-
-               
+             
+            
             }
         }
 
@@ -67,35 +70,22 @@ namespace Simulador
 
         private void btUnico_Click(object sender, EventArgs e)
         {
-
-            try
-            {
                 Ruta ruta;
                 ruta.ruta = txtRutaArchivo1.Text;
                 openChildForm(new GraficaUnica(ruta));
-            }
-            catch
-            {
-                MessageBox.Show("Por favor verificar si se ha ingresado  la ruta del archivo a leer.");
-            }
-            
-           
         }
 
         private void btMultigrafico_Click(object sender, EventArgs e)
         {
-            try
-            {
                 Ruta ruta;
                 ruta.ruta = txtRutaArchivo1.Text;
                 openChildForm(new Multigrafico(ruta));
-
-            }
-            catch
-            {
-                MessageBox.Show("Por favor verificar si se ha ingresado  la ruta del archivo a leer.");
-            }
-        
+        }
+        private void btCalculo_Click(object sender, EventArgs e)
+        {
+            Ruta ruta;
+            ruta.ruta = txtRutaArchivo1.Text;
+            openChildForm(new Calculos(ruta));
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -118,6 +108,6 @@ namespace Simulador
             childForm.Show();
         }
 
-
+     
     }
 }
