@@ -24,11 +24,7 @@ namespace Simulador
         {
             InitializeComponent();
             rutaArchivo = ruta.ruta;
-           // rich.Clear();
-          
-
-          
-
+    
 
         }
 
@@ -94,10 +90,8 @@ namespace Simulador
             //SE TOMAN LOS DATOS Y SE REALIZAN LOS CALCULOS
             //los resultados se muestran en el rich.
             richPotencia.AppendText("\n \n" + "POTENCIA:\n  ");
-
             richPotencia.AppendText("\n \n" + "Potencia_Izquierda: " + decimal.Round(( fPromIzq *fuerzaPico * cadencia*(2*pi)* longitudBiela /60000) ,2));
             richPotencia.AppendText("\n \n" + "Potencia_Derecha: " + decimal.Round((fPromD * fuerzaPico * cadencia * (pi * 2) * longitudBiela / 60000), 2));
-
             richPotencia.AppendText("\n \n" + "Potencia_TOTAL: " + decimal.Round((fPromTOTAL * fuerzaPico * cadencia * (pi * 2) * longitudBiela / 60000), 2));
            
         }
