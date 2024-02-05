@@ -103,6 +103,17 @@ namespace Simulador
 
         }
 
-   
+        private void button1_Click(object sender, EventArgs e)
+        {
+            SLDocument sl = new SLDocument(rutaArchivo);
+            int iRow = 1;
+            while (!string.IsNullOrEmpty(sl.GetCellValueAsString(iRow, 1)))
+            {
+                iRow++;
+            }
+            int ls = Convert.ToInt32(valorBarra.Text);
+            richPotencia.AppendText("\n\nLS:"+ ls + " # de muestras: " +iRow);
+            richPotencia.AppendText("\n Frecuencia de muestreo: " +(iRow /ls));
+        }
     }
 }

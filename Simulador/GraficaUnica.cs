@@ -25,7 +25,7 @@ namespace Simulador
            chart1.Series["Izquierda"].Points.AddXY(0, 0);
            chart1.Series["Velocidad"].Points.AddXY(0, 0);
            chart1.Series["Combinada"].Points.AddXY(0, 0);
-            rutaArchivo = ruta.ruta;// Se toma la ruta enviada del form inicial
+           rutaArchivo = ruta.ruta;// Se toma la ruta enviada del form inicial
 
         }
 

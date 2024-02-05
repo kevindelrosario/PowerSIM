@@ -97,7 +97,7 @@
             this.chartCombinacion.ChartAreas.Add(chartArea3);
             legend3.Name = "Legend1";
             this.chartCombinacion.Legends.Add(legend3);
-            this.chartCombinacion.Location = new System.Drawing.Point(564, 367);
+            this.chartCombinacion.Location = new System.Drawing.Point(612, 367);
             this.chartCombinacion.Margin = new System.Windows.Forms.Padding(10);
             this.chartCombinacion.Name = "chartCombinacion";
             series3.ChartArea = "ChartArea1";
@@ -117,7 +117,7 @@
             this.chartVelocidad.ChartAreas.Add(chartArea4);
             legend4.Name = "Legend1";
             this.chartVelocidad.Legends.Add(legend4);
-            this.chartVelocidad.Location = new System.Drawing.Point(564, 1);
+            this.chartVelocidad.Location = new System.Drawing.Point(612, 1);
             this.chartVelocidad.Margin = new System.Windows.Forms.Padding(10);
             this.chartVelocidad.Name = "chartVelocidad";
             series4.ChartArea = "ChartArea1";

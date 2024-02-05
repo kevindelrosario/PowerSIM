@@ -40,6 +40,7 @@
             this.editCadencia = new System.Windows.Forms.TextBox();
             this.editFuerzaPico = new System.Windows.Forms.TextBox();
             this.richPotencia = new System.Windows.Forms.RichTextBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.barra)).BeginInit();
             this.SuspendLayout();
@@ -83,6 +84,7 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.Gray;
+            this.panel1.Controls.Add(this.button1);
             this.panel1.Controls.Add(this.txtConteo);
             this.panel1.Controls.Add(this.valorBarra);
             this.panel1.Controls.Add(this.barra);
@@ -111,7 +113,7 @@
             // valorBarra
             // 
             this.valorBarra.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.valorBarra.Location = new System.Drawing.Point(646, 103);
+            this.valorBarra.Location = new System.Drawing.Point(641, 94);
             this.valorBarra.Name = "valorBarra";
             this.valorBarra.Size = new System.Drawing.Size(55, 26);
             this.valorBarra.TabIndex = 8;
@@ -170,6 +172,16 @@
             this.richPotencia.TabIndex = 5;
             this.richPotencia.Text = "";
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(632, 126);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 10;
+            this.button1.Text = "ls";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // Calculos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -202,5 +214,6 @@
         private System.Windows.Forms.TrackBar barra;
         private System.Windows.Forms.TextBox valorBarra;
         private System.Windows.Forms.Label txtConteo;
+        private System.Windows.Forms.Button button1;
     }
 }
