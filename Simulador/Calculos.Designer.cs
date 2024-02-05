@@ -32,13 +32,13 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.txtConteo = new System.Windows.Forms.Label();
             this.valorBarra = new System.Windows.Forms.TextBox();
             this.barra = new System.Windows.Forms.TrackBar();
             this.btCalcular = new System.Windows.Forms.Button();
             this.editLongBiela = new System.Windows.Forms.TextBox();
             this.editCadencia = new System.Windows.Forms.TextBox();
             this.editFuerzaPico = new System.Windows.Forms.TextBox();
-            this.rich = new System.Windows.Forms.RichTextBox();
             this.richPotencia = new System.Windows.Forms.RichTextBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.barra)).BeginInit();
@@ -83,6 +83,7 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.Gray;
+            this.panel1.Controls.Add(this.txtConteo);
             this.panel1.Controls.Add(this.valorBarra);
             this.panel1.Controls.Add(this.barra);
             this.panel1.Controls.Add(this.btCalcular);
@@ -98,10 +99,19 @@
             this.panel1.Size = new System.Drawing.Size(1178, 153);
             this.panel1.TabIndex = 3;
             // 
+            // txtConteo
+            // 
+            this.txtConteo.AutoSize = true;
+            this.txtConteo.Location = new System.Drawing.Point(433, 60);
+            this.txtConteo.Name = "txtConteo";
+            this.txtConteo.Size = new System.Drawing.Size(13, 13);
+            this.txtConteo.TabIndex = 9;
+            this.txtConteo.Text = "0";
+            // 
             // valorBarra
             // 
             this.valorBarra.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.valorBarra.Location = new System.Drawing.Point(632, 104);
+            this.valorBarra.Location = new System.Drawing.Point(646, 103);
             this.valorBarra.Name = "valorBarra";
             this.valorBarra.Size = new System.Drawing.Size(55, 26);
             this.valorBarra.TabIndex = 8;
@@ -152,19 +162,11 @@
             this.editFuerzaPico.Size = new System.Drawing.Size(121, 20);
             this.editFuerzaPico.TabIndex = 3;
             // 
-            // rich
-            // 
-            this.rich.Location = new System.Drawing.Point(40, 228);
-            this.rich.Name = "rich";
-            this.rich.Size = new System.Drawing.Size(350, 398);
-            this.rich.TabIndex = 4;
-            this.rich.Text = "";
-            // 
             // richPotencia
             // 
-            this.richPotencia.Location = new System.Drawing.Point(419, 228);
+            this.richPotencia.Location = new System.Drawing.Point(61, 180);
             this.richPotencia.Name = "richPotencia";
-            this.richPotencia.Size = new System.Drawing.Size(350, 398);
+            this.richPotencia.Size = new System.Drawing.Size(408, 398);
             this.richPotencia.TabIndex = 5;
             this.richPotencia.Text = "";
             // 
@@ -175,7 +177,6 @@
             this.BackColor = System.Drawing.Color.DarkGray;
             this.ClientSize = new System.Drawing.Size(1178, 729);
             this.Controls.Add(this.richPotencia);
-            this.Controls.Add(this.rich);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Calculos";
@@ -197,9 +198,9 @@
         private System.Windows.Forms.TextBox editCadencia;
         private System.Windows.Forms.TextBox editFuerzaPico;
         private System.Windows.Forms.Button btCalcular;
-        private System.Windows.Forms.RichTextBox rich;
         private System.Windows.Forms.RichTextBox richPotencia;
         private System.Windows.Forms.TrackBar barra;
         private System.Windows.Forms.TextBox valorBarra;
+        private System.Windows.Forms.Label txtConteo;
     }
 }

@@ -13,36 +13,32 @@ namespace Simulador
 {
     public partial class Multigrafico : Form
     {
-        public string rutaArchivo = string.Empty;
+        public string rutaArchivo = string.Empty; 
+        //La ruta obtenida en el Form principal entra aqui
         public Multigrafico(Form1.Ruta ruta)
         {
             InitializeComponent();
            
-
-        //    string rutaArchivo = string.Empty;
-           
-
-          
+            //se inicializa el chart con 0 valores cada que se abre esta pantalla
                 chartDerecha.Series["Derecha"].Points.AddXY(0, 0);
                 chartIzquierda.Series["Izquierda"].Points.AddXY(0, 0);
                 chartVelocidad.Series["Velocidad"].Points.AddXY(0, 0);
                 chartCombinacion.Series["Combinacion"].Points.AddXY(0, 0);
                 rutaArchivo = ruta.ruta;
-            /*   
+               
                 limpiaChart();
+                //se llama cada funcion para cada grafica.
                 derecho(rutaArchivo);
                 combinacion(rutaArchivo);
                 izquierda(rutaArchivo);
                 velocidad(rutaArchivo);
-            */
-
-
-
+            
 
         }
 
         public void derecho(string rutaArchivo)
         {
+            //se lee el archivo y se dibuja la grafica
             SLDocument sl = new SLDocument(rutaArchivo);
             int iRow = 1;
 
@@ -52,7 +48,6 @@ namespace Simulador
                 decimal derecha = sl.GetCellValueAsDecimal(iRow, 3);
                 chartDerecha.Series["Derecha"].Points.AddXY(angulo, derecha);
                 iRow++;
-
             }
         }
 
@@ -65,7 +60,6 @@ namespace Simulador
                 decimal angulo = sl.GetCellValueAsDecimal(iRow, 1);
                 chartCombinacion.Series["Combinacion"].Points.AddXY(angulo, sl.GetCellValueAsDecimal(iRow, 2) + sl.GetCellValueAsDecimal(iRow, 3));
                 iRow++;
-
             }
         }
 
@@ -106,21 +100,5 @@ namespace Simulador
             chartCombinacion.Series["Combinacion"].Points.Clear();
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                derecho(rutaArchivo);
-                combinacion(rutaArchivo);
-                izquierda(rutaArchivo);
-                velocidad(rutaArchivo);
-            }
-            catch
-            {
-                MessageBox.Show("Verificar ruta del archivo.");
-                this.Close();
-            }
-           
-        }
     }
 }

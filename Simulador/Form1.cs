@@ -34,8 +34,8 @@ namespace Simulador
 
         private void buscarArchivo_Click(object sender, EventArgs e)
         {
-            string rutaArchivo = string.Empty;
 
+            string rutaArchivo = string.Empty;
             //Abre una ventana de Dialogo para buscar la ruta del archivo
             OpenFileDialog openFileDialog = new OpenFileDialog
             {
@@ -53,9 +53,10 @@ namespace Simulador
             }
         }
 
+        //constructor utilizado para tomar la ruta que se enviara a cada clase....
         public struct Ruta
         {
-            public string ruta;
+            public string ruta; 
         }
 
 
@@ -67,36 +68,58 @@ namespace Simulador
 
    
 
-
+        /*****LLAMADAS A LAS OTRAS VENTANAS******/
         private void btUnico_Click(object sender, EventArgs e)
         {
-                Ruta ruta;
-                ruta.ruta = txtRutaArchivo1.Text;
+            Ruta ruta; 
+            ruta.ruta = txtRutaArchivo1.Text; //toma el valor que contiene el txt txtRutaArchivo1
+            if (ruta.ruta == string.Empty) 
+                //si el atributo ruta no obtiene nada del txt salta un mensaje para que lo busque, para evitar errores
+            {
+                MessageBox.Show("Antes selecciona el fichero de pedaladas.");
+            }
+            else
+            {
+                //Si ya contiene la ruta de un archivo podra entrar al Form y ver los graficos
                 openChildForm(new GraficaUnica(ruta));
+            }
+             
         }
 
         private void btMultigrafico_Click(object sender, EventArgs e)
         {
+            try
+            {
                 Ruta ruta;
                 ruta.ruta = txtRutaArchivo1.Text;
                 openChildForm(new Multigrafico(ruta));
+            }
+            catch {
+                MessageBox.Show("Antes selecciona el fichero de pedaladas.");
+            }
+
         }
+
         private void btCalculo_Click(object sender, EventArgs e)
         {
             Ruta ruta;
             ruta.ruta = txtRutaArchivo1.Text;
-            openChildForm(new Calculos(ruta));
+            if (ruta.ruta == string.Empty)
+            {
+                MessageBox.Show("Antes selecciona el fichero de pedaladas.");
+            }
+            else
+            {
+                openChildForm(new Calculos(ruta));
+            }
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
+      
+        /******************************Funcion para el cambio de pantalla de los distintos botones************************************/
         private Form activeForm = null;
-        private void openChildForm(Form childForm)
+        private void openChildForm(Form childForm)//toma el form indicado y lo muestra en el panel central...
         {
-            if (activeForm != null)
+            if (activeForm != null) //cierra el ultimo panel que se haya abierto y muestra el siguiente.
                 activeForm.Close();
             activeForm = childForm;
             childForm.TopLevel = false;
