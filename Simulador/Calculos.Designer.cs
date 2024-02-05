@@ -168,12 +168,13 @@
             // 
             this.richPotencia.Location = new System.Drawing.Point(61, 180);
             this.richPotencia.Name = "richPotencia";
-            this.richPotencia.Size = new System.Drawing.Size(408, 398);
+            this.richPotencia.Size = new System.Drawing.Size(445, 501);
             this.richPotencia.TabIndex = 5;
             this.richPotencia.Text = "";
             // 
             // button1
             // 
+            this.button1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.button1.Location = new System.Drawing.Point(632, 126);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);

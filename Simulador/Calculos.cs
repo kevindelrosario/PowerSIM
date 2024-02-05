@@ -105,15 +105,48 @@ namespace Simulador
 
         private void button1_Click(object sender, EventArgs e)
         {
+            richPotencia.Clear();
             SLDocument sl = new SLDocument(rutaArchivo);
             int iRow = 1;
             while (!string.IsNullOrEmpty(sl.GetCellValueAsString(iRow, 1)))
             {
                 iRow++;
             }
+            decimal Totalderecha = 0;
+            decimal TotalIzquierda = 0;
             int ls = Convert.ToInt32(valorBarra.Text);
-            richPotencia.AppendText("\n\nLS:"+ ls + " # de muestras: " +iRow);
+          
+            //Datos de prueba
+            richPotencia.AppendText("\n\nLS:"+ ls + ", # de muestras: " +iRow);
             richPotencia.AppendText("\n Frecuencia de muestreo: " +(iRow /ls));
+
+            int fM = iRow / ls;
+            int iRow2 = 1;
+            int contador = 0;
+            int nValores = 0;
+            while (!string.IsNullOrEmpty(sl.GetCellValueAsString(iRow2, 1)))
+            {
+                decimal izquierda = sl.GetCellValueAsDecimal(iRow2, 2);
+                decimal derecha = sl.GetCellValueAsDecimal(iRow2, 3);
+               
+               
+                if (contador == fM + 1)
+                {
+                    Totalderecha += derecha; //Va sumando los valores encontrados
+                    TotalIzquierda += izquierda;
+                    contador = 0;
+                    nValores++;
+                }
+                contador++;
+                iRow2++;
+               
+            }
+            richPotencia.AppendText("\n Frecuencia de muestreo: " + " izquierda: " +TotalIzquierda + " Derecha: " +Totalderecha +" v: "+ nValores);
+         
+            decimal fpromIzq = (TotalIzquierda / nValores);//redondea los datos y lo guardan en la variable para enviarlos
+            decimal fpromDere = (Totalderecha / nValores);
+            decimal fPromTOTAL = fpromIzq + fpromDere;
+            potencia(fpromIzq, fpromDere, fPromTOTAL);
         }
     }
 }

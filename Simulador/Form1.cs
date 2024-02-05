@@ -119,7 +119,7 @@ namespace Simulador
         private Form activeForm = null;
         private void openChildForm(Form childForm)//toma el form indicado y lo muestra en el panel central...
         {
-            if (activeForm != null) //cierra el ultimo panel que se haya abierto y muestra el siguiente.
+            if (activeForm != null) //cierra el ultimo panel que se haya abierto y muestra el
                 activeForm.Close();
             activeForm = childForm;
             childForm.TopLevel = false;
