@@ -40,3 +40,4 @@ C:\Personal KEVIN\TRABAJOS DE CLASE PARA PORTAFOLIO\Simulador\PowerSIM\Simulador
 C:\Personal KEVIN\TRABAJOS DE CLASE PARA PORTAFOLIO\Simulador\PowerSIM\Simulador\obj\Debug\Simulador.csproj.CopyComplete
 C:\Personal KEVIN\TRABAJOS DE CLASE PARA PORTAFOLIO\Simulador\PowerSIM\Simulador\obj\Debug\Simulador.exe
 C:\Personal KEVIN\TRABAJOS DE CLASE PARA PORTAFOLIO\Simulador\PowerSIM\Simulador\obj\Debug\Simulador.pdb
+C:\Personal KEVIN\TRABAJOS DE CLASE PARA PORTAFOLIO\Simulador\PowerSIM\Simulador\obj\Debug\Simulador.CalculosSectores.resources

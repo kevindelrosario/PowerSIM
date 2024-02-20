@@ -114,7 +114,20 @@ namespace Simulador
             }
         }
 
-      
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Ruta ruta;
+            ruta.ruta = txtRutaArchivo1.Text;
+            if (ruta.ruta == string.Empty)
+            {
+                MessageBox.Show("Antes selecciona el fichero de pedaladas.");
+            }
+            else
+            {
+                openChildForm(new CalculosSectores(ruta));
+            }
+        }
+
         /******************************Funcion para el cambio de pantalla de los distintos botones************************************/
         private Form activeForm = null;
         private void openChildForm(Form childForm)//toma el form indicado y lo muestra en el panel central...
@@ -131,6 +144,6 @@ namespace Simulador
             childForm.Show();
         }
 
-     
+       
     }
 }
