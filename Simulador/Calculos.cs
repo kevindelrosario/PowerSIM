@@ -219,6 +219,13 @@ namespace Simulador
             
         }
 
-      
+        private void btErrorPotencia_Click(object sender, EventArgs e)
+        {
+            int fsInicio =Convert.ToInt32(txtFsInicio.Text.ToString());
+            int fsFinal = Convert.ToInt32(txtFsFinal.Text.ToString());
+            int numPuntos = Convert.ToInt32(txtPuntos.Text.ToString());
+
+
+        }
     }
 }
