@@ -36,8 +36,18 @@ namespace Simulador
         {
             InitializeComponent();
             rutaArchivo = ruta.ruta;
-            
 
+            /*******Dibujando en la grafica***********/
+            chartErrores.Series["fs"].Points.Clear();
+            chartErrores.Series["Recorrido"].Points.Clear();
+            chartErrores.ChartAreas[0].AxisY.Interval = 20;
+            chartErrores.ChartAreas[0].AxisX.Interval = 350;
+            for (int i = 0; i < 10; i++)
+            {
+               
+                chartErrores.Series["fs"].Points.AddXY(i, 2 * i);
+                chartErrores.Series["Recorrido"].Points.AddXY(i, 2 + i);
+            }
         }
 
    
@@ -256,18 +266,23 @@ namespace Simulador
             int fsFinal = Convert.ToInt32(txtFsFinal.Text.ToString());
             int numPuntos = Convert.ToInt32(txtIncrementoFs.Text.ToString());
 
-            //
+            
             fuerzaPico = Convert.ToDecimal(editFuerzaPico.Text.ToString());
             cadencia = Convert.ToDecimal(editCadencia.Text.ToString());
             longitudBiela = Convert.ToDecimal(editLongBiela.Text.ToString());
 
-            /*******Dibujando en la grafica***********/
 
+
+
+
+
+            /*******Dibujando en la grafica***********/
             chartErrores.Series["fs"].Points.Clear();
             chartErrores.Series["Recorrido"].Points.Clear();
-            chartErrores.ChartAreas[0].AxisX.Interval = 1;
+            //chartErrores.ChartAreas[0].AxisX.Interval = 1;
             for (int i = 0; i < 10; i++)
             {
+                chartErrores.ChartAreas[0].AxisX.Interval = i;
                 chartErrores.Series["fs"].Points.AddXY(i, 2 * i);
                 chartErrores.Series["Recorrido"].Points.AddXY(i, 2 + i);
             }
@@ -286,7 +301,7 @@ namespace Simulador
         /*********************************************************************/
         public decimal calcularPorcentajeError(decimal pReal, decimal pIdeal)
         {
-           return Decimal.Round(((pReal - pIdeal) / pIdeal)*100,2); // con la formula como esta los valores que resivo son negativos
+           return Decimal.Round(((pReal - pIdeal) / pIdeal)*100,2); 
         }
 
         //toma la fuerza total (real) y retorna el resultado al implementar la formula.
