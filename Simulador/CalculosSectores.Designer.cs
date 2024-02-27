@@ -99,7 +99,7 @@
             // 
             // richPotencia
             // 
-            this.richPotencia.Location = new System.Drawing.Point(312, 29);
+            this.richPotencia.Location = new System.Drawing.Point(318, 123);
             this.richPotencia.Name = "richPotencia";
             this.richPotencia.Size = new System.Drawing.Size(366, 376);
             this.richPotencia.TabIndex = 1;

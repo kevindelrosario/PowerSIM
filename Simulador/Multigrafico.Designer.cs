@@ -59,8 +59,8 @@
             this.chartIzquierda.ChartAreas.Add(chartArea1);
             legend1.Name = "Legend1";
             this.chartIzquierda.Legends.Add(legend1);
-            this.chartIzquierda.Location = new System.Drawing.Point(739, 0);
-            this.chartIzquierda.Margin = new System.Windows.Forms.Padding(0, 0, 0, 0);
+            this.chartIzquierda.Location = new System.Drawing.Point(839, 446);
+            this.chartIzquierda.Margin = new System.Windows.Forms.Padding(0);
             this.chartIzquierda.Name = "chartIzquierda";
             series1.ChartArea = "ChartArea1";
             series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Polar;
@@ -68,7 +68,7 @@
             series1.Legend = "Legend1";
             series1.Name = "Izquierda";
             this.chartIzquierda.Series.Add(series1);
-            this.chartIzquierda.Size = new System.Drawing.Size(830, 452);
+            this.chartIzquierda.Size = new System.Drawing.Size(652, 428);
             this.chartIzquierda.TabIndex = 0;
             this.chartIzquierda.Text = "chartIzquierda";
             // 
@@ -79,8 +79,8 @@
             this.chartDerecha.ChartAreas.Add(chartArea2);
             legend2.Name = "Legend1";
             this.chartDerecha.Legends.Add(legend2);
-            this.chartDerecha.Location = new System.Drawing.Point(739, 452);
-            this.chartDerecha.Margin = new System.Windows.Forms.Padding(0, 0, 0, 0);
+            this.chartDerecha.Location = new System.Drawing.Point(42, 446);
+            this.chartDerecha.Margin = new System.Windows.Forms.Padding(0);
             this.chartDerecha.Name = "chartDerecha";
             series2.ChartArea = "ChartArea1";
             series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Polar;
@@ -88,7 +88,7 @@
             series2.Legend = "Legend1";
             series2.Name = "Derecha";
             this.chartDerecha.Series.Add(series2);
-            this.chartDerecha.Size = new System.Drawing.Size(830, 446);
+            this.chartDerecha.Size = new System.Drawing.Size(652, 428);
             this.chartDerecha.TabIndex = 1;
             this.chartDerecha.Text = "chartDerecha";
             // 
@@ -99,8 +99,8 @@
             this.chartCombinacion.ChartAreas.Add(chartArea3);
             legend3.Name = "Legend1";
             this.chartCombinacion.Legends.Add(legend3);
-            this.chartCombinacion.Location = new System.Drawing.Point(-5, 0);
-            this.chartCombinacion.Margin = new System.Windows.Forms.Padding(0, 0, 0, 0);
+            this.chartCombinacion.Location = new System.Drawing.Point(839, 7);
+            this.chartCombinacion.Margin = new System.Windows.Forms.Padding(0);
             this.chartCombinacion.Name = "chartCombinacion";
             series3.ChartArea = "ChartArea1";
             series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Polar;
@@ -108,7 +108,7 @@
             series3.Legend = "Legend1";
             series3.Name = "Combinacion";
             this.chartCombinacion.Series.Add(series3);
-            this.chartCombinacion.Size = new System.Drawing.Size(744, 452);
+            this.chartCombinacion.Size = new System.Drawing.Size(652, 428);
             this.chartCombinacion.TabIndex = 2;
             this.chartCombinacion.Text = "chartCombinacion";
             // 
@@ -119,8 +119,8 @@
             this.chartVelocidad.ChartAreas.Add(chartArea4);
             legend4.Name = "Legend1";
             this.chartVelocidad.Legends.Add(legend4);
-            this.chartVelocidad.Location = new System.Drawing.Point(0, 452);
-            this.chartVelocidad.Margin = new System.Windows.Forms.Padding(0, 0, 0, 0);
+            this.chartVelocidad.Location = new System.Drawing.Point(42, 7);
+            this.chartVelocidad.Margin = new System.Windows.Forms.Padding(0);
             this.chartVelocidad.Name = "chartVelocidad";
             series4.ChartArea = "ChartArea1";
             series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Polar;
@@ -128,7 +128,7 @@
             series4.Legend = "Legend1";
             series4.Name = "Velocidad";
             this.chartVelocidad.Series.Add(series4);
-            this.chartVelocidad.Size = new System.Drawing.Size(739, 446);
+            this.chartVelocidad.Size = new System.Drawing.Size(652, 428);
             this.chartVelocidad.TabIndex = 3;
             this.chartVelocidad.Text = "chartVelocidad";
             // 
