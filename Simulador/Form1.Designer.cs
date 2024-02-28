@@ -33,6 +33,7 @@
             this.btRuta1 = new System.Windows.Forms.Button();
             this.buscarArchivo = new System.Windows.Forms.Button();
             this.panelSideMenu = new System.Windows.Forms.Panel();
+            this.button1 = new System.Windows.Forms.Button();
             this.btCalculo = new System.Windows.Forms.Button();
             this.btMultigrafico = new System.Windows.Forms.Button();
             this.btUnico = new System.Windows.Forms.Button();
@@ -41,7 +42,6 @@
             this.panelBuscarArchivo = new System.Windows.Forms.Panel();
             this.panelChildForm = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.button1 = new System.Windows.Forms.Button();
             this.panelSideMenu.SuspendLayout();
             this.panelLogo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -52,9 +52,10 @@
             // 
             // txtRutaArchivo1
             // 
-            this.txtRutaArchivo1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtRutaArchivo1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtRutaArchivo1.BackColor = System.Drawing.SystemColors.ScrollBar;
-            this.txtRutaArchivo1.Location = new System.Drawing.Point(405, 28);
+            this.txtRutaArchivo1.Location = new System.Drawing.Point(403, 26);
             this.txtRutaArchivo1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtRutaArchivo1.Name = "txtRutaArchivo1";
             this.txtRutaArchivo1.Size = new System.Drawing.Size(580, 22);
@@ -77,7 +78,7 @@
             // 
             this.buscarArchivo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buscarArchivo.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.buscarArchivo.Location = new System.Drawing.Point(992, 23);
+            this.buscarArchivo.Location = new System.Drawing.Point(990, 21);
             this.buscarArchivo.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.buscarArchivo.Name = "buscarArchivo";
             this.buscarArchivo.Size = new System.Drawing.Size(159, 32);
@@ -90,6 +91,7 @@
             // 
             this.panelSideMenu.AutoScroll = true;
             this.panelSideMenu.BackColor = System.Drawing.Color.Black;
+            this.panelSideMenu.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelSideMenu.Controls.Add(this.button1);
             this.panelSideMenu.Controls.Add(this.btCalculo);
             this.panelSideMenu.Controls.Add(this.btMultigrafico);
@@ -102,6 +104,23 @@
             this.panelSideMenu.Size = new System.Drawing.Size(268, 967);
             this.panelSideMenu.TabIndex = 13;
             // 
+            // button1
+            // 
+            this.button1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button1.FlatAppearance.BorderSize = 0;
+            this.button1.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.button1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.ForeColor = System.Drawing.Color.Gainsboro;
+            this.button1.Location = new System.Drawing.Point(0, 267);
+            this.button1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(266, 43);
+            this.button1.TabIndex = 4;
+            this.button1.Text = "Calculos Sectores";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // btCalculo
             // 
             this.btCalculo.Dock = System.Windows.Forms.DockStyle.Top;
@@ -113,7 +132,7 @@
             this.btCalculo.Location = new System.Drawing.Point(0, 224);
             this.btCalculo.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btCalculo.Name = "btCalculo";
-            this.btCalculo.Size = new System.Drawing.Size(268, 43);
+            this.btCalculo.Size = new System.Drawing.Size(266, 43);
             this.btCalculo.TabIndex = 3;
             this.btCalculo.Text = "Calculos Fs";
             this.btCalculo.UseVisualStyleBackColor = true;
@@ -130,7 +149,7 @@
             this.btMultigrafico.Location = new System.Drawing.Point(0, 181);
             this.btMultigrafico.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btMultigrafico.Name = "btMultigrafico";
-            this.btMultigrafico.Size = new System.Drawing.Size(268, 43);
+            this.btMultigrafico.Size = new System.Drawing.Size(266, 43);
             this.btMultigrafico.TabIndex = 2;
             this.btMultigrafico.Text = "Multigrafico";
             this.btMultigrafico.UseVisualStyleBackColor = true;
@@ -147,7 +166,7 @@
             this.btUnico.Location = new System.Drawing.Point(0, 138);
             this.btUnico.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btUnico.Name = "btUnico";
-            this.btUnico.Size = new System.Drawing.Size(268, 43);
+            this.btUnico.Size = new System.Drawing.Size(266, 43);
             this.btUnico.TabIndex = 1;
             this.btUnico.Text = "Grafico unico";
             this.btUnico.UseVisualStyleBackColor = true;
@@ -160,7 +179,7 @@
             this.panelLogo.Location = new System.Drawing.Point(0, 0);
             this.panelLogo.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panelLogo.Name = "panelLogo";
-            this.panelLogo.Size = new System.Drawing.Size(268, 138);
+            this.panelLogo.Size = new System.Drawing.Size(266, 138);
             this.panelLogo.TabIndex = 0;
             // 
             // pictureBox2
@@ -177,6 +196,7 @@
             // panelBuscarArchivo
             // 
             this.panelBuscarArchivo.BackColor = System.Drawing.Color.Black;
+            this.panelBuscarArchivo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelBuscarArchivo.Controls.Add(this.buscarArchivo);
             this.panelBuscarArchivo.Controls.Add(this.txtRutaArchivo1);
             this.panelBuscarArchivo.Dock = System.Windows.Forms.DockStyle.Top;
@@ -209,23 +229,6 @@
             this.pictureBox1.Size = new System.Drawing.Size(1571, 897);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
-            // 
-            // button1
-            // 
-            this.button1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button1.FlatAppearance.BorderSize = 0;
-            this.button1.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.button1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.ForeColor = System.Drawing.Color.Gainsboro;
-            this.button1.Location = new System.Drawing.Point(0, 267);
-            this.button1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(268, 43);
-            this.button1.TabIndex = 4;
-            this.button1.Text = "Calculos Sectores";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // Form1
             // 

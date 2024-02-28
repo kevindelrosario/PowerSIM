@@ -50,14 +50,14 @@
             this.chart1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.chart1.BackColor = System.Drawing.Color.DarkGray;
+            this.chart1.BackColor = System.Drawing.Color.Gray;
             this.chart1.BorderlineColor = System.Drawing.Color.Black;
             chartArea1.Name = "ChartArea1";
             this.chart1.ChartAreas.Add(chartArea1);
             legend1.Name = "Legend1";
             this.chart1.Legends.Add(legend1);
             this.chart1.Location = new System.Drawing.Point(0, -2);
-            this.chart1.Margin = new System.Windows.Forms.Padding(2);
+            this.chart1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.chart1.Name = "chart1";
             this.chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Berry;
             series1.BorderWidth = 3;
@@ -91,7 +91,7 @@
             this.chart1.Series.Add(series2);
             this.chart1.Series.Add(series3);
             this.chart1.Series.Add(series4);
-            this.chart1.Size = new System.Drawing.Size(1178, 729);
+            this.chart1.Size = new System.Drawing.Size(1571, 897);
             this.chart1.TabIndex = 7;
             this.chart1.Text = "chart1";
             // 
@@ -101,9 +101,10 @@
             this.button1.BackColor = System.Drawing.Color.MediumSpringGreen;
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button1.ForeColor = System.Drawing.Color.Black;
-            this.button1.Location = new System.Drawing.Point(-11, 93);
+            this.button1.Location = new System.Drawing.Point(-15, 116);
+            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(137, 21);
+            this.button1.Size = new System.Drawing.Size(183, 26);
             this.button1.TabIndex = 9;
             this.button1.Text = "Dibujar";
             this.button1.UseVisualStyleBackColor = false;
@@ -115,9 +116,10 @@
             this.checkDerecha.AutoSize = true;
             this.checkDerecha.BackColor = System.Drawing.Color.Transparent;
             this.checkDerecha.ForeColor = System.Drawing.Color.Black;
-            this.checkDerecha.Location = new System.Drawing.Point(1, 1);
+            this.checkDerecha.Location = new System.Drawing.Point(1, 3);
+            this.checkDerecha.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.checkDerecha.Name = "checkDerecha";
-            this.checkDerecha.Size = new System.Drawing.Size(67, 17);
+            this.checkDerecha.Size = new System.Drawing.Size(81, 20);
             this.checkDerecha.TabIndex = 10;
             this.checkDerecha.Text = "Derecha";
             this.checkDerecha.UseVisualStyleBackColor = false;
@@ -128,9 +130,10 @@
             this.checkIzquierda.AutoSize = true;
             this.checkIzquierda.BackColor = System.Drawing.Color.Transparent;
             this.checkIzquierda.ForeColor = System.Drawing.Color.Black;
-            this.checkIzquierda.Location = new System.Drawing.Point(1, 24);
+            this.checkIzquierda.Location = new System.Drawing.Point(1, 32);
+            this.checkIzquierda.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.checkIzquierda.Name = "checkIzquierda";
-            this.checkIzquierda.Size = new System.Drawing.Size(69, 17);
+            this.checkIzquierda.Size = new System.Drawing.Size(84, 20);
             this.checkIzquierda.TabIndex = 11;
             this.checkIzquierda.Text = "Izquierda";
             this.checkIzquierda.UseVisualStyleBackColor = false;
@@ -141,9 +144,10 @@
             this.checkCombinada.AutoSize = true;
             this.checkCombinada.BackColor = System.Drawing.Color.Transparent;
             this.checkCombinada.ForeColor = System.Drawing.Color.Black;
-            this.checkCombinada.Location = new System.Drawing.Point(1, 47);
+            this.checkCombinada.Location = new System.Drawing.Point(1, 60);
+            this.checkCombinada.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.checkCombinada.Name = "checkCombinada";
-            this.checkCombinada.Size = new System.Drawing.Size(79, 17);
+            this.checkCombinada.Size = new System.Drawing.Size(99, 20);
             this.checkCombinada.TabIndex = 12;
             this.checkCombinada.Text = "Combinada";
             this.checkCombinada.UseVisualStyleBackColor = false;
@@ -154,9 +158,10 @@
             this.checkVelocidad.AutoSize = true;
             this.checkVelocidad.BackColor = System.Drawing.Color.Transparent;
             this.checkVelocidad.ForeColor = System.Drawing.Color.Black;
-            this.checkVelocidad.Location = new System.Drawing.Point(1, 70);
+            this.checkVelocidad.Location = new System.Drawing.Point(1, 88);
+            this.checkVelocidad.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.checkVelocidad.Name = "checkVelocidad";
-            this.checkVelocidad.Size = new System.Drawing.Size(73, 17);
+            this.checkVelocidad.Size = new System.Drawing.Size(91, 20);
             this.checkVelocidad.TabIndex = 13;
             this.checkVelocidad.Text = "Velocidad";
             this.checkVelocidad.UseVisualStyleBackColor = false;
@@ -164,26 +169,28 @@
             // panel1
             // 
             this.panel1.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.panel1.BackColor = System.Drawing.Color.Gray;
+            this.panel1.BackColor = System.Drawing.Color.DarkGray;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panel1.Controls.Add(this.checkDerecha);
             this.panel1.Controls.Add(this.checkVelocidad);
             this.panel1.Controls.Add(this.checkIzquierda);
             this.panel1.Controls.Add(this.checkCombinada);
             this.panel1.Controls.Add(this.button1);
-            this.panel1.Location = new System.Drawing.Point(1026, 272);
+            this.panel1.Location = new System.Drawing.Point(1368, 319);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(119, 115);
+            this.panel1.Size = new System.Drawing.Size(157, 144);
             this.panel1.TabIndex = 14;
             // 
             // GraficaUnica
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1178, 729);
+            this.ClientSize = new System.Drawing.Size(1571, 897);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.chart1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "GraficaUnica";
             this.Text = "GraficaUnica";
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
