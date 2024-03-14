@@ -1,6 +1,6 @@
 ﻿namespace Simulador
 {
-    partial class Calculos
+    partial class CalculosFs
     {
         /// <summary>
         /// Required designer variable.
@@ -28,17 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.Button btRepresentarG;
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label4 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btCalcular = new System.Windows.Forms.Button();
             this.valorBarra = new System.Windows.Forms.TextBox();
             this.barra = new System.Windows.Forms.TrackBar();
             this.editLongBiela = new System.Windows.Forms.TextBox();
@@ -55,11 +55,14 @@
             this.txtFsFinal = new System.Windows.Forms.TextBox();
             this.txtFsInicio = new System.Windows.Forms.TextBox();
             this.chartErrores = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.errorCampoVacio = new System.Windows.Forms.ErrorProvider(this.components);
+            this.timerGraficaError = new System.Windows.Forms.Timer(this.components);
             btRepresentarG = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.barra)).BeginInit();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chartErrores)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorCampoVacio)).BeginInit();
             this.SuspendLayout();
             // 
             // btRepresentarG
@@ -67,10 +70,10 @@
             btRepresentarG.BackColor = System.Drawing.Color.Gold;
             btRepresentarG.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             btRepresentarG.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            btRepresentarG.Location = new System.Drawing.Point(33, 295);
+            btRepresentarG.Location = new System.Drawing.Point(26, 269);
             btRepresentarG.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             btRepresentarG.Name = "btRepresentarG";
-            btRepresentarG.Size = new System.Drawing.Size(101, 30);
+            btRepresentarG.Size = new System.Drawing.Size(143, 48);
             btRepresentarG.TabIndex = 1;
             btRepresentarG.Text = "Representar";
             btRepresentarG.UseVisualStyleBackColor = false;
@@ -119,7 +122,7 @@
             // 
             this.panel1.BackColor = System.Drawing.Color.Black;
             this.panel1.Controls.Add(this.label4);
-            this.panel1.Controls.Add(this.button1);
+            this.panel1.Controls.Add(this.btCalcular);
             this.panel1.Controls.Add(this.valorBarra);
             this.panel1.Controls.Add(this.barra);
             this.panel1.Controls.Add(this.editLongBiela);
@@ -148,17 +151,17 @@
             this.label4.TabIndex = 11;
             this.label4.Text = "F. S.";
             // 
-            // button1
+            // btCalcular
             // 
-            this.button1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.button1.Location = new System.Drawing.Point(1190, 105);
-            this.button1.Margin = new System.Windows.Forms.Padding(4);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(117, 41);
-            this.button1.TabIndex = 10;
-            this.button1.Text = "Calcular";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.btCalcular.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btCalcular.Location = new System.Drawing.Point(1190, 105);
+            this.btCalcular.Margin = new System.Windows.Forms.Padding(4);
+            this.btCalcular.Name = "btCalcular";
+            this.btCalcular.Size = new System.Drawing.Size(117, 41);
+            this.btCalcular.TabIndex = 10;
+            this.btCalcular.Text = "Calcular";
+            this.btCalcular.UseVisualStyleBackColor = true;
+            this.btCalcular.Click += new System.EventHandler(this.button1_Click);
             // 
             // valorBarra
             // 
@@ -168,7 +171,6 @@
             this.valorBarra.Name = "valorBarra";
             this.valorBarra.Size = new System.Drawing.Size(88, 31);
             this.valorBarra.TabIndex = 8;
-            this.valorBarra.Text = "0";
             this.valorBarra.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // barra
@@ -240,10 +242,10 @@
             this.panel2.Controls.Add(this.txtFsInicio);
             this.panel2.Controls.Add(btRepresentarG);
             this.panel2.Controls.Add(this.chartErrores);
-            this.panel2.Location = new System.Drawing.Point(421, 173);
+            this.panel2.Location = new System.Drawing.Point(421, 170);
             this.panel2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1147, 722);
+            this.panel2.Size = new System.Drawing.Size(1147, 725);
             this.panel2.TabIndex = 7;
             // 
             // label8
@@ -268,7 +270,7 @@
             this.label7.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.label7.Location = new System.Drawing.Point(4, 210);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(121, 23);
+            this.label7.Size = new System.Drawing.Size(97, 18);
             this.label7.TabIndex = 7;
             this.label7.Text = "Incremento:";
             // 
@@ -280,7 +282,7 @@
             this.label6.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.label6.Location = new System.Drawing.Point(3, 155);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(85, 23);
+            this.label6.Size = new System.Drawing.Size(68, 18);
             this.label6.TabIndex = 6;
             this.label6.Text = "Fs final:";
             // 
@@ -292,13 +294,13 @@
             this.label5.ForeColor = System.Drawing.Color.Black;
             this.label5.Location = new System.Drawing.Point(3, 100);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(96, 23);
+            this.label5.Size = new System.Drawing.Size(77, 18);
             this.label5.TabIndex = 5;
             this.label5.Text = "Fs inicio:";
             // 
             // txtIncrementoFs
             // 
-            this.txtIncrementoFs.Location = new System.Drawing.Point(32, 235);
+            this.txtIncrementoFs.Location = new System.Drawing.Point(42, 230);
             this.txtIncrementoFs.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtIncrementoFs.Name = "txtIncrementoFs";
             this.txtIncrementoFs.Size = new System.Drawing.Size(101, 22);
@@ -306,7 +308,7 @@
             // 
             // txtFsFinal
             // 
-            this.txtFsFinal.Location = new System.Drawing.Point(32, 180);
+            this.txtFsFinal.Location = new System.Drawing.Point(42, 175);
             this.txtFsFinal.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtFsFinal.Name = "txtFsFinal";
             this.txtFsFinal.Size = new System.Drawing.Size(101, 22);
@@ -314,7 +316,7 @@
             // 
             // txtFsInicio
             // 
-            this.txtFsInicio.Location = new System.Drawing.Point(32, 125);
+            this.txtFsInicio.Location = new System.Drawing.Point(42, 120);
             this.txtFsInicio.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtFsInicio.Name = "txtFsInicio";
             this.txtFsInicio.Size = new System.Drawing.Size(101, 22);
@@ -341,25 +343,26 @@
             this.chartErrores.Location = new System.Drawing.Point(193, -1);
             this.chartErrores.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.chartErrores.Name = "chartErrores";
-            this.chartErrores.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Bright;
-            series1.BorderWidth = 3;
+            this.chartErrores.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Fire;
+            series1.BorderWidth = 2;
             series1.ChartArea = "ChartArea1";
             series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
-            series1.Color = System.Drawing.Color.Navy;
+            series1.Color = System.Drawing.Color.Blue;
+            series1.LabelBorderWidth = 2;
             series1.Legend = "Legend1";
-            series1.Name = "fs";
-            series1.YValuesPerPoint = 2;
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series2.Color = System.Drawing.Color.Red;
-            series2.Legend = "Legend1";
-            series2.Name = "Recorrido";
-            series2.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            series1.Name = "Combinada";
             this.chartErrores.Series.Add(series1);
-            this.chartErrores.Series.Add(series2);
-            this.chartErrores.Size = new System.Drawing.Size(949, 725);
+            this.chartErrores.Size = new System.Drawing.Size(956, 728);
             this.chartErrores.TabIndex = 0;
             this.chartErrores.Text = "chart1";
+            // 
+            // errorCampoVacio
+            // 
+            this.errorCampoVacio.ContainerControl = this;
+            // 
+            // timerGraficaError
+            // 
+            this.timerGraficaError.Interval = 1000;
             // 
             // Calculos
             // 
@@ -381,6 +384,7 @@
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chartErrores)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorCampoVacio)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -397,7 +401,7 @@
         private System.Windows.Forms.RichTextBox richPotencia;
         private System.Windows.Forms.TrackBar barra;
         private System.Windows.Forms.TextBox valorBarra;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btCalcular;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.RichTextBox richInfo;
         private System.Windows.Forms.Panel panel2;
@@ -409,5 +413,7 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.ErrorProvider errorCampoVacio;
+        private System.Windows.Forms.Timer timerGraficaError;
     }
 }

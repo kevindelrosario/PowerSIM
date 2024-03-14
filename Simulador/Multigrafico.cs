@@ -15,7 +15,7 @@ namespace Simulador
     {
         public string rutaArchivo = string.Empty; 
         //La ruta obtenida en el Form principal entra aqui
-        public Multigrafico(Form1.Ruta ruta)
+        public Multigrafico(Inicio.Ruta ruta)
         {
             InitializeComponent();
            

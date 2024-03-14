@@ -1,6 +1,6 @@
 ﻿namespace Simulador
 {
-    partial class Form1
+    partial class Inicio
     {
         /// <summary>
         /// Variable del diseñador necesaria.
@@ -28,12 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Inicio));
             this.txtRutaArchivo1 = new System.Windows.Forms.TextBox();
             this.btRuta1 = new System.Windows.Forms.Button();
             this.buscarArchivo = new System.Windows.Forms.Button();
             this.panelSideMenu = new System.Windows.Forms.Panel();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btCalculosSectores = new System.Windows.Forms.Button();
             this.btCalculo = new System.Windows.Forms.Button();
             this.btMultigrafico = new System.Windows.Forms.Button();
             this.btUnico = new System.Windows.Forms.Button();
@@ -42,12 +43,14 @@
             this.panelBuscarArchivo = new System.Windows.Forms.Panel();
             this.panelChildForm = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.errorArchivoVacio = new System.Windows.Forms.ErrorProvider(this.components);
             this.panelSideMenu.SuspendLayout();
             this.panelLogo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.panelBuscarArchivo.SuspendLayout();
             this.panelChildForm.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorArchivoVacio)).BeginInit();
             this.SuspendLayout();
             // 
             // txtRutaArchivo1
@@ -55,7 +58,7 @@
             this.txtRutaArchivo1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtRutaArchivo1.BackColor = System.Drawing.SystemColors.ScrollBar;
-            this.txtRutaArchivo1.Location = new System.Drawing.Point(403, 26);
+            this.txtRutaArchivo1.Location = new System.Drawing.Point(364, 26);
             this.txtRutaArchivo1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtRutaArchivo1.Name = "txtRutaArchivo1";
             this.txtRutaArchivo1.Size = new System.Drawing.Size(580, 22);
@@ -92,7 +95,7 @@
             this.panelSideMenu.AutoScroll = true;
             this.panelSideMenu.BackColor = System.Drawing.Color.Black;
             this.panelSideMenu.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelSideMenu.Controls.Add(this.button1);
+            this.panelSideMenu.Controls.Add(this.btCalculosSectores);
             this.panelSideMenu.Controls.Add(this.btCalculo);
             this.panelSideMenu.Controls.Add(this.btMultigrafico);
             this.panelSideMenu.Controls.Add(this.btUnico);
@@ -104,22 +107,22 @@
             this.panelSideMenu.Size = new System.Drawing.Size(268, 967);
             this.panelSideMenu.TabIndex = 13;
             // 
-            // button1
+            // btCalculosSectores
             // 
-            this.button1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button1.FlatAppearance.BorderSize = 0;
-            this.button1.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.button1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.ForeColor = System.Drawing.Color.Gainsboro;
-            this.button1.Location = new System.Drawing.Point(0, 267);
-            this.button1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(266, 43);
-            this.button1.TabIndex = 4;
-            this.button1.Text = "Calculos Sectores";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.btCalculosSectores.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btCalculosSectores.FlatAppearance.BorderSize = 0;
+            this.btCalculosSectores.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btCalculosSectores.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btCalculosSectores.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btCalculosSectores.ForeColor = System.Drawing.Color.Gainsboro;
+            this.btCalculosSectores.Location = new System.Drawing.Point(0, 267);
+            this.btCalculosSectores.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btCalculosSectores.Name = "btCalculosSectores";
+            this.btCalculosSectores.Size = new System.Drawing.Size(266, 43);
+            this.btCalculosSectores.TabIndex = 4;
+            this.btCalculosSectores.Text = "Calculos Sectores";
+            this.btCalculosSectores.UseVisualStyleBackColor = true;
+            this.btCalculosSectores.Click += new System.EventHandler(this.button1_Click);
             // 
             // btCalculo
             // 
@@ -230,7 +233,11 @@
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
-            // Form1
+            // errorArchivoVacio
+            // 
+            this.errorArchivoVacio.ContainerControl = this;
+            // 
+            // Inicio
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -243,7 +250,7 @@
             this.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MinimumSize = new System.Drawing.Size(1533, 819);
-            this.Name = "Form1";
+            this.Name = "Inicio";
             this.Text = "Form1";
             this.panelSideMenu.ResumeLayout(false);
             this.panelLogo.ResumeLayout(false);
@@ -252,6 +259,7 @@
             this.panelBuscarArchivo.PerformLayout();
             this.panelChildForm.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorArchivoVacio)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -270,7 +278,8 @@
         private System.Windows.Forms.Button btCalculo;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox pictureBox2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btCalculosSectores;
+        private System.Windows.Forms.ErrorProvider errorArchivoVacio;
     }
 }
 

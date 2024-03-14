@@ -17,7 +17,7 @@ namespace Simulador
     public partial class GraficaUnica : Form
     {
        public string rutaArchivo = string.Empty;// Se inicializa la ruta en null para realizar las comprobaciones luego
-        public GraficaUnica(Form1.Ruta ruta)
+        public GraficaUnica(Inicio.Ruta ruta)
         {
             InitializeComponent();
            //Se inicializan los valores del chart a 0
@@ -108,7 +108,11 @@ namespace Simulador
             {
                 decimal angulo = sl.GetCellValueAsDecimal(iRow, 1);//toma los valores de la columna 1 (angulo)
                 decimal izquierda = sl.GetCellValueAsDecimal(iRow, 2);//toma los valores de la columna 2 (Izquierda)
-                chart1.Series["Izquierda"].Points.AddXY(angulo, izquierda);
+
+               
+                         chart1.Series["Izquierda"].Points.AddXY(angulo, izquierda);
+                  
+              
                 iRow++;
 
             }

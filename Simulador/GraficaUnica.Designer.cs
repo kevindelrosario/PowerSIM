@@ -102,7 +102,7 @@
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button1.ForeColor = System.Drawing.Color.Black;
             this.button1.Location = new System.Drawing.Point(-15, 116);
-            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button1.Margin = new System.Windows.Forms.Padding(4);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(183, 26);
             this.button1.TabIndex = 9;
@@ -117,7 +117,7 @@
             this.checkDerecha.BackColor = System.Drawing.Color.Transparent;
             this.checkDerecha.ForeColor = System.Drawing.Color.Black;
             this.checkDerecha.Location = new System.Drawing.Point(1, 3);
-            this.checkDerecha.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.checkDerecha.Margin = new System.Windows.Forms.Padding(4);
             this.checkDerecha.Name = "checkDerecha";
             this.checkDerecha.Size = new System.Drawing.Size(81, 20);
             this.checkDerecha.TabIndex = 10;
@@ -131,7 +131,7 @@
             this.checkIzquierda.BackColor = System.Drawing.Color.Transparent;
             this.checkIzquierda.ForeColor = System.Drawing.Color.Black;
             this.checkIzquierda.Location = new System.Drawing.Point(1, 32);
-            this.checkIzquierda.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.checkIzquierda.Margin = new System.Windows.Forms.Padding(4);
             this.checkIzquierda.Name = "checkIzquierda";
             this.checkIzquierda.Size = new System.Drawing.Size(84, 20);
             this.checkIzquierda.TabIndex = 11;
@@ -145,7 +145,7 @@
             this.checkCombinada.BackColor = System.Drawing.Color.Transparent;
             this.checkCombinada.ForeColor = System.Drawing.Color.Black;
             this.checkCombinada.Location = new System.Drawing.Point(1, 60);
-            this.checkCombinada.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.checkCombinada.Margin = new System.Windows.Forms.Padding(4);
             this.checkCombinada.Name = "checkCombinada";
             this.checkCombinada.Size = new System.Drawing.Size(99, 20);
             this.checkCombinada.TabIndex = 12;
@@ -159,7 +159,7 @@
             this.checkVelocidad.BackColor = System.Drawing.Color.Transparent;
             this.checkVelocidad.ForeColor = System.Drawing.Color.Black;
             this.checkVelocidad.Location = new System.Drawing.Point(1, 88);
-            this.checkVelocidad.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.checkVelocidad.Margin = new System.Windows.Forms.Padding(4);
             this.checkVelocidad.Name = "checkVelocidad";
             this.checkVelocidad.Size = new System.Drawing.Size(91, 20);
             this.checkVelocidad.TabIndex = 13;
@@ -177,7 +177,7 @@
             this.panel1.Controls.Add(this.checkCombinada);
             this.panel1.Controls.Add(this.button1);
             this.panel1.Location = new System.Drawing.Point(1368, 319);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(157, 144);
             this.panel1.TabIndex = 14;
@@ -190,9 +190,9 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.chart1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "GraficaUnica";
-            this.Text = "GraficaUnica";
+            this.Text = "º";
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();

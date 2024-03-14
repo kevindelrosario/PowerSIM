@@ -11,17 +11,17 @@ using System.IO;
 using SpreadsheetLight;
 using System.Windows;
 using DocumentFormat.OpenXml.Bibliography;
-using static Simulador.Form1;
+using static Simulador.Inicio;
 
 namespace Simulador
 {
 
 
-    public partial class Form1 : Form
+    public partial class Inicio : Form
     {
 
        
-        public Form1()
+        public Inicio()
         {
             InitializeComponent();
            
@@ -34,7 +34,7 @@ namespace Simulador
 
         private void buscarArchivo_Click(object sender, EventArgs e)
         {
-
+            borrarMensajeError();
             string rutaArchivo = string.Empty;
             //Abre una ventana de Dialogo para buscar la ruta del archivo
             OpenFileDialog openFileDialog = new OpenFileDialog
@@ -71,59 +71,50 @@ namespace Simulador
         /*****LLAMADAS A LAS OTRAS VENTANAS******/
         private void btUnico_Click(object sender, EventArgs e)
         {
-            Ruta ruta; 
-            ruta.ruta = txtRutaArchivo1.Text; //toma el valor que contiene el txt txtRutaArchivo1
-            if (ruta.ruta == string.Empty) 
-                //si el atributo ruta no obtiene nada del txt salta un mensaje para que lo busque, para evitar errores
+            borrarMensajeError();
+            if (validarCampos())
             {
-                MessageBox.Show("Antes selecciona el fichero de pedaladas.");
+                Ruta ruta;
+                ruta.ruta = txtRutaArchivo1.Text; //toma el valor que contiene el txt txtRutaArchivo1
+              
+                    //Si ya contiene la ruta de un archivo podra entrar al Form y ver los graficos
+                    openChildForm(new GraficaUnica(ruta));
+             
             }
-            else
-            {
-                //Si ya contiene la ruta de un archivo podra entrar al Form y ver los graficos
-                openChildForm(new GraficaUnica(ruta));
-            }
+           
+           
              
         }
 
         private void btMultigrafico_Click(object sender, EventArgs e)
         {
-            try
+            borrarMensajeError();
+            if (validarCampos())
             {
                 Ruta ruta;
                 ruta.ruta = txtRutaArchivo1.Text;
                 openChildForm(new Multigrafico(ruta));
             }
-            catch {
-                MessageBox.Show("Antes selecciona el fichero de pedaladas.");
-            }
-
         }
 
         private void btCalculo_Click(object sender, EventArgs e)
         {
-            Ruta ruta;
-            ruta.ruta = txtRutaArchivo1.Text;
-            if (ruta.ruta == string.Empty)
+            borrarMensajeError();
+            if (validarCampos())
             {
-                MessageBox.Show("Antes selecciona el fichero de pedaladas.");
-            }
-            else
-            {
-                openChildForm(new Calculos(ruta));
+                Ruta ruta;
+                ruta.ruta = txtRutaArchivo1.Text;
+                openChildForm(new CalculosFs(ruta));
             }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Ruta ruta;
-            ruta.ruta = txtRutaArchivo1.Text;
-            if (ruta.ruta == string.Empty)
+            borrarMensajeError();
+            if (validarCampos())
             {
-                MessageBox.Show("Antes selecciona el fichero de pedaladas.");
-            }
-            else
-            {
+                Ruta ruta;
+                ruta.ruta = txtRutaArchivo1.Text;
                 openChildForm(new CalculosSectores(ruta));
             }
         }
@@ -144,6 +135,28 @@ namespace Simulador
             childForm.Show();
         }
 
-       
+
+        /****************************************************/
+        /*************VERIFICAR CAMPOS VACIOS****************/
+        /****************************************************/
+        private bool validarCampos()
+        {
+            bool ok = true;
+
+            if(txtRutaArchivo1.Text == "")
+            {
+                ok = false;
+                errorArchivoVacio.SetError(txtRutaArchivo1, "Ingresa ruta del archivo");
+            }
+
+            return ok;
+        }
+        /*****************LIMPIAR CAMPOS***************************/
+        
+        private void borrarMensajeError()
+        {
+            errorArchivoVacio.SetError(txtRutaArchivo1,"");
+        }
+
     }
 }
