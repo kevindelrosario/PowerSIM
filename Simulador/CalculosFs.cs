@@ -67,15 +67,16 @@ namespace Simulador
         public decimal muestrasPorPedaladas = decimal.Zero;
 
 
-        //Variables para tomar el valor total de cada pierna de la funcion  "calculaFrecuenciaMuestreo()" (segun la frecuencia de muestreo).
+        //Variables para tomar el valor total de cada pierna de la funcion  "calculaFuerzasPromediadas()" (segun la frecuencia de muestreo).
         //para realizar los calculos de la potencia real, teniendo en cuenta que este valor no es de todos los datos, sino que es de las que nos indique el fs
 
          public decimal totalPiernaIzq_muestreo = decimal.Zero;
          public decimal totalPiernaDer_muestreo = decimal.Zero;
          public decimal totalCombinada_muestreo = decimal.Zero;
-
+        public decimal  factorCorreccion = decimal.Zero;
 
         //VARIABLES PARA TOMAR LOS VALORES QUE SE UTILIZAN PARA DIBUJAR EL PORCENTAJE DE ERROR
+        int nMuestrasCogidas = 0;
 
 
         /************CLASES***************/
@@ -91,11 +92,11 @@ namespace Simulador
 
 
 
-        /*********Calcula promedio*************/
-        /* Se encarga de tomar tomar todos los datos de cada columna y sacar el promedio de todo para 
+        /*********Calcula promedioPotenciaIdeal*************/
+        /* Se encarga de tomar tomar todos los datos de cada columna y sacar el promedioPotenciaIdeal de todo para 
          realizar los calculos de potenciaReal de pedaladas.
          */
-        private void promedio()
+        private void promedioPotenciaIdeal()
         {
 
             SLDocument sl = new SLDocument(rutaArchivo);
@@ -109,7 +110,7 @@ namespace Simulador
                 decimal izquierda = sl.GetCellValueAsDecimal(iRow, 2);
                 decimal derecha = sl.GetCellValueAsDecimal(iRow, 3);
                 iRow++;
-                contador++; // Toma la cantidad de valores que son para sacar el promedio...
+                contador++; // Toma la cantidad de valores que son para sacar el promedioPotenciaIdeal...
                 Totalderecha += derecha; //Va sumando los valores encontrados
                 TotalIzquierda += izquierda;
             }
@@ -141,7 +142,7 @@ namespace Simulador
                 //Realiza el calculo de muestreo para saber las cantidades de muestras a tomar para el calculo
                 //de potencia real.
 
-                calculaFrecuenciaMuestreo(Convert.ToInt32(valorBarra.Text));
+                calculaFuerzasPromediadas(Convert.ToInt32(valorBarra.Text));
 
 
 
@@ -153,7 +154,7 @@ namespace Simulador
                 richInfo.AppendText("\n Numero de muestras por pedalada(Sp): " + muestrasPorPedaladas); // La frecuencia con la que se tomaran las pruebas
 
               
-                promedio(); // Lleva a la funcion de sacar promedio y cuando se realiza este llama a la funcion de potenciaReal
+                promedioPotenciaIdeal(); // Lleva a la funcion de sacar promedioPotenciaIdeal y cuando se realiza este llama a la funcion de potenciaReal
 
                 //los resultados de la POTENCIA IDEAL se muestran en el rich.
                 richPotencia.AppendText("\n" + "---- POTENCIA IDEAL ---- ");
@@ -185,7 +186,7 @@ namespace Simulador
                             + "\n % Error combinada: " + calcularPorcentajeError(totalCombinada_real_pError, totalCombinada_ideal_pError)
                             );
 
-               
+                MessageBox.Show("Muestras sin tomar: " + factorCorreccion);
 
 
             }
@@ -236,9 +237,9 @@ namespace Simulador
             tomaDatos();
             //SE TOMAN LOS DATOS Y SE REALIZAN LOS CALCULOS
             //los resultados se muestran en el rich.
-            pTotal_pIzquierda_real = potenciaClase.calculaPotenciaReal(fIzqui, fs, fuerzaPico, cadencia, longitudBiela); //Llama a la funcion encargada de realizar los calculos.
-            pTotal_pDercha_real = potenciaClase.calculaPotenciaReal(fDere, fs, fuerzaPico, cadencia, longitudBiela);
-            pTotal_pCombinada_real = potenciaClase.calculaPotenciaReal(fCombinada, fs, fuerzaPico, cadencia, longitudBiela);
+            pTotal_pIzquierda_real = potenciaClase.calculaPotenciaReal(fIzqui, nMuestrasCogidas, fuerzaPico, cadencia, longitudBiela, 1); //Llama a la funcion encargada de realizar los calculos.
+            pTotal_pDercha_real = potenciaClase.calculaPotenciaReal(fDere, nMuestrasCogidas, fuerzaPico, cadencia, longitudBiela, 1);
+            pTotal_pCombinada_real = potenciaClase.calculaPotenciaReal(fCombinada, nMuestrasCogidas, fuerzaPico, cadencia, longitudBiela, 1);
 
             balanceIq_real = potenciaClase.calcularPorcentajeError(fIzqui, fCombinada);
             balanceDe_real = potenciaClase.calcularPorcentajeError(fDere, fCombinada);
@@ -280,12 +281,12 @@ namespace Simulador
               //  cadencia = Convert.ToDecimal(editCadencia.Text.ToString());
                 /****************************** TOMANDO VALORES DE PONTENCIA IDEAL *****************************************/
 
-                //LLamamos a la funcion promedio para que se encargue de sacar el promedio de todos los datos que se encuentran en
+                //LLamamos a la funcion promedioPotenciaIdeal para que se encargue de sacar el promedioPotenciaIdeal de todos los datos que se encuentran en
                 //el archivo seleccionado anteriormente...
-                promedio(); //funcion que ya esta llamando por su cuenta a potenciaReal(), que es la encargada de 
-                            //sacar la potencia ideal a los resultados que nos dio promedio() para cada pierna y su combinacion.
+                promedioPotenciaIdeal(); //funcion que ya esta llamando por su cuenta a potenciaReal(), que es la encargada de 
+                            //sacar la potencia ideal a los resultados que nos dio promedioPotenciaIdeal() para cada pierna y su combinacion.
 
-                //al realizar la llamada de promedio() ya se pueden usar las variables globales.
+                //al realizar la llamada de promedioPotenciaIdeal() ya se pueden usar las variables globales.
                 //la que necesitamos son los totales de cada pierna, esto para llamar a calcularPorcentajeError() y nos los valores
                 //necesarios para el grafico del porcentaje de error de la ideal.
                 /*
@@ -303,11 +304,19 @@ namespace Simulador
                 /*******Dibujando en la grafica***********/
                 chartErrores.Series["Combinada"].Points.Clear();
            
-                chartErrores.ChartAreas[0].AxisY.Interval = 0.50;
-
-                for (int i = fsInicio; i <= fsFinal; i += numPuntos) //hasta aqui funciona
+               // chartErrores.ChartAreas[0].AxisY.Interval = 0.50;
+                /*
+                for (int i = fsInicio; i < fsFinal; i += numPuntos) //hasta aqui funciona
                 {
                     dibujarError(i);
+                }*/
+
+                int inicio = fsInicio;
+                while(inicio < fsFinal)
+                {
+                   
+                    dibujarError(inicio);
+                    inicio += numPuntos;
                 }
 
 
@@ -321,7 +330,7 @@ namespace Simulador
                        totalPiernaD_real_pError = pTotal_pDercha_real;
                        totalCombinada_real_pError = pTotal_pCombinada_real;
              */
-            calculaFrecuenciaMuestreo(i);
+            calculaFuerzasPromediadas(i);
             potenciaReal(totalPiernaIzq_muestreo, totalPiernaDer_muestreo, totalCombinada_muestreo, i);
 
             decimal porErrorC = calcularPorcentajeError(totalCombinada_real_pError, totalCombinada_ideal_pError);
@@ -333,7 +342,7 @@ namespace Simulador
    
 
         //Se le debe ingresar el valor del fs la funcion se encarga de enviar los datos necesarios
-        public void calculaFrecuenciaMuestreo(int fs)
+        public void calculaFuerzasPromediadas(int fs)
         {
             //VARIABLES
           // int fs = Convert.ToInt32(fs.Text); // Toma la frecuencia de muestreo de los datos
@@ -347,7 +356,7 @@ namespace Simulador
 
 
             try
-            {   //toma los valores de los textView y si no estan vacios llama la funcion promedio para que inicie
+            {   //toma los valores de los textView y si no estan vacios llama la funcion promedioPotenciaIdeal para que inicie
                 //los calculos.
 
                // tomaDatos();
@@ -372,7 +381,7 @@ namespace Simulador
                     }
                     numMuestras = iRow - 1;// -1 parra corregir lo mencionado anteriormente...
 
-                    Sp = (numMuestras / fs) * (60 / Convert.ToInt32(editCadencia.Text.ToString())); //Indicamos cada cuanto debe realizar el salto para tomar el valor siguiente.
+                    Sp = (fs * 60) / Convert.ToInt32(editCadencia.Text.ToString()); //Indicamos cada cuanto debe realizar el salto para tomar el valor siguiente.
 
                     //Info del archivo y la frecuencia de muestreo
 
@@ -381,31 +390,45 @@ namespace Simulador
                     muestrasPorPedaladas = Sp;
 
 
-                    int iRow2 = 1;
+                    //indica cada cuantos pruebas se tomaran:
+                    int muestras_A_tomar = numMuestras / Sp;
 
-                    //realiza la busqueda de los datos...
-                    while (!string.IsNullOrEmpty(sl.GetCellValueAsString(iRow2, 1)))
+                    int iRow2 = 1;
+                    nMuestrasCogidas = 0;
+
+                //realiza la busqueda de los datos...
+                while (!string.IsNullOrEmpty(sl.GetCellValueAsString(iRow2, 1)))
                     {
                         decimal izquierda = sl.GetCellValueAsDecimal(iRow2, 2);
                         decimal derecha = sl.GetCellValueAsDecimal(iRow2, 3);
+                        contador++;
+                        iRow2++;
 
-                        if (contador == Sp + 1)
+
+                    //  if (contador == muestras_A_tomar ) //toma no cada valor que indica el sp sino ese valor +1
+                    if (contador == muestras_A_tomar )
                         {
                             //Se toma el valor siguiente al sp (cada cuantas muestras nos indicaron que se deben guardar anteriormente).
                             totalIzquierda += izquierda; //se van sumando a la variable izq y der
                             totalDerecha += derecha;
 
                             contador = 0; // vuelve a cero para reinicial el conteo despues de tomar el valor y volver a tomar cada cierto momento el valor.
+                            nMuestrasCogidas++;
                         }
-
-                        contador++;
-                        iRow2++;
-
                     }
 
-                    totalPiernaIzq_muestreo = totalIzquierda; //valores para luego utilizarlos en la funcion potenciaReal()
-                    totalPiernaDer_muestreo = totalDerecha;
-                    totalCombinada_muestreo = totalIzquierda+totalDerecha;
+
+                    //si no es igual a 0 al terminar significa que quedaron pruebas sin tomar
+                    factorCorreccion = (decimal) numMuestras / (decimal) (numMuestras - contador); 
+                    
+
+                    totalPiernaIzq_muestreo = totalIzquierda * factorCorreccion; //valores para luego utilizarlos en la funcion potenciaReal()
+                    totalPiernaDer_muestreo = totalDerecha * factorCorreccion;
+
+                totalPiernaIzq_muestreo /= totalPiernaIzq_muestreo / (decimal) nMuestrasCogidas;
+                totalPiernaDer_muestreo = totalPiernaDer_muestreo / (decimal) nMuestrasCogidas;
+
+                totalCombinada_muestreo = totalIzquierda+totalDerecha;
 
             }
             catch

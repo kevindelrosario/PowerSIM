@@ -29,6 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btCalcularConfi = new System.Windows.Forms.Button();
             this.editAnguloInicio = new System.Windows.Forms.TextBox();
@@ -54,9 +57,12 @@
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
+            this.richMuestraReal = new System.Windows.Forms.RichTextBox();
+            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorCampoVacio)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorConfi)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -82,7 +88,7 @@
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(281, 896);
+            this.panel1.Size = new System.Drawing.Size(290, 896);
             this.panel1.TabIndex = 0;
             // 
             // btCalcularConfi
@@ -245,10 +251,10 @@
             // 
             // richReal
             // 
-            this.richReal.Location = new System.Drawing.Point(727, 28);
+            this.richReal.Location = new System.Drawing.Point(308, 382);
             this.richReal.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.richReal.Name = "richReal";
-            this.richReal.Size = new System.Drawing.Size(367, 190);
+            this.richReal.Size = new System.Drawing.Size(328, 142);
             this.richReal.TabIndex = 1;
             this.richReal.Text = "";
             // 
@@ -262,19 +268,19 @@
             // 
             // richIdeal
             // 
-            this.richIdeal.Location = new System.Drawing.Point(308, 28);
+            this.richIdeal.Location = new System.Drawing.Point(308, 74);
             this.richIdeal.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.richIdeal.Name = "richIdeal";
-            this.richIdeal.Size = new System.Drawing.Size(367, 190);
+            this.richIdeal.Size = new System.Drawing.Size(328, 148);
             this.richIdeal.TabIndex = 2;
             this.richIdeal.Text = "";
             // 
             // richSectores
             // 
-            this.richSectores.Location = new System.Drawing.Point(1147, 28);
+            this.richSectores.Location = new System.Drawing.Point(308, 629);
             this.richSectores.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.richSectores.Name = "richSectores";
-            this.richSectores.Size = new System.Drawing.Size(367, 190);
+            this.richSectores.Size = new System.Drawing.Size(328, 152);
             this.richSectores.TabIndex = 3;
             this.richSectores.Text = "";
             // 
@@ -283,9 +289,9 @@
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label9.ForeColor = System.Drawing.Color.Gold;
-            this.label9.Location = new System.Drawing.Point(457, 233);
+            this.label9.Location = new System.Drawing.Point(440, 226);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(68, 23);
+            this.label9.Size = new System.Drawing.Size(54, 18);
             this.label9.TabIndex = 4;
             this.label9.Text = "IDEAL";
             // 
@@ -294,7 +300,7 @@
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold);
             this.label10.ForeColor = System.Drawing.Color.Gold;
-            this.label10.Location = new System.Drawing.Point(888, 231);
+            this.label10.Location = new System.Drawing.Point(440, 526);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(50, 18);
             this.label10.TabIndex = 5;
@@ -305,11 +311,42 @@
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold);
             this.label11.ForeColor = System.Drawing.Color.Gold;
-            this.label11.Location = new System.Drawing.Point(1270, 233);
+            this.label11.Location = new System.Drawing.Point(402, 783);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(140, 18);
             this.label11.TabIndex = 6;
             this.label11.Text = "POR SECTORES";
+            // 
+            // richMuestraReal
+            // 
+            this.richMuestraReal.Location = new System.Drawing.Point(308, 314);
+            this.richMuestraReal.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.richMuestraReal.Name = "richMuestraReal";
+            this.richMuestraReal.Size = new System.Drawing.Size(328, 64);
+            this.richMuestraReal.TabIndex = 7;
+            this.richMuestraReal.Text = "";
+            // 
+            // chart1
+            // 
+            this.chart1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            chartArea1.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chart1.Legends.Add(legend1);
+            this.chart1.Location = new System.Drawing.Point(697, 117);
+            this.chart1.Name = "chart1";
+            series1.BorderWidth = 2;
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+            series1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.chart1.Series.Add(series1);
+            this.chart1.Size = new System.Drawing.Size(837, 593);
+            this.chart1.TabIndex = 8;
+            this.chart1.Text = "chart1";
             // 
             // CalculosSectores
             // 
@@ -317,6 +354,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(1571, 896);
+            this.Controls.Add(this.chart1);
+            this.Controls.Add(this.richMuestraReal);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label9);
@@ -333,6 +372,7 @@
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorCampoVacio)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorConfi)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -365,5 +405,7 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.RichTextBox richSectores;
         private System.Windows.Forms.RichTextBox richIdeal;
+        private System.Windows.Forms.RichTextBox richMuestraReal;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
     }
 }
