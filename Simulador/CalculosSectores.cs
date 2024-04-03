@@ -276,8 +276,8 @@ namespace Simulador
 
             if (verificarCampoConf() && divisor360() )
             {
-                MessageBox.Show("valido.");
-                //tomaDatos(); //toma los datos con los que se trabajo en la potencia real.
+               
+              
 
                 //tomamos los datos de configuracion:
                 int numSectores = Convert.ToInt32(editNumeroSectores.Text); 
@@ -348,10 +348,20 @@ namespace Simulador
 
                     //   MessageBox.Show("\n-Num. Sector: "+ sectorCom.Count +"\n-Potencia: "+combinada);
                     richSectores.AppendText("\nNUMERO SECTOR: " + sectorDe.Count);
-                    richSectores.AppendText("\n ------ Potencia Derecha: " + Derecha);
                     richSectores.AppendText("\n ------ Potencia Izquierda: " + Izquierda);
-                    richSectores.AppendText("\n ------ Potencia Combinada: "+combinada + "\n\n");
+                    richSectores.AppendText("\n ------ Potencia Derecha: " + Derecha);
+                    richSectores.AppendText("\n ------ Potencia Combinada: "+combinada );
 
+                    //PORCENTAJE DE ERROR POR SECTORES
+
+                    //*******************OJO AQUIIIIII abajo ALGO ESTA MAL************************
+
+                    //cada pierna debe entrar a la funcion y ambas con el resultado de la combinada
+                    richSectores.AppendText("\n-----Balance Izq/dere: "
+                        + potenciaClase.calcularPorcentajeError(Izquierda, combinada)
+                        + " / " + potenciaClase.calcularPorcentajeError(Derecha, combinada) + "\n\n");
+                  
+                    
                     cont = 0;
                 }
                
