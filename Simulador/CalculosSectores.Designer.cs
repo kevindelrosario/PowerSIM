@@ -277,10 +277,10 @@
             // 
             // richSectores
             // 
-            this.richSectores.Location = new System.Drawing.Point(332, 545);
+            this.richSectores.Location = new System.Drawing.Point(317, 545);
             this.richSectores.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.richSectores.Name = "richSectores";
-            this.richSectores.Size = new System.Drawing.Size(334, 333);
+            this.richSectores.Size = new System.Drawing.Size(368, 333);
             this.richSectores.TabIndex = 3;
             this.richSectores.Text = "";
             // 
@@ -336,7 +336,7 @@
             this.chart1.ChartAreas.Add(chartArea1);
             legend1.Name = "Legend1";
             this.chart1.Legends.Add(legend1);
-            this.chart1.Location = new System.Drawing.Point(691, 97);
+            this.chart1.Location = new System.Drawing.Point(704, 97);
             this.chart1.Name = "chart1";
             series1.BorderWidth = 2;
             series1.ChartArea = "ChartArea1";
@@ -345,7 +345,7 @@
             series1.Legend = "Legend1";
             series1.Name = "Series1";
             this.chart1.Series.Add(series1);
-            this.chart1.Size = new System.Drawing.Size(868, 624);
+            this.chart1.Size = new System.Drawing.Size(855, 624);
             this.chart1.TabIndex = 8;
             this.chart1.Text = "chart1";
             // 

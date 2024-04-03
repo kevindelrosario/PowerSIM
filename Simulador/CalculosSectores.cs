@@ -306,9 +306,10 @@ namespace Simulador
             ArrayList sectorIzq = new ArrayList();
             ArrayList sectorDe = new ArrayList();
 
-            int sumaSectores = 0;
+            decimal sumaSectorDe = 0;
+            decimal sumaSectorIz = 0;
+            decimal sumaSectorCom = 0;
 
-   
 
             // Indica el numero de pruebas que se debe tomar por sectores
             SLDocument sl = new SLDocument(rutaArchivo);
@@ -320,10 +321,6 @@ namespace Simulador
 
             int iRow = 1;
 
-
-            //Espacio entre sectores
-            int nSector = 0;
-            
 
             while (!string.IsNullOrEmpty(sl.GetCellValueAsString(iRow, 1)))
             {
@@ -363,15 +360,19 @@ namespace Simulador
 
             
 
-          
-
-
             //Segun el angulo de inicio que se indique se empezaran a sumar los valores que haya dentro del arrayList.
             for (int i = angInicio; i <= sectorCom.Count; i++) //i = angulo - 1 poque asi los angulos no empizan desde el cero.
             {
-                sumaSectores += Convert.ToInt32(sectorCom[i-1]); //guarda la suma de sectores segun se indica con el angulo de inicio
-               
+                sumaSectorDe += Convert.ToDecimal(sectorDe[i - 1]); //guarda la suma de sectores segun se indica con el angulo de inicio
+                sumaSectorIz += Convert.ToDecimal(sectorIzq[i - 1]);
+                sumaSectorCom += Convert.ToDecimal(sectorCom[i - 1]);
+
             }
+            richSectores.AppendText("\n*******SUMA TOTAL DE SECTORES*******" +
+                "\n*** Derecha: " + sumaSectorDe
+               + "\n*** Izquierda: " + sumaSectorIz
+                + "\n*** Combinada: "+ sumaSectorCom +"\n");
+
 
         }
 
