@@ -137,7 +137,7 @@
             this.btCalculo.Name = "btCalculo";
             this.btCalculo.Size = new System.Drawing.Size(266, 43);
             this.btCalculo.TabIndex = 3;
-            this.btCalculo.Text = "Calculos Fs";
+            this.btCalculo.Text = "Calculos Frecuencia Muestreo";
             this.btCalculo.UseVisualStyleBackColor = true;
             this.btCalculo.Click += new System.EventHandler(this.btCalculo_Click);
             // 

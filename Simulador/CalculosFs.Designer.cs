@@ -346,7 +346,7 @@
             this.chartErrores.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Fire;
             series1.BorderWidth = 2;
             series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
             series1.Color = System.Drawing.Color.Blue;
             series1.LabelBorderWidth = 2;
             series1.Legend = "Legend1";
@@ -364,7 +364,7 @@
             // 
             this.timerGraficaError.Interval = 1000;
             // 
-            // Calculos
+            // CalculosFs
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -376,7 +376,7 @@
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Margin = new System.Windows.Forms.Padding(4);
-            this.Name = "Calculos";
+            this.Name = "CalculosFs";
             this.Text = "Calculos";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();

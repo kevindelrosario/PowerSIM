@@ -6,7 +6,7 @@ namespace Simulador.Clases
     internal class Potencia
     {
    
-
+        // forma de calcular la potencia real anterior
         /// <summary>
         /// CALCULAR POTENCIA REAL (con frecuencia de muestro) 
         /// (Calcula la potencia real despues de haber realizado antes el muestreo)...
@@ -18,13 +18,16 @@ namespace Simulador.Clases
         /// <param name="cadencia">Cadencia ingresada por pantalla</param>
         /// <param name="longitudBiela">Longitud de biela</param>
         /// <returns>potenciaClase real</returns>
-        public decimal calculaPotenciaReal(decimal totalFuerza, int fs, decimal fuerzaPico,decimal cadencia, decimal longitudBiela, decimal factor)
+    /*   public decimal calculaPotenciaReal(decimal totalFuerza, int fs, decimal fuerzaPico,decimal cadencia, decimal longitudBiela, decimal factor)
         {
             decimal pi = (Convert.ToDecimal(Math.PI));
             //  return decimal.Round( ((totalFuerza * fuerzaPico * cadencia * (2 * pi) * longitudBiela / 60000) / fs) ,2);
             decimal formula = factor* ((totalFuerza * fuerzaPico * cadencia * 2 * pi * longitudBiela) / 60000);
             return decimal.Round(formula/fs, 2);
         }
+    
+        */
+
 
 
         /// <summary>
@@ -37,7 +40,7 @@ namespace Simulador.Clases
         /// <param name="cadencia">Cadencia ingresada por pantalla</param>
         /// <param name="longitudBiela">Longitud de biela</param>
         /// <returns>potenciaClase real</returns>
-        public decimal calculaPotenciaIdeal(decimal totalFuerza, decimal fuerzaPico, decimal cadencia, decimal longitudBiela)
+        public decimal calculaPotencia(decimal totalFuerza, decimal fuerzaPico, decimal cadencia, decimal longitudBiela)
         {
             decimal pi = (Convert.ToDecimal(Math.PI));
             return decimal.Round((totalFuerza * fuerzaPico * cadencia * 2 * pi * longitudBiela / 60000), 2);

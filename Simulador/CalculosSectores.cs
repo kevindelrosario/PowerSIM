@@ -52,8 +52,11 @@ namespace Simulador
         public decimal totalPiernaIzq_ideal_pError = decimal.Zero;
         public decimal totalCombinada_ideal_pError = decimal.Zero;
 
+        //Factor correcion para saber cuantas muestras faltarian por tomar en caso de que no se recorra toda la circunferencia.
+        public decimal factorCorreccion = decimal.Zero;
 
-
+        //VARIABLES PARA TOMAR LOS VALORES QUE SE UTILIZAN PARA DIBUJAR EL PORCENTAJE DE ERROR
+        int nMuestrasCogidas = 0;
         /************CLASES***************/
         //potencia
         Potencia potenciaClase = new Potencia();
@@ -87,19 +90,13 @@ namespace Simulador
 
                 //los resultados se muestran en el rich.
                 calculaFuerzasPromediadas(Convert.ToInt32(editMuestreo.Text.ToString()));
-                potenciaReal(totalPiernaIzq_muestreo, totalPiernaDer_muestreo, totalCombinada_muestreo, Convert.ToInt32(editMuestreo.Text.ToString()));
+                potenciaReal(totalPiernaIzq_muestreo, totalPiernaDer_muestreo, totalCombinada_muestreo);
         
             }
 
 
 
         }
-
-
-
-
-
-
 
         private void promedioPotenciaIdeal()
         {
@@ -139,9 +136,9 @@ namespace Simulador
             //    pTotal_pDercha_ideal = decimal.Round((fPromD * fuerzaPico * cadencia * pi * 2 * longitudBiela / 60000), 2);
             //   pTotal_pCombinada_ideal = decimal.Round((fPromCombinada * fuerzaPico * cadencia * pi * 2 * longitudBiela / 60000), 2);
 
-            pTotal_pIzquierda_ideal = potenciaClase.calculaPotenciaIdeal(fPromIzq, fuerzaPico, cadencia, longitudBiela);
-            pTotal_pDercha_ideal = potenciaClase.calculaPotenciaIdeal(fPromD, fuerzaPico, cadencia, longitudBiela);
-            pTotal_pCombinada_ideal = potenciaClase.calculaPotenciaIdeal(fPromCombinada, fuerzaPico, cadencia, longitudBiela);
+            pTotal_pIzquierda_ideal = potenciaClase.calculaPotencia(fPromIzq, fuerzaPico, cadencia, longitudBiela);
+            pTotal_pDercha_ideal = potenciaClase.calculaPotencia(fPromD, fuerzaPico, cadencia, longitudBiela);
+            pTotal_pCombinada_ideal = potenciaClase.calculaPotencia(fPromCombinada, fuerzaPico, cadencia, longitudBiela);
             //balance
             balanceIq_ideal = potenciaClase.calcularPorcentajeError(fPromIzq, fPromCombinada);
             balanceDe_ideal = potenciaClase.calcularPorcentajeError(fPromD, fPromCombinada);
@@ -153,44 +150,48 @@ namespace Simulador
 
             
            // richIdeal.AppendText("\n" + "---- POTENCIA IDEAL ---- ");
-            richIdeal.AppendText("\n" + " potenciaClase pierna izquierda: " + pTotal_pIzquierda_ideal);
-            richIdeal.AppendText("\n" + " potenciaClase pierna derecha: " + pTotal_pDercha_ideal);
-            richIdeal.AppendText("\n" + " potenciaClase combinada: " + pTotal_pCombinada_ideal);
+            richIdeal.AppendText("\n" + " potencia pierna izquierda: " + pTotal_pIzquierda_ideal);
+            richIdeal.AppendText("\n" + " potencia pierna derecha: " + pTotal_pDercha_ideal);
+            richIdeal.AppendText("\n" + " potencia combinada: " + pTotal_pCombinada_ideal);
 
 
             // Se muestra el balance de error IDEAL
-            richIdeal.AppendText("\n\n Balance Izq/dere: " + balanceIq_ideal + "/" + balanceDe_ideal);
+            richIdeal.AppendText("\n\n Balance Izq/dere: " + balanceIq_ideal + " / " + balanceDe_ideal);
         }
 
 
-        public void potenciaReal(decimal fIzqui, decimal fDere, decimal fCombinada, int fsMuestreo)
+        public void potenciaReal(decimal fIzqui, decimal fDere, decimal fCombinada)
         {
             richReal.Clear();
-
+            richMuestraReal.Clear();
             //SE TOMAN LOS DATOS Y SE REALIZAN LOS CALCULOS
             //los resultados se muestran en el rich.
 
             richMuestraReal.AppendText("\n Muestras totales: " + nMuestrasTotales);
             richMuestraReal.AppendText("\n Numero de muestras por pedalada(Sp): " + muestrasPorPedaladas); // La frecuencia con la que se tomaran las pruebas
-/***********OJO AQUI*******************/
-          //  richReal.AppendText("\n" + "---- POTENCIA REAL ---- ");
-          //  richReal.AppendText("\n" + " potenciaClase pierna izquierda: " + potenciaClase.calculaPotenciaReal(fIzqui, fsMuestreo, fuerzaPico, cadencia, longitudBiela));
-         //   richReal.AppendText("\n" + " potenciaClase pierna derecha: " + potenciaClase.calculaPotenciaReal(fDere, fsMuestreo, fuerzaPico, cadencia, longitudBiela));
-         //   richReal.AppendText("\n" + " potenciaClase total: " + potenciaClase.calculaPotenciaReal(fCombinada, fsMuestreo, fuerzaPico, cadencia, longitudBiela));
+
+            //Muestra los resultados
+            richReal.AppendText("\n" + " potencia pierna izquierda: " + potenciaClase.calculaPotencia(fIzqui, fuerzaPico, cadencia, longitudBiela));
+            richReal.AppendText("\n" + " potencia pierna derecha: " + potenciaClase.calculaPotencia(fDere, fuerzaPico, cadencia, longitudBiela));
+            richReal.AppendText("\n" + " potencia Combinada: " + potenciaClase.calculaPotencia(fCombinada, fuerzaPico, cadencia, longitudBiela));
 
 
 
             decimal balanceIq = potenciaClase.calcularPorcentajeError(fIzqui, fCombinada);
             decimal balanceDe = potenciaClase.calcularPorcentajeError(fDere, fCombinada);
 
-            richReal.AppendText("\n\n Balance Izq/dere: " + balanceIq + "/" + balanceDe);
+            richReal.AppendText("\n\n Balance Izq/dere: " + balanceIq + " / " + balanceDe);
 
         }
 
 
 
 
-
+        /// <summary>
+        /// FUERZAS PROMEDIADAS
+        /// Nos indica la cantidad de muestras a tomar segun la frecuencia de muestreo indicada....
+        /// </summary>
+        /// <param name="fs"></param>
         public void calculaFuerzasPromediadas(int fs)
         {
             //VARIABLES
@@ -213,16 +214,20 @@ namespace Simulador
                 }
                 numMuestras = iRow - 1;// -1 parra corregir lo mencionado anteriormente...
 
-                Sp = (numMuestras / fs) * (60 / Convert.ToInt32(editCadencia.Text.ToString())); //Indicamos cada cuanto debe realizar el salto para tomar el valor siguiente.
-
+                Sp = (fs * 60) / Convert.ToInt32(editCadencia.Text.ToString()); //Indicamos cada cuanto debe realizar el salto para tomar el valor siguiente.
+              
                 //Info del archivo y la frecuencia de muestreo
 
                 //Esta informacion solo se mostrara al dar clic en el boton calcular, de lo contrario es irrelevante.
                 nMuestrasTotales = numMuestras;
                 muestrasPorPedaladas = Sp;
 
+                //indica cada cuantos pruebas se tomaran:
+                int muestras_A_tomar = numMuestras / Sp;
 
                 int iRow2 = 1;
+
+                nMuestrasCogidas = 0;
 
                 //realiza la busqueda de los datos...
                 while (!string.IsNullOrEmpty(sl.GetCellValueAsString(iRow2, 1)))
@@ -237,6 +242,7 @@ namespace Simulador
                         totalDerecha += derecha;
 
                         contador = 0; // vuelve a cero para reinicial el conteo despues de tomar el valor y volver a tomar cada cierto momento el valor.
+                        nMuestrasCogidas++;
                     }
 
                     contador++;
@@ -244,10 +250,15 @@ namespace Simulador
 
                 }
 
-                totalPiernaIzq_muestreo = totalIzquierda; //valores para luego utilizarlos en la funcion potenciaReal()
-                totalPiernaDer_muestreo = totalDerecha;
-                totalCombinada_muestreo = totalIzquierda + totalDerecha;
+                //si no es igual a 0 al terminar significa que quedaron pruebas sin tomar
+                factorCorreccion = (decimal)numMuestras / (decimal)(numMuestras - contador);
 
+                totalPiernaIzq_muestreo = totalIzquierda * factorCorreccion; //valores para luego utilizarlos en la funcion potenciaReal()
+                totalPiernaDer_muestreo = totalDerecha * factorCorreccion;
+                //valores para luego utilizarlos en la funcion potenciaReal()
+                totalPiernaIzq_muestreo = totalPiernaIzq_muestreo / (decimal)nMuestrasCogidas;
+                totalPiernaDer_muestreo = totalPiernaDer_muestreo / (decimal)nMuestrasCogidas;
+                totalCombinada_muestreo = totalIzquierda + totalDerecha / (decimal)nMuestrasCogidas;
             }
             catch
             {
@@ -258,15 +269,12 @@ namespace Simulador
         }
 
 
-
-  
-
         private void btCalcularConfi_Click(object sender, EventArgs e)
         {
             // int numSectores = Convert.ToInt32(editNumeroSectores.Text);
             borrarMensajeErrorCalculos();
 
-            if (verificarCampoConf() && divisor360())
+            if (verificarCampoConf() && divisor360() )
             {
                 MessageBox.Show("valido.");
                 //tomaDatos(); //toma los datos con los que se trabajo en la potencia real.
@@ -276,7 +284,7 @@ namespace Simulador
                 int anguloInicio = Convert.ToInt32(editAnguloInicio.Text);
                
                 //Comprobamos cuantas pruebas debe haber por sectores.
-                MessageBox.Show("resultado de la division: " + dividirMuestras(numSectores));
+               // MessageBox.Show("resultado de la division: " + dividirMuestras(numSectores));
 
                 Sectores(dividirMuestras(numSectores), anguloInicio); //Entra: cantidad de pruebas por sectores y el sectore de inicio
             }
@@ -288,21 +296,19 @@ namespace Simulador
 
         /// <summary>
         /// SECTORES
-        /// Se encarga de tomar el numero de muestras por sector y guardar los datos segun el numero de sectores que se indiquen.
+        /// Se encarga de tomar el numero de muestras por sectorCom y guardar los datos segun el numero de sectores que se indiquen.
         /// </summary>
         /// <returns></returns>
         public void Sectores(int nMuestras, int angInicio)
         {
-            ArrayList sector = new ArrayList();
+            richSectores.Clear();
+            ArrayList sectorCom = new ArrayList();
+            ArrayList sectorIzq = new ArrayList();
+            ArrayList sectorDe = new ArrayList();
+
             int sumaSectores = 0;
 
-            //datos de prueba
-           // sector.Add(1);
-         //   sector.Add(20);
-         //   sector.Add(80);
-         //   sector.Add(500);
-         //   sector.Add(500);
-            //suma de todo: 1101
+   
 
             // Indica el numero de pruebas que se debe tomar por sectores
             SLDocument sl = new SLDocument(rutaArchivo);
@@ -314,11 +320,16 @@ namespace Simulador
 
             int iRow = 1;
 
+
+            //Espacio entre sectores
+            int nSector = 0;
+            
+
             while (!string.IsNullOrEmpty(sl.GetCellValueAsString(iRow, 1)))
             {
                 cont++;
 
-                //Se van guardando los datos hasta que el contador llegue al numero de pruebas que se debe ingresar por sector
+                //Se van guardando los datos hasta que el contador llegue al numero de pruebas que se debe ingresar por sectorCom
                 if(cont < nMuestras)
                 {
                     izquierdaIdeal += sl.GetCellValueAsDecimal(iRow, 2);
@@ -329,10 +340,21 @@ namespace Simulador
                 {
 
                     //Se saca el promedio al sumar todas y dividir entre la cantidad total
-                    decimal combinada = decimal.Round((izquierdaIdeal+derechaIdeal)/nMuestras,2); 
-                     sector.Add( combinada);
-                 //   MessageBox.Show("\n-Num. Sector: "+ sector.Count +"\n-Potencia: "+combinada);
-                    richSectores.AppendText("-Num.Sector: "+ sector.Count +"\n - Potencia: "+combinada);
+                    decimal combinada = decimal.Round((izquierdaIdeal+derechaIdeal)/nMuestras,2);
+                    decimal Derecha = decimal.Round( derechaIdeal/ nMuestras, 2);
+                    decimal Izquierda = decimal.Round(izquierdaIdeal / nMuestras, 2);
+
+                    sectorCom.Add( combinada);
+                    sectorDe.Add(Derecha);
+                    sectorIzq.Add(Izquierda);
+
+
+                    //   MessageBox.Show("\n-Num. Sector: "+ sectorCom.Count +"\n-Potencia: "+combinada);
+                    richSectores.AppendText("\nNUMERO SECTOR: " + sectorDe.Count);
+                    richSectores.AppendText("\n ------ Potencia Derecha: " + Derecha);
+                    richSectores.AppendText("\n ------ Potencia Izquierda: " + Izquierda);
+                    richSectores.AppendText("\n ------ Potencia Combinada: "+combinada + "\n\n");
+
                     cont = 0;
                 }
                
@@ -345,14 +367,12 @@ namespace Simulador
 
 
             //Segun el angulo de inicio que se indique se empezaran a sumar los valores que haya dentro del arrayList.
-            for (int i = angInicio; i <= sector.Count; i++) //i = angulo - 1 poque asi los angulos no empizan desde el cero.
+            for (int i = angInicio; i <= sectorCom.Count; i++) //i = angulo - 1 poque asi los angulos no empizan desde el cero.
             {
-                sumaSectores += Convert.ToInt32(sector[i-1]); //guarda la suma de sectores segun se indica con el angulo de inicio
+                sumaSectores += Convert.ToInt32(sectorCom[i-1]); //guarda la suma de sectores segun se indica con el angulo de inicio
                
             }
 
-            MessageBox.Show("#sectores: "+sector.Count+"\nResultado de suma de sectores: "+sumaSectores);
-            //  return sector;
         }
 
 
@@ -361,7 +381,7 @@ namespace Simulador
             bool ok = true;
             
           
-
+            //sectores
             if (editNumeroSectores.Text == "")
             {
                 ok = false;
@@ -369,23 +389,36 @@ namespace Simulador
             }
             else
             {
-                if (Convert.ToInt32(editNumeroSectores.Text) % 2 != 0)
+                if ((Convert.ToInt32(editNumeroSectores.Text) % 2 != 0))
                 {
                     ok = false;
-                    errorConfi.SetError(editNumeroSectores, "El numero de sector debe ser par.");
+                    errorConfi.SetError(editNumeroSectores, "El numero de sectorCom debe ser par.");
                 }
             }
 
+            if ((Convert.ToInt32(editNumeroSectores.Text) > 12))
+            {
+                ok = false;
+                errorConfi.SetError(editNumeroSectores, "Numero maximo de sectores: 12");
+            }
+
+            //angulo
             if (editAnguloInicio.Text == "")
             {
                 ok = false;
                 errorConfi.SetError(editAnguloInicio, "Indicar angulo de inicio");
             }
+          
 
             return ok;
 
         }
 
+        /// <summary>
+        /// DIVISOR 369
+        /// Se asegura que el valor ingresado sea un divisaor exacto del 360
+        /// </summary>
+        /// <returns></returns>
         public bool divisor360()
         {
             bool ok = true;
@@ -402,7 +435,7 @@ namespace Simulador
             if (divisor * numero != 360)
             {
                 ok = false;
-                errorConfi.SetError(editNumeroSectores, "El numero de sector debe ser divisor de 360.");
+                errorConfi.SetError(editNumeroSectores, "El numero de sectorCom debe ser divisor de 360.");
             }
             return ok;
 
@@ -410,10 +443,10 @@ namespace Simulador
 
         /// <summary>
         /// DIVIDIR MUESTRAS
-        /// Se encarga de indicar el # de muestras con la que se debe trabajarse en cada sector.
+        /// Se encarga de indicar el # de muestras con la que se debe trabajarse en cada sectorCom.
         /// </summary>
         /// <param name="sectores">sectores en los que se debe dividir la circunferencia</param>
-        /// <returns>Total de pruebas por sector</returns>
+        /// <returns>Total de pruebas por sectorCom</returns>
         public int dividirMuestras(int sectores)
         {
             /*aqui tomamos el numero de sectores que nos indique y dividimos las pruebas en ese numero, 
@@ -448,8 +481,6 @@ namespace Simulador
         }
 
     
-
-
 
         /********************************************************************/
         /************************CONTROL DE ERRORES**************************/

@@ -95,7 +95,7 @@
             // 
             this.btCalcularConfi.BackColor = System.Drawing.Color.Gold;
             this.btCalcularConfi.ForeColor = System.Drawing.Color.Black;
-            this.btCalcularConfi.Location = new System.Drawing.Point(99, 641);
+            this.btCalcularConfi.Location = new System.Drawing.Point(92, 641);
             this.btCalcularConfi.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btCalcularConfi.Name = "btCalcularConfi";
             this.btCalcularConfi.Size = new System.Drawing.Size(84, 30);
@@ -120,7 +120,7 @@
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(108, 32);
             this.label8.TabIndex = 13;
-            this.label8.Text = "Angulo de inicio \r\nde sectorizacion:";
+            this.label8.Text = "Angulo de inicio \r\nde sectorización:";
             // 
             // editNumeroSectores
             // 
@@ -149,7 +149,7 @@
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(244, 44);
             this.label6.TabIndex = 10;
-            this.label6.Text = "Configuración de sectores\r\n de calculo:";
+            this.label6.Text = "Configuración de sectores\r\n de cálculo:";
             this.label6.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // label5
@@ -157,11 +157,11 @@
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.Gold;
-            this.label5.Location = new System.Drawing.Point(57, 26);
+            this.label5.Location = new System.Drawing.Point(12, 27);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(167, 22);
+            this.label5.Size = new System.Drawing.Size(241, 22);
             this.label5.TabIndex = 9;
-            this.label5.Text = "POTENCIA REAL";
+            this.label5.Text = "POTENCIA REAL / IDEAL";
             // 
             // editCadencia
             // 
@@ -251,7 +251,7 @@
             // 
             // richReal
             // 
-            this.richReal.Location = new System.Drawing.Point(308, 382);
+            this.richReal.Location = new System.Drawing.Point(332, 285);
             this.richReal.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.richReal.Name = "richReal";
             this.richReal.Size = new System.Drawing.Size(328, 142);
@@ -268,7 +268,7 @@
             // 
             // richIdeal
             // 
-            this.richIdeal.Location = new System.Drawing.Point(308, 74);
+            this.richIdeal.Location = new System.Drawing.Point(332, 29);
             this.richIdeal.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.richIdeal.Name = "richIdeal";
             this.richIdeal.Size = new System.Drawing.Size(328, 148);
@@ -277,10 +277,10 @@
             // 
             // richSectores
             // 
-            this.richSectores.Location = new System.Drawing.Point(308, 629);
+            this.richSectores.Location = new System.Drawing.Point(332, 545);
             this.richSectores.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.richSectores.Name = "richSectores";
-            this.richSectores.Size = new System.Drawing.Size(328, 152);
+            this.richSectores.Size = new System.Drawing.Size(334, 333);
             this.richSectores.TabIndex = 3;
             this.richSectores.Text = "";
             // 
@@ -289,7 +289,7 @@
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label9.ForeColor = System.Drawing.Color.Gold;
-            this.label9.Location = new System.Drawing.Point(440, 226);
+            this.label9.Location = new System.Drawing.Point(472, 179);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(54, 18);
             this.label9.TabIndex = 4;
@@ -300,7 +300,7 @@
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold);
             this.label10.ForeColor = System.Drawing.Color.Gold;
-            this.label10.Location = new System.Drawing.Point(440, 526);
+            this.label10.Location = new System.Drawing.Point(464, 429);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(50, 18);
             this.label10.TabIndex = 5;
@@ -311,15 +311,16 @@
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold);
             this.label11.ForeColor = System.Drawing.Color.Gold;
-            this.label11.Location = new System.Drawing.Point(402, 783);
+            this.label11.Location = new System.Drawing.Point(427, 502);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(140, 18);
+            this.label11.Size = new System.Drawing.Size(147, 36);
             this.label11.TabIndex = 6;
-            this.label11.Text = "POR SECTORES";
+            this.label11.Text = "Por configuración \r\nde sectores:";
+            this.label11.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // richMuestraReal
             // 
-            this.richMuestraReal.Location = new System.Drawing.Point(308, 314);
+            this.richMuestraReal.Location = new System.Drawing.Point(332, 217);
             this.richMuestraReal.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.richMuestraReal.Name = "richMuestraReal";
             this.richMuestraReal.Size = new System.Drawing.Size(328, 64);
@@ -335,16 +336,16 @@
             this.chart1.ChartAreas.Add(chartArea1);
             legend1.Name = "Legend1";
             this.chart1.Legends.Add(legend1);
-            this.chart1.Location = new System.Drawing.Point(697, 117);
+            this.chart1.Location = new System.Drawing.Point(691, 97);
             this.chart1.Name = "chart1";
             series1.BorderWidth = 2;
             series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
             series1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             series1.Legend = "Legend1";
             series1.Name = "Series1";
             this.chart1.Series.Add(series1);
-            this.chart1.Size = new System.Drawing.Size(837, 593);
+            this.chart1.Size = new System.Drawing.Size(868, 624);
             this.chart1.TabIndex = 8;
             this.chart1.Text = "chart1";
             // 

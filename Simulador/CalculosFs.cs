@@ -167,7 +167,7 @@ namespace Simulador
                 richPotencia.AppendText("\n Balance Izq/dere: " + balanceIq_ideal + "/" + balanceDe_ideal);
 
                
-                potenciaReal(totalPiernaIzq_muestreo, totalPiernaDer_muestreo, totalCombinada_muestreo, Convert.ToInt32(valorBarra.Text));
+                potenciaReal(totalPiernaIzq_muestreo, totalPiernaDer_muestreo, totalCombinada_muestreo);
 
                 //escribiendo en rich POTENCIA REAL
                 richPotencia.AppendText("\n\n ---- POTENCIA REAL ----");
@@ -213,9 +213,9 @@ namespace Simulador
             //    pTotal_pDercha_ideal = decimal.Round((fPromD * fuerzaPico * cadencia * pi * 2 * longitudBiela / 60000), 2);
             //   pTotal_pCombinada_ideal = decimal.Round((fPromCombinada * fuerzaPico * cadencia * pi * 2 * longitudBiela / 60000), 2);
 
-            pTotal_pIzquierda_ideal =   potenciaClase.calculaPotenciaIdeal(fPromIzq ,fuerzaPico , cadencia, longitudBiela);
-            pTotal_pDercha_ideal = potenciaClase.calculaPotenciaIdeal(fPromD, fuerzaPico, cadencia, longitudBiela);
-            pTotal_pCombinada_ideal = potenciaClase.calculaPotenciaIdeal(fPromCombinada, fuerzaPico, cadencia, longitudBiela);
+            pTotal_pIzquierda_ideal =   potenciaClase.calculaPotencia(fPromIzq ,fuerzaPico , cadencia, longitudBiela);
+            pTotal_pDercha_ideal = potenciaClase.calculaPotencia(fPromD, fuerzaPico, cadencia, longitudBiela);
+            pTotal_pCombinada_ideal = potenciaClase.calculaPotencia(fPromCombinada, fuerzaPico, cadencia, longitudBiela);
             //balance
             balanceIq_ideal = potenciaClase.calcularPorcentajeError(fPromIzq, fPromCombinada);
             balanceDe_ideal = potenciaClase.calcularPorcentajeError(fPromD, fPromCombinada);
@@ -232,14 +232,14 @@ namespace Simulador
         //CALCULAR POTENCIA REAL 
         /*********************************************************************/
         /*********************************************************************/
-        public void potenciaReal(decimal fIzqui, decimal fDere, decimal fCombinada,int fs)
+        public void potenciaReal(decimal fIzqui, decimal fDere, decimal fCombinada)
         {
             tomaDatos();
             //SE TOMAN LOS DATOS Y SE REALIZAN LOS CALCULOS
             //los resultados se muestran en el rich.
-            pTotal_pIzquierda_real = potenciaClase.calculaPotenciaReal(fIzqui, nMuestrasCogidas, fuerzaPico, cadencia, longitudBiela, 1); //Llama a la funcion encargada de realizar los calculos.
-            pTotal_pDercha_real = potenciaClase.calculaPotenciaReal(fDere, nMuestrasCogidas, fuerzaPico, cadencia, longitudBiela, 1);
-            pTotal_pCombinada_real = potenciaClase.calculaPotenciaReal(fCombinada, nMuestrasCogidas, fuerzaPico, cadencia, longitudBiela, 1);
+            pTotal_pIzquierda_real = potenciaClase.calculaPotencia(fIzqui, fuerzaPico, cadencia, longitudBiela); //Llama a la funcion encargada de realizar los calculos.
+            pTotal_pDercha_real = potenciaClase.calculaPotencia(fDere, fuerzaPico, cadencia, longitudBiela);
+            pTotal_pCombinada_real = potenciaClase.calculaPotencia(fCombinada, fuerzaPico, cadencia, longitudBiela);
 
             balanceIq_real = potenciaClase.calcularPorcentajeError(fIzqui, fCombinada);
             balanceDe_real = potenciaClase.calcularPorcentajeError(fDere, fCombinada);
@@ -331,7 +331,7 @@ namespace Simulador
                        totalCombinada_real_pError = pTotal_pCombinada_real;
              */
             calculaFuerzasPromediadas(i);
-            potenciaReal(totalPiernaIzq_muestreo, totalPiernaDer_muestreo, totalCombinada_muestreo, i);
+            potenciaReal(totalPiernaIzq_muestreo, totalPiernaDer_muestreo, totalCombinada_muestreo);
 
             decimal porErrorC = calcularPorcentajeError(totalCombinada_real_pError, totalCombinada_ideal_pError);
 
@@ -358,13 +358,6 @@ namespace Simulador
             try
             {   //toma los valores de los textView y si no estan vacios llama la funcion promedioPotenciaIdeal para que inicie
                 //los calculos.
-
-               // tomaDatos();
-                // fuerzaPico = Convert.ToDecimal(editFuerzaPico.Text.ToString());
-                //  cadencia = Convert.ToInt32(editCadencia.Text.ToString());
-              
-                //  longitudBiela = Convert.ToDecimal(editLongBiela.Text.ToString());
-               
               
                     /**************************CALCULO SEGUN NUMERO DE MUESTREO******************************/
 
@@ -425,10 +418,9 @@ namespace Simulador
                     totalPiernaIzq_muestreo = totalIzquierda * factorCorreccion; //valores para luego utilizarlos en la funcion potenciaReal()
                     totalPiernaDer_muestreo = totalDerecha * factorCorreccion;
 
-                totalPiernaIzq_muestreo /= totalPiernaIzq_muestreo / (decimal) nMuestrasCogidas;
+                totalPiernaIzq_muestreo = totalPiernaIzq_muestreo / (decimal) nMuestrasCogidas;
                 totalPiernaDer_muestreo = totalPiernaDer_muestreo / (decimal) nMuestrasCogidas;
-
-                totalCombinada_muestreo = totalIzquierda+totalDerecha;
+                totalCombinada_muestreo = totalIzquierda+totalDerecha / (decimal)nMuestrasCogidas;
 
             }
             catch
