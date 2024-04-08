@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btCalcularConfi = new System.Windows.Forms.Button();
             this.editAnguloInicio = new System.Windows.Forms.TextBox();
@@ -61,10 +61,6 @@
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.panel2 = new System.Windows.Forms.Panel();
             this.btnGrafica = new System.Windows.Forms.Button();
-            this.txtAnguloG = new System.Windows.Forms.TextBox();
-            this.label12 = new System.Windows.Forms.Label();
-            this.txtSectoresG = new System.Windows.Forms.TextBox();
-            this.label13 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorCampoVacio)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorConfi)).BeginInit();
@@ -75,6 +71,7 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.Desktop;
+            this.panel1.Controls.Add(this.btnGrafica);
             this.panel1.Controls.Add(this.btCalcularConfi);
             this.panel1.Controls.Add(this.editAnguloInicio);
             this.panel1.Controls.Add(this.label8);
@@ -336,31 +333,26 @@
             // 
             // chart1
             // 
-            chartArea2.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.chart1.Legends.Add(legend2);
-            this.chart1.Location = new System.Drawing.Point(14, 12);
+            chartArea1.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chart1.Legends.Add(legend1);
+            this.chart1.Location = new System.Drawing.Point(14, 29);
             this.chart1.Name = "chart1";
-            series2.BorderWidth = 2;
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series2.Color = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            this.chart1.Series.Add(series2);
-            this.chart1.Size = new System.Drawing.Size(854, 727);
+            series1.BorderWidth = 2;
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.chart1.Series.Add(series1);
+            this.chart1.Size = new System.Drawing.Size(854, 830);
             this.chart1.TabIndex = 8;
             this.chart1.Text = "chart1";
             // 
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.Gray;
-            this.panel2.Controls.Add(this.btnGrafica);
-            this.panel2.Controls.Add(this.txtAnguloG);
-            this.panel2.Controls.Add(this.label12);
-            this.panel2.Controls.Add(this.txtSectoresG);
-            this.panel2.Controls.Add(this.label13);
             this.panel2.Controls.Add(this.chart1);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Right;
             this.panel2.Location = new System.Drawing.Point(691, 0);
@@ -373,51 +365,14 @@
             this.btnGrafica.BackColor = System.Drawing.Color.Orange;
             this.btnGrafica.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnGrafica.ForeColor = System.Drawing.Color.Black;
-            this.btnGrafica.Location = new System.Drawing.Point(770, 843);
+            this.btnGrafica.Location = new System.Drawing.Point(68, 687);
             this.btnGrafica.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnGrafica.Name = "btnGrafica";
-            this.btnGrafica.Size = new System.Drawing.Size(84, 30);
+            this.btnGrafica.Size = new System.Drawing.Size(138, 30);
             this.btnGrafica.TabIndex = 20;
-            this.btnGrafica.Text = "Calcular";
+            this.btnGrafica.Text = "Dibujar Grafica";
             this.btnGrafica.UseVisualStyleBackColor = false;
-            // 
-            // txtAnguloG
-            // 
-            this.txtAnguloG.Location = new System.Drawing.Point(556, 851);
-            this.txtAnguloG.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.txtAnguloG.Name = "txtAnguloG";
-            this.txtAnguloG.Size = new System.Drawing.Size(187, 22);
-            this.txtAnguloG.TabIndex = 19;
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.ForeColor = System.Drawing.Color.Black;
-            this.label12.Location = new System.Drawing.Point(553, 808);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(156, 40);
-            this.label12.TabIndex = 18;
-            this.label12.Text = "Angulo de inicio \r\nde sectorización:";
-            // 
-            // txtSectoresG
-            // 
-            this.txtSectoresG.Location = new System.Drawing.Point(556, 775);
-            this.txtSectoresG.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.txtSectoresG.Name = "txtSectoresG";
-            this.txtSectoresG.Size = new System.Drawing.Size(187, 22);
-            this.txtSectoresG.TabIndex = 17;
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.ForeColor = System.Drawing.Color.Black;
-            this.label13.Location = new System.Drawing.Point(553, 757);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(189, 20);
-            this.label13.TabIndex = 16;
-            this.label13.Text = "Numero de sectores:";
+            this.btnGrafica.Click += new System.EventHandler(this.btnGrafica_Click);
             // 
             // CalculosSectores
             // 
@@ -445,7 +400,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.errorConfi)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -482,9 +436,5 @@
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button btnGrafica;
-        private System.Windows.Forms.TextBox txtAnguloG;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.TextBox txtSectoresG;
-        private System.Windows.Forms.Label label13;
     }
 }
