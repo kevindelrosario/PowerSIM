@@ -81,33 +81,40 @@ namespace Simulador
 
         /************CLASES***************/
         //potencia
-        Potencia potenciaClase = new Potencia();
+        Potencia potenciaClase = new Potencia(); //Clase potencia inicializada para utilizar sus metodos.
+
+
 
         public CalculosFs(Inicio.Ruta ruta)
         {
             InitializeComponent();
-            rutaArchivo = ruta.ruta;
+            //Igualamos la ruta que se ingresa desde la pestaña inicio con la variable ruta de esta clase para trabajar con ella en esta pestaña. 
+            rutaArchivo = ruta.ruta; 
 
         }
 
 
 
-        /*********Calcula promedioPotenciaIdeal*************/
-        /* Se encarga de tomar tomar todos los datos de cada columna y sacar el promedioPotenciaIdeal de todo para 
-         realizar los calculos de potenciaReal de pedaladas.
-         */
+       
+        /// <summary>
+        /// promedioPotenciaIdeal
+        /// Se encarga de tomar tomar todos los datos de cada columna y sacar el promedio con el que se trabajara en los calculos de la PotenciaIdeal.
+        /// </summary>
         private void promedioPotenciaIdeal()
         {
 
             SLDocument sl = new SLDocument(rutaArchivo);
-            int iRow = 1;
+            int iRow = 1; //indica la columna que se tomara como referencia a la hora de leer el archivo, basicamente indica desde donde empieza y donde terminara cuando no hayan datos.
             int contador = 0;
-            decimal Totalderecha = 0;
+            //Variables para guardar el valor total de la suma de las columna de cada pierna.
+            decimal Totalderecha = 0; 
             decimal TotalIzquierda = 0;
+
             //toma los valores de las columnas del Excel.
-            while (!string.IsNullOrEmpty(sl.GetCellValueAsString(iRow, 1)))
+            while (!string.IsNullOrEmpty(sl.GetCellValueAsString(iRow, 1))) //Recorre el archivo hasta que no haya ningun valor para extraer.
             {
-                decimal izquierda = sl.GetCellValueAsDecimal(iRow, 2);
+                //Ingresa cada columna en la variable correspondiente
+                decimal izquierda = sl.GetCellValueAsDecimal(iRow, 2); 
                 decimal derecha = sl.GetCellValueAsDecimal(iRow, 3);
                 iRow++;
                 contador++; // Toma la cantidad de valores que son para sacar el promedioPotenciaIdeal...
@@ -115,22 +122,34 @@ namespace Simulador
                 TotalIzquierda += izquierda;
             }
 
+            //se toma el promedio de cada columna:
             decimal fpromIzq = decimal.Round((TotalIzquierda / contador), 2);//redondea los datos y lo guardan en la variable para enviarlos
             decimal fpromDere = decimal.Round((Totalderecha / contador), 2);
             decimal fPromTOTAL = fpromIzq + fpromDere;
-            potenciaIdeal(fpromIzq, fpromDere, fPromTOTAL );//toma los datos y saca la potenciaReal
+            potenciaIdeal(fpromIzq, fpromDere, fPromTOTAL );//toma los datos y saca la potenciaIdeal
         }
 
 
 
 
-        //Metodo que muestra el valor de la barra en el label.
+        /// <summary>
+        /// barra_Scroll
+        /// Metodo que muestra el valor de la barra en el label.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void barra_Scroll(object sender, EventArgs e)
         {
             valorBarra.Text = barra.Value.ToString();
 
         }
 
+        /// <summary>
+        /// BOTON CALCULAR 
+        /// Llama los metodos necesarios para realizar los calculos de potencia real e ideal.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button1_Click(object sender, EventArgs e)
         {
             borrarMensajeErrorCalculos(); //Borra el aviso del error
@@ -142,6 +161,7 @@ namespace Simulador
                 //Realiza el calculo de muestreo para saber las cantidades de muestras a tomar para el calculo
                 //de potencia real.
 
+                //obtiene el valor de frecuencia de muestrado FS ingresado por pantalla e indica la frecuencia con la que se iran tomando las muestras.
                 calculaFuerzasPromediadas(Convert.ToInt32(valorBarra.Text));
 
 
@@ -158,9 +178,9 @@ namespace Simulador
 
                 //los resultados de la POTENCIA IDEAL se muestran en el rich.
                 richPotencia.AppendText("\n" + "---- POTENCIA IDEAL ---- ");
-                richPotencia.AppendText("\n" + " potenciaClase pierna izquierda: " + pTotal_pIzquierda_ideal);
-                richPotencia.AppendText("\n" + " potenciaClase pierna derecha: " + pTotal_pDercha_ideal);
-                richPotencia.AppendText("\n" + " potenciaClase combinada: " + pTotal_pCombinada_ideal);
+                richPotencia.AppendText("\n" + " potencia pierna izquierda: " + pTotal_pIzquierda_ideal);
+                richPotencia.AppendText("\n" + " potencia pierna derecha: " + pTotal_pDercha_ideal);
+                richPotencia.AppendText("\n" + " potencia combinada: " + pTotal_pCombinada_ideal);
 
 
                 // Se muestra el balance de error IDEAL
@@ -171,9 +191,9 @@ namespace Simulador
 
                 //escribiendo en rich POTENCIA REAL
                 richPotencia.AppendText("\n\n ---- POTENCIA REAL ----");
-                richPotencia.AppendText("\n potenciaClase pierna izquierda: " + pTotal_pIzquierda_real);
-                richPotencia.AppendText("\n potenciaClase pierna derecha: " + pTotal_pDercha_real);
-                richPotencia.AppendText("\n potenciaClase combinada: " + pTotal_pCombinada_real);
+                richPotencia.AppendText("\n potencia pierna izquierda: " + pTotal_pIzquierda_real);
+                richPotencia.AppendText("\n potencia pierna derecha: " + pTotal_pDercha_real);
+                richPotencia.AppendText("\n potencia combinada: " + pTotal_pCombinada_real);
 
                 // Se muestra el balance de error REAL
                 richPotencia.AppendText("\n Balance pierna Izq/dere: " + balanceIq_real + "/" + balanceDe_real);
@@ -203,16 +223,11 @@ namespace Simulador
         /*********************************************************************/
         public void potenciaIdeal(decimal fPromIzq, decimal fPromD, decimal fPromCombinada)
         {
-            tomaDatos();
+            tomaDatos(); //Metodo encargado de extraer los datos ingresados en la interfaz y que se utilizaran en la formula.
 
-            //Toma el Pi (valor en double) y lo pasa a decimal para poder trabajar con el mas abajo.
-           // decimal pi = (Convert.ToDecimal(Math.PI));
-
-            //SE TOMAN LOS DATOS Y SE REALIZAN LOS CALCULOS21
-            //  pTotal_pIzquierda_ideal = decimal.Round((fPromIzq * fuerzaPico * cadencia * pi * 2 * longitudBiela / 60000), 2);
-            //    pTotal_pDercha_ideal = decimal.Round((fPromD * fuerzaPico * cadencia * pi * 2 * longitudBiela / 60000), 2);
-            //   pTotal_pCombinada_ideal = decimal.Round((fPromCombinada * fuerzaPico * cadencia * pi * 2 * longitudBiela / 60000), 2);
-
+            
+            //SE TOMAN LOS DATOS Y SE REALIZAN LOS CALCULOS
+           //Utilizamos el metodo calculaPotencia que pertenece a la clase Potencia, este nos da los resultados obtenidos con la formula.
             pTotal_pIzquierda_ideal =   potenciaClase.calculaPotencia(fPromIzq ,fuerzaPico , cadencia, longitudBiela);
             pTotal_pDercha_ideal = potenciaClase.calculaPotencia(fPromD, fuerzaPico, cadencia, longitudBiela);
             pTotal_pCombinada_ideal = potenciaClase.calculaPotencia(fPromCombinada, fuerzaPico, cadencia, longitudBiela);
@@ -312,7 +327,7 @@ namespace Simulador
                 }*/
 
                 int inicio = fsInicio;
-                while(inicio < fsFinal)
+                while(inicio <= fsFinal)
                 {
                    
                     dibujarError(inicio);

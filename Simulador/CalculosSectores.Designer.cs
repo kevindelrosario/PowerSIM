@@ -58,20 +58,23 @@
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.richMuestraReal = new System.Windows.Forms.RichTextBox();
-            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.chartSectorizacion = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.btnGrafica = new System.Windows.Forms.Button();
+            this.editMaximoSectorG = new System.Windows.Forms.TextBox();
+            this.editInicioSectorG = new System.Windows.Forms.TextBox();
+            this.btGraficarSectorizacion = new System.Windows.Forms.Button();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorCampoVacio)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorConfi)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chartSectorizacion)).BeginInit();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.Desktop;
-            this.panel1.Controls.Add(this.btnGrafica);
             this.panel1.Controls.Add(this.btCalcularConfi);
             this.panel1.Controls.Add(this.editAnguloInicio);
             this.panel1.Controls.Add(this.label8);
@@ -104,7 +107,7 @@
             this.btCalcularConfi.Name = "btCalcularConfi";
             this.btCalcularConfi.Size = new System.Drawing.Size(84, 30);
             this.btCalcularConfi.TabIndex = 15;
-            this.btCalcularConfi.Text = "Calcular";
+            this.btCalcularConfi.Text = "Sectorizar";
             this.btCalcularConfi.UseVisualStyleBackColor = false;
             this.btCalcularConfi.Click += new System.EventHandler(this.btCalcularConfi_Click);
             // 
@@ -331,48 +334,99 @@
             this.richMuestraReal.TabIndex = 7;
             this.richMuestraReal.Text = "";
             // 
-            // chart1
+            // chartSectorizacion
             // 
+            this.chartSectorizacion.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             chartArea1.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea1);
+            this.chartSectorizacion.ChartAreas.Add(chartArea1);
             legend1.Name = "Legend1";
-            this.chart1.Legends.Add(legend1);
-            this.chart1.Location = new System.Drawing.Point(14, 29);
-            this.chart1.Name = "chart1";
+            this.chartSectorizacion.Legends.Add(legend1);
+            this.chartSectorizacion.Location = new System.Drawing.Point(14, 29);
+            this.chartSectorizacion.Name = "chartSectorizacion";
             series1.BorderWidth = 2;
             series1.ChartArea = "ChartArea1";
             series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            series1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            series1.LabelBorderWidth = 2;
             series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.chart1.Series.Add(series1);
-            this.chart1.Size = new System.Drawing.Size(854, 830);
-            this.chart1.TabIndex = 8;
-            this.chart1.Text = "chart1";
+            series1.Name = "sectores";
+            this.chartSectorizacion.Series.Add(series1);
+            this.chartSectorizacion.Size = new System.Drawing.Size(854, 717);
+            this.chartSectorizacion.TabIndex = 8;
+            this.chartSectorizacion.Text = "chart1";
             // 
             // panel2
             // 
+            this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.panel2.BackColor = System.Drawing.Color.Gray;
-            this.panel2.Controls.Add(this.chart1);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel2.Controls.Add(this.label13);
+            this.panel2.Controls.Add(this.label12);
+            this.panel2.Controls.Add(this.btGraficarSectorizacion);
+            this.panel2.Controls.Add(this.editInicioSectorG);
+            this.panel2.Controls.Add(this.editMaximoSectorG);
+            this.panel2.Controls.Add(this.chartSectorizacion);
             this.panel2.Location = new System.Drawing.Point(691, 0);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(880, 896);
             this.panel2.TabIndex = 9;
             // 
-            // btnGrafica
+            // editMaximoSectorG
             // 
-            this.btnGrafica.BackColor = System.Drawing.Color.Orange;
-            this.btnGrafica.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnGrafica.ForeColor = System.Drawing.Color.Black;
-            this.btnGrafica.Location = new System.Drawing.Point(68, 687);
-            this.btnGrafica.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnGrafica.Name = "btnGrafica";
-            this.btnGrafica.Size = new System.Drawing.Size(138, 30);
-            this.btnGrafica.TabIndex = 20;
-            this.btnGrafica.Text = "Dibujar Grafica";
-            this.btnGrafica.UseVisualStyleBackColor = false;
-            this.btnGrafica.Click += new System.EventHandler(this.btnGrafica_Click);
+            this.editMaximoSectorG.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.editMaximoSectorG.Location = new System.Drawing.Point(48, 798);
+            this.editMaximoSectorG.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.editMaximoSectorG.Name = "editMaximoSectorG";
+            this.editMaximoSectorG.Size = new System.Drawing.Size(187, 22);
+            this.editMaximoSectorG.TabIndex = 13;
+            // 
+            // editInicioSectorG
+            // 
+            this.editInicioSectorG.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.editInicioSectorG.Location = new System.Drawing.Point(48, 851);
+            this.editInicioSectorG.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.editInicioSectorG.Name = "editInicioSectorG";
+            this.editInicioSectorG.Size = new System.Drawing.Size(187, 22);
+            this.editInicioSectorG.TabIndex = 14;
+            // 
+            // btGraficarSectorizacion
+            // 
+            this.btGraficarSectorizacion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btGraficarSectorizacion.BackColor = System.Drawing.Color.Gold;
+            this.btGraficarSectorizacion.ForeColor = System.Drawing.Color.Black;
+            this.btGraficarSectorizacion.Location = new System.Drawing.Point(262, 815);
+            this.btGraficarSectorizacion.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btGraficarSectorizacion.Name = "btGraficarSectorizacion";
+            this.btGraficarSectorizacion.Size = new System.Drawing.Size(156, 30);
+            this.btGraficarSectorizacion.TabIndex = 16;
+            this.btGraficarSectorizacion.Text = "Graficar sectorización";
+            this.btGraficarSectorizacion.UseVisualStyleBackColor = false;
+            this.btGraficarSectorizacion.Click += new System.EventHandler(this.btGraficarSectorizacion_Click);
+            // 
+            // label12
+            // 
+            this.label12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label12.AutoSize = true;
+            this.label12.ForeColor = System.Drawing.Color.White;
+            this.label12.Location = new System.Drawing.Point(48, 764);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(129, 32);
+            this.label12.TabIndex = 17;
+            this.label12.Text = "Numero de sectores\r\nmaximo:";
+            // 
+            // label13
+            // 
+            this.label13.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label13.AutoSize = true;
+            this.label13.ForeColor = System.Drawing.Color.White;
+            this.label13.Location = new System.Drawing.Point(48, 829);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(86, 16);
+            this.label13.TabIndex = 18;
+            this.label13.Text = "Sector inicial:";
             // 
             // CalculosSectores
             // 
@@ -398,8 +452,9 @@
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorCampoVacio)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorConfi)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chartSectorizacion)).EndInit();
             this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -433,8 +488,12 @@
         private System.Windows.Forms.RichTextBox richSectores;
         private System.Windows.Forms.RichTextBox richIdeal;
         private System.Windows.Forms.RichTextBox richMuestraReal;
-        private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chartSectorizacion;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Button btnGrafica;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Button btGraficarSectorizacion;
+        private System.Windows.Forms.TextBox editInicioSectorG;
+        private System.Windows.Forms.TextBox editMaximoSectorG;
     }
 }

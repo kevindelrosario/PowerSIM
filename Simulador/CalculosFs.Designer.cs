@@ -346,7 +346,7 @@
             this.chartErrores.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Fire;
             series1.BorderWidth = 2;
             series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
             series1.Color = System.Drawing.Color.Blue;
             series1.LabelBorderWidth = 2;
             series1.Legend = "Legend1";

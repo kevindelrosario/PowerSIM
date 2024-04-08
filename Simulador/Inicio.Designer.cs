@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Inicio));
-            this.txtRutaArchivo1 = new System.Windows.Forms.TextBox();
+            this.editRutaArchivo1 = new System.Windows.Forms.TextBox();
             this.btRuta1 = new System.Windows.Forms.Button();
             this.buscarArchivo = new System.Windows.Forms.Button();
             this.panelSideMenu = new System.Windows.Forms.Panel();
@@ -53,16 +53,16 @@
             ((System.ComponentModel.ISupportInitialize)(this.errorArchivoVacio)).BeginInit();
             this.SuspendLayout();
             // 
-            // txtRutaArchivo1
+            // editRutaArchivo1
             // 
-            this.txtRutaArchivo1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.editRutaArchivo1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtRutaArchivo1.BackColor = System.Drawing.SystemColors.ScrollBar;
-            this.txtRutaArchivo1.Location = new System.Drawing.Point(364, 26);
-            this.txtRutaArchivo1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.txtRutaArchivo1.Name = "txtRutaArchivo1";
-            this.txtRutaArchivo1.Size = new System.Drawing.Size(580, 22);
-            this.txtRutaArchivo1.TabIndex = 0;
+            this.editRutaArchivo1.BackColor = System.Drawing.SystemColors.ScrollBar;
+            this.editRutaArchivo1.Location = new System.Drawing.Point(364, 26);
+            this.editRutaArchivo1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.editRutaArchivo1.Name = "editRutaArchivo1";
+            this.editRutaArchivo1.Size = new System.Drawing.Size(580, 22);
+            this.editRutaArchivo1.TabIndex = 0;
             // 
             // btRuta1
             // 
@@ -120,7 +120,7 @@
             this.btCalculosSectores.Name = "btCalculosSectores";
             this.btCalculosSectores.Size = new System.Drawing.Size(266, 43);
             this.btCalculosSectores.TabIndex = 4;
-            this.btCalculosSectores.Text = "Calculos Sectores";
+            this.btCalculosSectores.Text = "Calculos y grafica de sectores";
             this.btCalculosSectores.UseVisualStyleBackColor = true;
             this.btCalculosSectores.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -201,7 +201,7 @@
             this.panelBuscarArchivo.BackColor = System.Drawing.Color.Black;
             this.panelBuscarArchivo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelBuscarArchivo.Controls.Add(this.buscarArchivo);
-            this.panelBuscarArchivo.Controls.Add(this.txtRutaArchivo1);
+            this.panelBuscarArchivo.Controls.Add(this.editRutaArchivo1);
             this.panelBuscarArchivo.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelBuscarArchivo.Location = new System.Drawing.Point(268, 0);
             this.panelBuscarArchivo.Margin = new System.Windows.Forms.Padding(4);
@@ -266,7 +266,7 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox txtRutaArchivo1;
+        private System.Windows.Forms.TextBox editRutaArchivo1;
         private System.Windows.Forms.Button btRuta1;
         private System.Windows.Forms.Button buscarArchivo;
         private System.Windows.Forms.Panel panelSideMenu;

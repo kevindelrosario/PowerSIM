@@ -76,7 +76,7 @@ namespace Simulador
             //toma los valores de los textView y si no estan vacios llama la funcion promedioPotenciaIdeal para que inicie
             //los calculos.
 
-            if (validarCamposCalculos())
+            if (validarCamposCalculosPotencia())
             {
                 borrarMensajeErrorCalculos();
                 tomaDatos();
@@ -234,8 +234,10 @@ namespace Simulador
                 {
                     decimal izquierda = sl.GetCellValueAsDecimal(iRow2, 2);
                     decimal derecha = sl.GetCellValueAsDecimal(iRow2, 3);
+                    contador++;
+                    iRow2++;
 
-                    if (contador == Sp + 1)
+                    if (contador == muestras_A_tomar)
                     {
                         //Se toma el valor siguiente al sp (cada cuantas muestras nos indicaron que se deben guardar anteriormente).
                         totalIzquierda += izquierda; //se van sumando a la variable izq y der
@@ -245,8 +247,7 @@ namespace Simulador
                         nMuestrasCogidas++;
                     }
 
-                    contador++;
-                    iRow2++;
+                 
 
                 }
 
@@ -255,6 +256,7 @@ namespace Simulador
 
                 totalPiernaIzq_muestreo = totalIzquierda * factorCorreccion; //valores para luego utilizarlos en la funcion potenciaReal()
                 totalPiernaDer_muestreo = totalDerecha * factorCorreccion;
+
                 //valores para luego utilizarlos en la funcion potenciaReal()
                 totalPiernaIzq_muestreo = totalPiernaIzq_muestreo / (decimal)nMuestrasCogidas;
                 totalPiernaDer_muestreo = totalPiernaDer_muestreo / (decimal)nMuestrasCogidas;
@@ -274,7 +276,7 @@ namespace Simulador
             // int numSectores = Convert.ToInt32(editNumeroSectores.Text);
             borrarMensajeErrorCalculos();
 
-            if (verificarCampoConf() && validarCamposCalculos())
+            if (verificarCampoConf() && validarCamposCalculosPotencia())
             {
               
                     //tomamos los datos de configuracion:
@@ -284,7 +286,7 @@ namespace Simulador
                     //Comprobamos cuantas pruebas debe haber por sectores.
                     // MessageBox.Show("resultado de la division: " + dividirMuestras(numSectores));
 
-                    Sectores(dividirMuestras(numSectores), anguloInicio); //Entra: cantidad de pruebas por sectores y el sectore de inicio        
+                    dividirSectores(dividirMuestras(numSectores), anguloInicio); //Entra: cantidad de pruebas por sectores y el sectore de inicio        
                 
                 
             }
@@ -299,7 +301,7 @@ namespace Simulador
         /// Se encarga de tomar el numero de muestras por sectorCom y guardar los datos segun el numero de sectores que se indiquen.
         /// </summary>
         /// <returns></returns>
-        public void Sectores(int nMuestras, int angInicio)
+        public void dividirSectores(int nMuestras, int angInicio)
         {
             tomaDatos();
             richSectores.Clear();
@@ -340,24 +342,12 @@ namespace Simulador
 
                     //Se saca el promedio al sumar todas y dividir entre la cantidad total
 
-                    /***ANTES***/
+                 
 
-                    // decimal combinada = decimal.Round((izquierdaIdeal+derechaIdeal)/nMuestras,2);
-                    //  decimal Derecha = decimal.Round( derechaIdeal/ cont, 2);
-                    //  decimal Izquierda = decimal.Round(izquierdaIdeal / cont, 2);
-
-
-                    //prueba 1
-                    /*
-                    decimal combinada = decimal.Round((izquierdaIdeal + derechaIdeal) / numSectores, 2);
-                    decimal Derecha = decimal.Round(derechaIdeal / numSectores, 2);
-                    decimal Izquierda = decimal.Round(izquierdaIdeal / numSectores, 2);
-                    */
-
-                    //prueba 2
-                    decimal combP = decimal.Round(((izquierdaIdeal + derechaIdeal) / nMuestras), 2);
-                    decimal dereP = decimal.Round((derechaIdeal / nMuestras), 2);
-                    decimal izqP = decimal.Round((izquierdaIdeal / nMuestras), 2);
+                    //prueba (VERIFICAR SI ES CORRECTA LA FORMA DE SACAR EL PROMEDIO)
+                    decimal combP = decimal.Round(((izquierdaIdeal + derechaIdeal) / numSectores), 2); //puede que tenga que dividir entre numero de sectores
+                    decimal dereP = decimal.Round((derechaIdeal / numSectores), 2);
+                    decimal izqP = decimal.Round((izquierdaIdeal / numSectores), 2);
                     // fuerzaPico = Convert.ToDecimal(editFuerzaPico.Text.ToString());
                     //  cadencia = Convert.ToDecimal(editCadencia.Text.ToString());
                     //  longitudBiela = Convert.ToDecimal(editLongBiela.Text.ToString());
@@ -388,7 +378,11 @@ namespace Simulador
                     richSectores.AppendText("\n ------ Balance Izq/dere: "
                         + potenciaClase.balanceDeError(Izquierda, combinada)
                         + " / " + potenciaClase.balanceDeError(Derecha, combinada) + "\n\n");
-                  
+
+                    //LLAMADA A LA FUNCION QUE DIBUJA EN LA GRAFICA
+
+                   
+
                     
                     cont = 0;
                 }
@@ -397,7 +391,7 @@ namespace Simulador
                
             }
 
-            
+            int contS = 0;
 
             //Segun el angulo de inicio que se indique se empezaran a sumar los valores que haya dentro del arrayList.
             for (int i = angInicio; i <= sectorCom.Count; i++) //i = angulo - 1 poque asi los angulos no empizan desde el cero.
@@ -405,9 +399,10 @@ namespace Simulador
                 sumaSectorDe += Convert.ToDecimal(sectorDe[i - 1]); //guarda la suma de sectores segun se indica con el angulo de inicio
                 sumaSectorIz += Convert.ToDecimal(sectorIzq[i - 1]);
                 sumaSectorCom += Convert.ToDecimal(sectorCom[i - 1]);
-
+                contS++;
+               
             }
-            richSectores.AppendText("\n*******SUMA TOTAL DE SECTORES*******" +
+            richSectores.AppendText("\n*******SUMA TOTAL DE "+contS +"  SECTORES*******" +
                 "\n*** Derecha: " + sumaSectorDe
                + "\n*** Izquierda: " + sumaSectorIz
                 + "\n*** Combinada: "+ sumaSectorCom +"\n");
@@ -432,20 +427,30 @@ namespace Simulador
                 if ((Convert.ToInt32(editNumeroSectores.Text) % 2 != 0))
                 {
                     ok = false;
-                    errorConfi.SetError(editNumeroSectores, "El numero de sectorCom debe ser par.");
+                    errorConfi.SetError(editNumeroSectores, "El numero de sector debe ser par.");
+                }
+                else
+                {
+                    if (!divisor360(Convert.ToInt32(editNumeroSectores.Text)))
+                    {
+                        ok = false;
+                        errorConfi.SetError(editNumeroSectores, "El numero de sector debe ser divisor de 360.");
+                    }
+                } 
+
+                if (Convert.ToInt32(editNumeroSectores.Text) > 12)
+                {
+                    ok = false;
+                    errorConfi.SetError(editNumeroSectores, "Numero maximo de sectores: 12");
                 }
             }
-
-            if ((Convert.ToInt32(editNumeroSectores.Text) > 12))
+/*
+            if (!divisor360(Convert.ToInt32(editNumeroSectores.Text)))
             {
                 ok = false;
-                errorConfi.SetError(editNumeroSectores, "Numero maximo de sectores: 12");
+                errorConfi.SetError(editNumeroSectores, "El numero de sector debe ser divisor de 360.");
             }
-            if (numeroSectoresError())
-            {
-                ok = false;
-                errorConfi.SetError(editNumeroSectores, "El numero de sectorCom debe ser divisor de 360.");
-            }
+*/
             //angulo
             if (editAnguloInicio.Text == "")
             {
@@ -560,7 +565,7 @@ namespace Simulador
        /// Verifica que los campos donde se ingresan los valores utilizados para calcular las potencias ideal/real esten correctos.
        /// </summary>
        /// <returns></returns>
-        private bool validarCamposCalculos()
+        private bool validarCamposCalculosPotencia()
         {
             bool ok = true;
 
@@ -605,58 +610,150 @@ namespace Simulador
             errorConfi.SetError(editAnguloInicio, "");
         }
 
-        /// <summary>
-        /// BOTON DIBUJA GRAFICA DE SECTORES.
-        /// Muestra la curva de error debido al numero de sectores.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnGrafica_Click(object sender, EventArgs e)
+        private void btGraficarSectorizacion_Click(object sender, EventArgs e)
         {
-/*
-            if (validarCamposGrafica() && validarCamposCalculos()) //verificamos que los campos cumplan los requisitos.
+            borrarMensajeErrorGraficaSectores();
+            borrarMensajeErrorCalculos();
+            chartSectorizacion.Series["sectores"].Points.Clear();
+          
+            if (validarCamposCalculosPotencia() && verificarCampoGrafica()) //verificamos que los campos cumplan los requisitos.
             {
-                //Si los campos son correctos se trabajara con ellos.
-             //   int sectores = Convert.ToInt32(txtSectoresG.Text.ToString());
-              //  int anguloI = Convert.ToInt32(txtAnguloG.Text.ToString());
-
-                /*
-                 * Ingresamos los sectores en el metodo dividirMuestras() para saber cuantas muestras se tendria que tomar por sectores.
-                 *
                
-                int numMuestras = dividirMuestras(sectores); 
+                int sectorMaximo = Convert.ToInt32(editMaximoSectorG.Text);
+                int sectorInicial = Convert.ToInt32(editInicioSectorG.Text);
+
+                int numMuestras = dividirMuestras(sectorMaximo); 
+
+
+
+            //    MessageBox.Show("Num muestras = "+ numMuestras);
+                graficarSectores(numMuestras, sectorInicial);
             }
-        */
+        }
+        public void graficarSectores(int nMuestras, int angInicio)
+        {
+            
+            tomaDatos();
+            ArrayList sectorCom = new ArrayList();
+            ArrayList sectorIzq = new ArrayList();
+            ArrayList sectorDe = new ArrayList();
+
+
+
+            // Indica el numero de pruebas que se debe tomar por sectores
+            SLDocument sl = new SLDocument(rutaArchivo);
+
+            int cont = 0; //para reinicial el conteo de las pruebas
+                          //variables para potencia Ideal
+            decimal izquierdaIdeal = 0;
+            decimal derechaIdeal = 0;
+
+            int iRow = 1;
+
+            int numSectores = Convert.ToInt32(editMaximoSectorG.Text);
+
+            while (!string.IsNullOrEmpty(sl.GetCellValueAsString(iRow, 1)))
+            {
+
+
+                //Se van guardando los datos hasta que el contador llegue al numero de pruebas que se debe ingresar por sectorCom
+                if (cont < nMuestras)
+                {
+                    izquierdaIdeal += sl.GetCellValueAsDecimal(iRow, 2);
+                    derechaIdeal += sl.GetCellValueAsDecimal(iRow, 3);
+                    cont++;
+                }
+                if (cont == nMuestras)
+                {
+
+                    //Se saca el promedio al sumar todas y dividir entre la cantidad total
+
+                    /***ANTES***/
+
+                    // decimal combinada = decimal.Round((izquierdaIdeal+derechaIdeal)/nMuestras,2);
+                    //  decimal Derecha = decimal.Round( derechaIdeal/ cont, 2);
+                    //  decimal Izquierda = decimal.Round(izquierdaIdeal / cont, 2);
+
+
+                    //prueba 1
+                    /*
+                    decimal combinada = decimal.Round((izquierdaIdeal + derechaIdeal) / numSectores, 2);
+                    decimal Derecha = decimal.Round(derechaIdeal / numSectores, 2);
+                    decimal Izquierda = decimal.Round(izquierdaIdeal / numSectores, 2);
+                    */
+
+                    //prueba 2
+                    decimal combP = decimal.Round(((izquierdaIdeal + derechaIdeal) / nMuestras), 2);
+                    decimal dereP = decimal.Round((derechaIdeal / nMuestras), 2);
+                    decimal izqP = decimal.Round((izquierdaIdeal / nMuestras), 2);
+                    // fuerzaPico = Convert.ToDecimal(editFuerzaPico.Text.ToString());
+                    //  cadencia = Convert.ToDecimal(editCadencia.Text.ToString());
+                    //  longitudBiela = Convert.ToDecimal(editLongBiela.Text.ToString());
+
+
+                    decimal combinada = potenciaClase.calculaPotencia(combP, fuerzaPico, cadencia, longitudBiela);
+                    decimal Derecha = potenciaClase.calculaPotencia(dereP, fuerzaPico, cadencia, longitudBiela);
+                    decimal Izquierda = potenciaClase.calculaPotencia(izqP, fuerzaPico, cadencia, longitudBiela);
+
+
+
+                    sectorCom.Add(combinada);
+                    sectorDe.Add(Derecha);
+                    sectorIzq.Add(Izquierda);
+
+
+                    cont = 0;
+                }
+
+                iRow++;
+
+            }
+
+            chartSectorizacion.Series["sectores"].Points.Clear();
+
+            //Segun el angulo de inicio que se indique se empezaran a graficar los valores que haya dentro del arrayList.
+           // chartSectorizacion.ChartAreas[0].AxisY.Interval = 1;
+            for (int i = angInicio; i <= sectorCom.Count; i++)
+            {
+                //i = angulo - 1 poque asi los angulos no empizan desde el cero.
+
+
+                //  decimal porErrorC = calcularPorcentajeError(totalCombinada_real_pError, totalCombinada_ideal_pError);
+
+                decimal sumaSectorCom = Convert.ToDecimal(sectorCom[i - 1]);
+                chartSectorizacion.Series["sectores"].Points.AddXY( i, sumaSectorCom); // se debe cambiar el valor a grafical por el correcto (Error Potencia)
+
+
+
+            }
+
+
         }
 
-        /// <summary>
-        /// VALIDAR CAMPOS GRAFICA DE SECTORES
-        /// Se encarga de verificar que los los valores ingresados para graficar los valores de los sectores esten correctos
-        /// </summary>
-        /// <returns></returns>
-      /*  private bool validarCamposGrafica()
+        private void borrarMensajeErrorGraficaSectores()
+        {
+            errorCampoVacio.SetError(editMaximoSectorG, "");
+            errorCampoVacio.SetError(editInicioSectorG, "");
+        }
+            public bool verificarCampoGrafica()
         {
             bool ok = true;
 
-            if (txtSectoresG.Text == "")
-            {
-                ok = false;
-                errorCampoVacio.SetError(txtSectoresG, "Ingresa numero de sectores.");
-            }
-            if (Convert.ToInt32(txtSectoresG.Text) >12)
-            {
-                ok = false;
-                errorCampoVacio.SetError(txtSectoresG, "Al valor maximo es 12");
-            }
 
-            if (txtAnguloG.Text == "")
+            //sectores
+            if (editMaximoSectorG.Text.Equals(""))
             {
                 ok = false;
-                errorCampoVacio.SetError(txtAnguloG, "Ingresa angulo inicial.");
+                errorConfi.SetError(editMaximoSectorG, "Indicar numero Maximo de sectores");
+            }
+            if (editInicioSectorG.Text.Equals(""))
+            {
+                ok = false;
+                errorConfi.SetError(editInicioSectorG, "Indicar numero incial de sector");
             }
             return ok;
         }
-*/
+
 
 
         }
