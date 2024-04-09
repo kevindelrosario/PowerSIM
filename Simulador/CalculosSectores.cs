@@ -345,9 +345,12 @@ namespace Simulador
                  
 
                     //prueba (VERIFICAR SI ES CORRECTA LA FORMA DE SACAR EL PROMEDIO)
+
                     decimal combP = decimal.Round(((izquierdaIdeal + derechaIdeal) / numSectores), 2); //puede que tenga que dividir entre numero de sectores
                     decimal dereP = decimal.Round((derechaIdeal / numSectores), 2);
                     decimal izqP = decimal.Round((izquierdaIdeal / numSectores), 2);
+
+
                     // fuerzaPico = Convert.ToDecimal(editFuerzaPico.Text.ToString());
                     //  cadencia = Convert.ToDecimal(editCadencia.Text.ToString());
                     //  longitudBiela = Convert.ToDecimal(editLongBiela.Text.ToString());
@@ -624,9 +627,6 @@ namespace Simulador
 
                 int numMuestras = dividirMuestras(sectorMaximo); 
 
-
-
-            //    MessageBox.Show("Num muestras = "+ numMuestras);
                 graficarSectores(numMuestras, sectorInicial);
             }
         }
@@ -675,21 +675,21 @@ namespace Simulador
                     //  decimal Izquierda = decimal.Round(izquierdaIdeal / cont, 2);
 
 
-                    //prueba 1
-                    /*
-                    decimal combinada = decimal.Round((izquierdaIdeal + derechaIdeal) / numSectores, 2);
-                    decimal Derecha = decimal.Round(derechaIdeal / numSectores, 2);
-                    decimal Izquierda = decimal.Round(izquierdaIdeal / numSectores, 2);
-                    */
+                    //prueba 1 con numero de sectores
+                    
+                   // decimal combP = decimal.Round((izquierdaIdeal + derechaIdeal) / numSectores, 2);
+                   // decimal dereP = decimal.Round(derechaIdeal / numSectores, 2);
+                    //decimal izqP = decimal.Round(izquierdaIdeal / numSectores, 2);
+                    
 
-                    //prueba 2
-                    decimal combP = decimal.Round(((izquierdaIdeal + derechaIdeal) / nMuestras), 2);
+                    //prueba 2 con numero de muestras
+                     decimal combP = decimal.Round(((izquierdaIdeal + derechaIdeal) / nMuestras), 2);
                     decimal dereP = decimal.Round((derechaIdeal / nMuestras), 2);
                     decimal izqP = decimal.Round((izquierdaIdeal / nMuestras), 2);
+                  
                     // fuerzaPico = Convert.ToDecimal(editFuerzaPico.Text.ToString());
                     //  cadencia = Convert.ToDecimal(editCadencia.Text.ToString());
                     //  longitudBiela = Convert.ToDecimal(editLongBiela.Text.ToString());
-
 
                     decimal combinada = potenciaClase.calculaPotencia(combP, fuerzaPico, cadencia, longitudBiela);
                     decimal Derecha = potenciaClase.calculaPotencia(dereP, fuerzaPico, cadencia, longitudBiela);

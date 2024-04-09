@@ -120,7 +120,7 @@
             this.btCalculosSectores.Name = "btCalculosSectores";
             this.btCalculosSectores.Size = new System.Drawing.Size(266, 43);
             this.btCalculosSectores.TabIndex = 4;
-            this.btCalculosSectores.Text = "Calculos y grafica de sectores";
+            this.btCalculosSectores.Text = "Calculos por sectores";
             this.btCalculosSectores.UseVisualStyleBackColor = true;
             this.btCalculosSectores.Click += new System.EventHandler(this.button1_Click);
             // 
