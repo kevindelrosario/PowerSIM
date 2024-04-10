@@ -55,6 +55,9 @@ namespace Simulador
         //Factor correcion para saber cuantas muestras faltarian por tomar en caso de que no se recorra toda la circunferencia.
         public decimal factorCorreccion = decimal.Zero;
 
+        // Número de muestras del archivo:
+        int numMuestras;
+
         //VARIABLES PARA TOMAR LOS VALORES QUE SE UTILIZAN PARA DIBUJAR EL PORCENTAJE DE ERROR
         int nMuestrasCogidas = 0;
         /************CLASES***************/
@@ -103,7 +106,7 @@ namespace Simulador
 
             SLDocument sl = new SLDocument(rutaArchivo);
             int iRow = 1;
-            int contador = 0;
+          //  int muestras_sobrantes = 0;
             decimal Totalderecha = 0;
             decimal TotalIzquierda = 0;
             //toma los valores de las columnas del Excel.
@@ -112,13 +115,13 @@ namespace Simulador
                 decimal izquierda = sl.GetCellValueAsDecimal(iRow, 2);
                 decimal derecha = sl.GetCellValueAsDecimal(iRow, 3);
                 iRow++;
-                contador++; // Toma la cantidad de valores que son para sacar el promedioPotenciaIdeal...
+           //     muestras_sobrantes++; // Toma la cantidad de valores que son para sacar el promedioPotenciaIdeal...
                 Totalderecha += derecha; //Va sumando los valores encontrados
                 TotalIzquierda += izquierda;
             }
 
-            decimal fpromIzq = decimal.Round((TotalIzquierda / contador), 2);//redondea los datos y lo guardan en la variable para enviarlos
-            decimal fpromDere = decimal.Round((Totalderecha / contador), 2);
+            decimal fpromIzq = decimal.Round((TotalIzquierda / iRow), 2);//redondea los datos y lo guardan en la variable para enviarlos
+            decimal fpromDere = decimal.Round((Totalderecha / iRow), 2);
             decimal fPromTOTAL = fpromIzq + fpromDere;
             potenciaIdeal(fpromIzq, fpromDere, fPromTOTAL);//toma los datos y saca la potenciaReal
         }
@@ -196,10 +199,9 @@ namespace Simulador
         {
             //VARIABLES
             // int fs = Convert.ToInt32(fs.Text); // Toma la frecuencia de muestreo de los datos
-            int numMuestras;//para tomar el numero de muestras
             SLDocument sl = new SLDocument(rutaArchivo);
             int Sp;
-            int contador = 0;
+            int muestras_sobrantes = 0;
             //variables para sumar los valores totales de cada pierna
             decimal totalIzquierda = 0;
             decimal totalDerecha = 0;
@@ -214,7 +216,7 @@ namespace Simulador
                 }
                 numMuestras = iRow - 1;// -1 parra corregir lo mencionado anteriormente...
 
-                Sp = (fs * 60) / Convert.ToInt32(editCadencia.Text.ToString()); //Indicamos cada cuanto debe realizar el salto para tomar el valor siguiente.
+                Sp = (fs * 60) / Convert.ToInt32(editCadencia.Text.ToString()); // Sp es el número de muestras por pedalada.
               
                 //Info del archivo y la frecuencia de muestreo
 
@@ -234,16 +236,17 @@ namespace Simulador
                 {
                     decimal izquierda = sl.GetCellValueAsDecimal(iRow2, 2);
                     decimal derecha = sl.GetCellValueAsDecimal(iRow2, 3);
-                    contador++;
+                    muestras_sobrantes++;
                     iRow2++;
 
-                    if (contador == muestras_A_tomar)
+                    if (iRow2 % muestras_A_tomar == 0)
                     {
                         //Se toma el valor siguiente al sp (cada cuantas muestras nos indicaron que se deben guardar anteriormente).
                         totalIzquierda += izquierda; //se van sumando a la variable izq y der
                         totalDerecha += derecha;
 
-                        contador = 0; // vuelve a cero para reinicial el conteo despues de tomar el valor y volver a tomar cada cierto momento el valor.
+                        //contador para saber cuantas muestras sobraron
+                        muestras_sobrantes = 0; // vuelve a cero para reinicial el conteo despues de tomar el valor y volver a tomar cada cierto momento el valor.
                         nMuestrasCogidas++;
                     }
 
@@ -252,7 +255,7 @@ namespace Simulador
                 }
 
                 //si no es igual a 0 al terminar significa que quedaron pruebas sin tomar
-                factorCorreccion = (decimal)numMuestras / (decimal)(numMuestras - contador);
+                factorCorreccion = (decimal)numMuestras / (decimal)(numMuestras - muestras_sobrantes);
 
                 totalPiernaIzq_muestreo = totalIzquierda * factorCorreccion; //valores para luego utilizarlos en la funcion potenciaReal()
                 totalPiernaDer_muestreo = totalDerecha * factorCorreccion;
@@ -260,7 +263,7 @@ namespace Simulador
                 //valores para luego utilizarlos en la funcion potenciaReal()
                 totalPiernaIzq_muestreo = totalPiernaIzq_muestreo / (decimal)nMuestrasCogidas;
                 totalPiernaDer_muestreo = totalPiernaDer_muestreo / (decimal)nMuestrasCogidas;
-                totalCombinada_muestreo = totalIzquierda + totalDerecha / (decimal)nMuestrasCogidas;
+                totalCombinada_muestreo = (totalIzquierda + totalDerecha) / (decimal)nMuestrasCogidas;
             }
             catch
             {
@@ -317,27 +320,40 @@ namespace Simulador
             // Indica el numero de pruebas que se debe tomar por sectores
             SLDocument sl = new SLDocument(rutaArchivo);
 
-            int cont = 0; //para reinicial el conteo de las pruebas
-                          //variables para potencia Ideal
+            //int cont = 0; //para reinicial el conteo de las pruebas
+            //              //variables para potencia Ideal
             decimal izquierdaIdeal = 0;
             decimal derechaIdeal = 0;
 
             int iRow = 1;
 
             int numSectores = Convert.ToInt32(editNumeroSectores.Text);
+            int fs = Convert.ToInt32(editMuestreo.Text);
+            int Sp, Ss;
+
+            Sp = (fs * 60) / Convert.ToInt32(editCadencia.Text.ToString()); // Sp es el número de muestras por pedalada.
+            Ss = Sp / numSectores;
+            int espacioEntreMuestras = numMuestras / Sp; // Indica las muestras a desechar entre cada muyestra válida.
+
+            int n_muestrasSector = 0;
 
             while (!string.IsNullOrEmpty(sl.GetCellValueAsString(iRow, 1)))
             {
-               
-
-                //Se van guardando los datos hasta que el contador llegue al numero de pruebas que se debe ingresar por sectorCom
-                if(cont < nMuestras)
+                // Vamos guardando las muestras válidfas hasta completar el sector:
+                if (iRow % espacioEntreMuestras == 0)
                 {
                     izquierdaIdeal += sl.GetCellValueAsDecimal(iRow, 2);
                     derechaIdeal += sl.GetCellValueAsDecimal(iRow, 3);
-                     cont++;
+
+                    ////Se van guardando los datos hasta que el muestras_sobrantes llegue al numero de pruebas que se debe ingresar por sectorCom
+                    //if (cont < nMuestras)
+                    //{
+                    //    izquierdaIdeal += sl.GetCellValueAsDecimal(iRow, 2);
+                    //    derechaIdeal += sl.GetCellValueAsDecimal(iRow, 3);
+                    //    cont++;
+                    n_muestrasSector++;
                 }
-              if(cont == nMuestras)
+                if (iRow % nMuestras == 0)
                 {
 
                     //Se saca el promedio al sumar todas y dividir entre la cantidad total
@@ -346,9 +362,10 @@ namespace Simulador
 
                     //prueba (VERIFICAR SI ES CORRECTA LA FORMA DE SACAR EL PROMEDIO)
 
-                    decimal combP = decimal.Round(((izquierdaIdeal + derechaIdeal) / numSectores), 2); //puede que tenga que dividir entre numero de sectores
-                    decimal dereP = decimal.Round((derechaIdeal / numSectores), 2);
-                    decimal izqP = decimal.Round((izquierdaIdeal / numSectores), 2);
+                    decimal combP = decimal.Round(((izquierdaIdeal + derechaIdeal) / n_muestrasSector), 2); //puede que tenga que dividir entre numero de sectores
+                    decimal dereP = decimal.Round((derechaIdeal / n_muestrasSector), 2);
+                    decimal izqP = decimal.Round((izquierdaIdeal / n_muestrasSector), 2);
+
 
 
                     // fuerzaPico = Convert.ToDecimal(editFuerzaPico.Text.ToString());
@@ -371,25 +388,25 @@ namespace Simulador
                     richSectores.AppendText("\nNUMERO SECTOR: " + sectorCom.Count);
                     richSectores.AppendText("\n ------ Potencia Derecha: " + Derecha);
                     richSectores.AppendText("\n ------ Potencia Izquierda: " + Izquierda);
-                    richSectores.AppendText("\n ------ Potencia Combinada: "+combinada );
+                    richSectores.AppendText("\n ------ Potencia Combinada: "+combinada+"\n");
 
                     //PORCENTAJE DE ERROR POR SECTORES
 
                     //*******************OJO AQUIIIIII abajo ALGO ESTA MAL************************
 
                     //cada pierna debe entrar a la funcion y ambas con el resultado de la combinada
-                    richSectores.AppendText("\n ------ Balance Izq/dere: "
-                        + potenciaClase.balanceDeError(Izquierda, combinada)
-                        + " / " + potenciaClase.balanceDeError(Derecha, combinada) + "\n\n");
+                    //richSectores.AppendText("\n ------ Balance Izq/dere: "
+                    //    + potenciaClase.balanceDeError(Izquierda, combinada)
+                    //    + " / " + potenciaClase.balanceDeError(Derecha, combinada) + "\n\n");
 
                     //LLAMADA A LA FUNCION QUE DIBUJA EN LA GRAFICA
 
-                   
 
-                    
-                    cont = 0;
+
+                    izquierdaIdeal = 0;
+                    derechaIdeal = 0;
+                    n_muestrasSector = 0;
                 }
-               
                 iRow++;
                
             }
@@ -406,9 +423,9 @@ namespace Simulador
                
             }
             richSectores.AppendText("\n*******SUMA TOTAL DE "+contS +"  SECTORES*******" +
-                "\n*** Derecha: " + sumaSectorDe
-               + "\n*** Izquierda: " + sumaSectorIz
-                + "\n*** Combinada: "+ sumaSectorCom +"\n");
+                "\n*** Derecha: " + sumaSectorDe /numSectores
+               + "\n*** Izquierda: " + sumaSectorIz / numSectores
+                + "\n*** Combinada: "+ sumaSectorCom  / numSectores + "\n");
 
 
         }
@@ -656,7 +673,7 @@ namespace Simulador
             {
 
 
-                //Se van guardando los datos hasta que el contador llegue al numero de pruebas que se debe ingresar por sectorCom
+                //Se van guardando los datos hasta que el muestras_sobrantes llegue al numero de pruebas que se debe ingresar por sectorCom
                 if (cont < nMuestras)
                 {
                     izquierdaIdeal += sl.GetCellValueAsDecimal(iRow, 2);
@@ -671,19 +688,19 @@ namespace Simulador
                     /***ANTES***/
 
                     // decimal combinada = decimal.Round((izquierdaIdeal+derechaIdeal)/nMuestras,2);
-                    //  decimal Derecha = decimal.Round( derechaIdeal/ cont, 2);
-                    //  decimal Izquierda = decimal.Round(izquierdaIdeal / cont, 2);
+                    //  decimal Derecha = decimal.Round( derechaIdeal/ nMuestras, 2);
+                    //  decimal Izquierda = decimal.Round(izquierdaIdeal / nMuestras, 2);
 
 
                     //prueba 1 con numero de sectores
-                    
-                   // decimal combP = decimal.Round((izquierdaIdeal + derechaIdeal) / numSectores, 2);
-                   // decimal dereP = decimal.Round(derechaIdeal / numSectores, 2);
+
+                    // decimal combP = decimal.Round((izquierdaIdeal + derechaIdeal) / numSectores, 2);
+                    // decimal dereP = decimal.Round(derechaIdeal / numSectores, 2);
                     //decimal izqP = decimal.Round(izquierdaIdeal / numSectores, 2);
-                    
+
 
                     //prueba 2 con numero de muestras
-                     decimal combP = decimal.Round(((izquierdaIdeal + derechaIdeal) / nMuestras), 2);
+                    decimal combP = decimal.Round(((izquierdaIdeal + derechaIdeal) / nMuestras), 2);
                     decimal dereP = decimal.Round((derechaIdeal / nMuestras), 2);
                     decimal izqP = decimal.Round((izquierdaIdeal / nMuestras), 2);
                   
