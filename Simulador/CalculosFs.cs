@@ -1,7 +1,9 @@
 ﻿using DocumentFormat.OpenXml.Drawing;
+using DocumentFormat.OpenXml.Spreadsheet;
 using Simulador.Clases;
 using SpreadsheetLight;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -21,6 +23,17 @@ namespace Simulador
         public decimal fuerzaPico = decimal.Zero;
         public decimal cadencia = decimal.Zero;
         public decimal longitudBiela = decimal.Zero;
+
+        //ARRAYLISTS para guardar los campos:
+        ArrayList piernaIzquierda;
+        ArrayList piernaDerecha;
+        ArrayList piernaCombinada;
+
+        //para saber el total de muestras en el archivo:
+        int muestrasTotales = 0;
+
+        //para recorrer el archivo
+        int iRow = 1;
 
 
 
@@ -89,13 +102,43 @@ namespace Simulador
         {
             InitializeComponent();
             //Igualamos la ruta que se ingresa desde la pestaña inicio con la variable ruta de esta clase para trabajar con ella en esta pestaña. 
-            rutaArchivo = ruta.ruta; 
+            rutaArchivo = ruta.ruta;
 
+            // Indica el numero de pruebas que se debe tomar por sectores
+            SLDocument sl = new SLDocument(rutaArchivo);
+            //Se encarga de guardar los datos del archivo leido en ArrayLists para trabajar con este en todo el codigo.
+            recogeDatosExcel(sl);
         }
 
 
 
-       
+
+
+        /// <summary>
+        /// recogeDatosExcel
+        /// Lee todo el archivo y guarda los campos por arraysList para que se pueda utilizar en todo
+        /// </summary>
+        /// <param name="sl"></param>
+        public void recogeDatosExcel(SLDocument sl)
+        {
+            piernaIzquierda = new ArrayList();
+            piernaDerecha = new ArrayList();
+            piernaCombinada = new ArrayList();
+
+            while (!string.IsNullOrEmpty(sl.GetCellValueAsString(iRow, 1)))
+            {
+                //Se van guardando los datos hasta que el muestras_sobrantes llegue al numero de pruebas que se debe ingresar por sectorCom
+
+                piernaIzquierda.Add(sl.GetCellValueAsDecimal(iRow, 2));
+                piernaDerecha.Add(sl.GetCellValueAsDecimal(iRow, 3));
+                piernaCombinada.Add(sl.GetCellValueAsDecimal(iRow, 2) + sl.GetCellValueAsDecimal(iRow, 3));
+                iRow++;
+            }
+
+
+        }
+
+
         /// <summary>
         /// promedioPotenciaIdeal
         /// Se encarga de tomar tomar todos los datos de cada columna y sacar el promedio con el que se trabajara en los calculos de la PotenciaIdeal.
