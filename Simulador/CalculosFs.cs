@@ -1,22 +1,11 @@
-﻿using DocumentFormat.OpenXml.Drawing;
-using DocumentFormat.OpenXml.Spreadsheet;
-using Simulador.Clases;
+﻿using Simulador.Clases;
 using SpreadsheetLight;
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Runtime.InteropServices.ComTypes;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 namespace Simulador
 {
-    
+
     public partial class CalculosFs : Form
     {
         public string rutaArchivo = string.Empty;
@@ -24,13 +13,21 @@ namespace Simulador
         public decimal cadencia = decimal.Zero;
         public decimal longitudBiela = decimal.Zero;
 
+
+
+        // ruta 
+
+        SLDocument sl;
         //ARRAYLISTS para guardar los campos:
+        LeeArchivo leerArchivo; //llama la clase
+
+        ArrayList angulo;
         ArrayList piernaIzquierda;
         ArrayList piernaDerecha;
         ArrayList piernaCombinada;
-
-        //para saber el total de muestras en el archivo:
-        int muestrasTotales = 0;
+        ArrayList velocidad;
+        int muestrasTotales = 0; //para saber el total de muestras en el archivo:
+      
 
         //para recorrer el archivo
         int iRow = 1;
@@ -76,7 +73,7 @@ namespace Simulador
 
         //Variables para tomar los valores de muestreo que entran al realizar los calculos de potencia ideal y real.
         //Se utilizan luego para guardar los datos de muestreo y para luego mostrarlo al realizarse el calculo de potencia(real/ideal)
-        public decimal nMuestrasTotales = decimal.Zero;
+       // public decimal nMuestrasTotales = decimal.Zero;
         public decimal muestrasPorPedaladas = decimal.Zero;
 
 
@@ -105,9 +102,13 @@ namespace Simulador
             rutaArchivo = ruta.ruta;
 
             // Indica el numero de pruebas que se debe tomar por sectores
-            SLDocument sl = new SLDocument(rutaArchivo);
+            sl = new SLDocument(rutaArchivo);
+
+
+            leerArchivo = new LeeArchivo(sl);
+
             //Se encarga de guardar los datos del archivo leido en ArrayLists para trabajar con este en todo el codigo.
-            recogeDatosExcel(sl);
+            extraerInformacion();
         }
 
 
@@ -115,25 +116,21 @@ namespace Simulador
 
 
         /// <summary>
-        /// recogeDatosExcel
+        /// extraerInformacion
         /// Lee todo el archivo y guarda los campos por arraysList para que se pueda utilizar en todo
         /// </summary>
-        /// <param name="sl"></param>
-        public void recogeDatosExcel(SLDocument sl)
+      
+        public void extraerInformacion()
         {
-            piernaIzquierda = new ArrayList();
-            piernaDerecha = new ArrayList();
-            piernaCombinada = new ArrayList();
+            //rellena los arrayList con cada campo
+            angulo = leerArchivo.Angulo;
+            piernaIzquierda = leerArchivo.PiernaIzquierda;
+            piernaDerecha = leerArchivo.PiernaDerecha;
+            piernaCombinada = leerArchivo.PiernaCombinada;
+            velocidad = leerArchivo.Velocidad;
 
-            while (!string.IsNullOrEmpty(sl.GetCellValueAsString(iRow, 1)))
-            {
-                //Se van guardando los datos hasta que el muestras_sobrantes llegue al numero de pruebas que se debe ingresar por sectorCom
-
-                piernaIzquierda.Add(sl.GetCellValueAsDecimal(iRow, 2));
-                piernaDerecha.Add(sl.GetCellValueAsDecimal(iRow, 3));
-                piernaCombinada.Add(sl.GetCellValueAsDecimal(iRow, 2) + sl.GetCellValueAsDecimal(iRow, 3));
-                iRow++;
-            }
+            //tomamos el total de las muestras
+            muestrasTotales = leerArchivo.MuestrasTotales;
 
 
         }
@@ -145,29 +142,23 @@ namespace Simulador
         /// </summary>
         private void promedioPotenciaIdeal()
         {
-
-            SLDocument sl = new SLDocument(rutaArchivo);
-            int iRow = 1; //indica la columna que se tomara como referencia a la hora de leer el archivo, basicamente indica desde donde empieza y donde terminara cuando no hayan datos.
-            int contador = 0;
             //Variables para guardar el valor total de la suma de las columna de cada pierna.
             decimal Totalderecha = 0; 
             decimal TotalIzquierda = 0;
-
+          
             //toma los valores de las columnas del Excel.
-            while (!string.IsNullOrEmpty(sl.GetCellValueAsString(iRow, 1))) //Recorre el archivo hasta que no haya ningun valor para extraer.
+
+            for (int i = 1; i <= muestrasTotales; i++)
             {
                 //Ingresa cada columna en la variable correspondiente
-                decimal izquierda = sl.GetCellValueAsDecimal(iRow, 2); 
-                decimal derecha = sl.GetCellValueAsDecimal(iRow, 3);
-                iRow++;
-                contador++; // Toma la cantidad de valores que son para sacar el promedioPotenciaIdeal...
-                Totalderecha += derecha; //Va sumando los valores encontrados
-                TotalIzquierda += izquierda;
+                Totalderecha += Convert.ToDecimal(piernaDerecha[i - 1]); //Va sumando los valores encontrados
+                TotalIzquierda += Convert.ToDecimal(piernaIzquierda[i -1]);
+               
             }
 
             //se toma el promedio de cada columna:
-            decimal fpromIzq = decimal.Round((TotalIzquierda / contador), 2);//redondea los datos y lo guardan en la variable para enviarlos
-            decimal fpromDere = decimal.Round((Totalderecha / contador), 2);
+            decimal fpromIzq = decimal.Round((TotalIzquierda / muestrasTotales), 2);//redondea los datos y lo guardan en la variable para enviarlos
+            decimal fpromDere = decimal.Round((Totalderecha / muestrasTotales), 2);
             decimal fPromTOTAL = fpromIzq + fpromDere;
             potenciaIdeal(fpromIzq, fpromDere, fPromTOTAL );//toma los datos y saca la potenciaIdeal
         }
@@ -213,7 +204,7 @@ namespace Simulador
                 /**************************CALCULO SEGUN NUMERO DE MUESTREO******************************/
 
                 //Info del archivo y la frecuencia de muestreo
-                richInfo.AppendText("\n Muestras totales: " + nMuestrasTotales);
+                richInfo.AppendText("\n Muestras totales: " + muestrasTotales);
                 richInfo.AppendText("\n Numero de muestras por pedalada(Sp): " + muestrasPorPedaladas); // La frecuencia con la que se tomaran las pruebas
 
               
@@ -249,7 +240,7 @@ namespace Simulador
                             + "\n % Error combinada: " + calcularPorcentajeError(totalCombinada_real_pError, totalCombinada_ideal_pError)
                             );
 
-                MessageBox.Show("Muestras sin tomar: " + factorCorreccion);
+            //    MessageBox.Show("Muestras sin tomar: " + factorCorreccion);
 
 
             }
@@ -335,12 +326,11 @@ namespace Simulador
                 tomaDatos();//Empezamos tomando los valores
 
 
-              // fuerzaPico = Convert.ToDecimal(editFuerzaPico.Text.ToString());
-              //  cadencia = Convert.ToDecimal(editCadencia.Text.ToString());
+             
                 /****************************** TOMANDO VALORES DE PONTENCIA IDEAL *****************************************/
-
                 //LLamamos a la funcion promedioPotenciaIdeal para que se encargue de sacar el promedioPotenciaIdeal de todos los datos que se encuentran en
                 //el archivo seleccionado anteriormente...
+
                 promedioPotenciaIdeal(); //funcion que ya esta llamando por su cuenta a potenciaReal(), que es la encargada de 
                             //sacar la potencia ideal a los resultados que nos dio promedioPotenciaIdeal() para cada pierna y su combinacion.
 
@@ -362,12 +352,7 @@ namespace Simulador
                 /*******Dibujando en la grafica***********/
                 chartErrores.Series["Combinada"].Points.Clear();
            
-               // chartErrores.ChartAreas[0].AxisY.Interval = 0.50;
-                /*
-                for (int i = fsInicio; i < fsFinal; i += numPuntos) //hasta aqui funciona
-                {
-                    dibujarError(i);
-                }*/
+            
 
                 int inicio = fsInicio;
                 while(inicio <= fsFinal)
@@ -382,12 +367,7 @@ namespace Simulador
         }
         public void dibujarError(int i)
         {
-            /*Si todo funciona tendrian que valer con usar estos valores
-
-                       totalPiernaIzq_real_pError = pTotal_pIzquierda_real;
-                       totalPiernaD_real_pError = pTotal_pDercha_real;
-                       totalCombinada_real_pError = pTotal_pCombinada_real;
-             */
+          
             calculaFuerzasPromediadas(i);
             potenciaReal(totalPiernaIzq_muestreo, totalPiernaDer_muestreo, totalCombinada_muestreo);
 
@@ -404,10 +384,10 @@ namespace Simulador
         {
             //VARIABLES
           // int fs = Convert.ToInt32(fs.Text); // Toma la frecuencia de muestreo de los datos
-            int numMuestras;//para tomar el numero de muestras
-            SLDocument sl = new SLDocument(rutaArchivo);
+          //  int numMuestras;//para tomar el numero de muestras
+         
             int Sp;
-            int contador = 0;
+            int muestras_sobrantes = 0;
             //variables para sumar los valores totales de cada pierna
             decimal totalIzquierda = 0;
             decimal totalDerecha = 0;
@@ -419,58 +399,46 @@ namespace Simulador
               
                     /**************************CALCULO SEGUN NUMERO DE MUESTREO******************************/
 
-                    //While solo para saber la cantidad de datos con las que trabajara mas abajo.
-                    int iRow = 1;
-                    /*
-                     * Aqui se hace el proceso de recorrer el archivo de texto hasta el final, pero esta vez es simplemente para sacar la cantidad
-                     * de muestras que hay, luego al iRow(que contiene el numero de muestras) se le tiene que restar 1 ya que cuando empieza a contar
-                     * lo hace desde uno y esto al final nos daria un valor de muestras erroneo (#muestras +1).
-                     */
-                    while (!string.IsNullOrEmpty(sl.GetCellValueAsString(iRow, 1)))
-                    {
-                        iRow++;
-                    }
-                    numMuestras = iRow - 1;// -1 parra corregir lo mencionado anteriormente...
-
+                   
+                 
                     Sp = (fs * 60) / Convert.ToInt32(editCadencia.Text.ToString()); //Indicamos cada cuanto debe realizar el salto para tomar el valor siguiente.
 
                     //Info del archivo y la frecuencia de muestreo
 
                     //Esta informacion solo se mostrara al dar clic en el boton calcular, de lo contrario es irrelevante.
-                    nMuestrasTotales = numMuestras;
+                  
                     muestrasPorPedaladas = Sp;
 
-
                     //indica cada cuantos pruebas se tomaran:
-                    int muestras_A_tomar = numMuestras / Sp;
+                    int muestras_A_tomar = muestrasTotales / Sp;
 
-                    int iRow2 = 1;
+                   // int iRow2 = 1;
                     nMuestrasCogidas = 0;
 
                 //realiza la busqueda de los datos...
-                while (!string.IsNullOrEmpty(sl.GetCellValueAsString(iRow2, 1)))
-                    {
-                        decimal izquierda = sl.GetCellValueAsDecimal(iRow2, 2);
-                        decimal derecha = sl.GetCellValueAsDecimal(iRow2, 3);
-                        contador++;
-                        iRow2++;
+                for (int i = 1; i <= muestrasTotales; i++)
+                {
+                    //decimal derecha = Convert.ToDecimal(piernaDerecha[i - 1]);
+                  //  decimal izquierda = Convert.ToDecimal(piernaIzquierda[i - 1]);
+                    muestras_sobrantes++;
+                    //    iRow2++;
 
 
-                    //  if (contador == muestras_A_tomar ) //toma no cada valor que indica el sp sino ese valor +1
-                    if (contador == muestras_A_tomar )
+                    //  if (muestras_sobrantes == muestras_A_tomar ) //toma no cada valor que indica el sp sino ese valor +1
+                    if (muestras_sobrantes == muestras_A_tomar )
                         {
                             //Se toma el valor siguiente al sp (cada cuantas muestras nos indicaron que se deben guardar anteriormente).
-                            totalIzquierda += izquierda; //se van sumando a la variable izq y der
-                            totalDerecha += derecha;
+                            totalIzquierda += Convert.ToDecimal(piernaIzquierda[i - 1]); //se van sumando a la variable izq y der
+                           totalDerecha += Convert.ToDecimal(piernaDerecha[i - 1]);
 
-                            contador = 0; // vuelve a cero para reinicial el conteo despues de tomar el valor y volver a tomar cada cierto momento el valor.
+                            muestras_sobrantes = 0; // vuelve a cero para reinicial el conteo despues de tomar el valor y volver a tomar cada cierto momento el valor.
                             nMuestrasCogidas++;
                         }
                     }
 
 
                     //si no es igual a 0 al terminar significa que quedaron pruebas sin tomar
-                    factorCorreccion = (decimal) numMuestras / (decimal) (numMuestras - contador); 
+                    factorCorreccion = (decimal)muestrasTotales / (decimal) (muestrasTotales - muestras_sobrantes); 
                     
 
                     totalPiernaIzq_muestreo = totalIzquierda * factorCorreccion; //valores para luego utilizarlos en la funcion potenciaReal()
@@ -478,7 +446,7 @@ namespace Simulador
 
                 totalPiernaIzq_muestreo = totalPiernaIzq_muestreo / (decimal) nMuestrasCogidas;
                 totalPiernaDer_muestreo = totalPiernaDer_muestreo / (decimal) nMuestrasCogidas;
-                totalCombinada_muestreo = totalIzquierda+totalDerecha / (decimal)nMuestrasCogidas;
+                totalCombinada_muestreo = (totalIzquierda+totalDerecha) / (decimal)nMuestrasCogidas;
 
             }
             catch

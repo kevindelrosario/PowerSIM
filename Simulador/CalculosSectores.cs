@@ -40,7 +40,7 @@ namespace Simulador
         ArrayList piernaIzquierda;
         ArrayList piernaDerecha;
         ArrayList piernaCombinada;
-        private ArrayList velocidad;
+        ArrayList velocidad;
         int muestrasTotales = 0;
 
 
@@ -78,7 +78,7 @@ namespace Simulador
         public decimal factorCorreccion = decimal.Zero;
 
         // Número de muestras del archivo:
-        int numMuestras;
+       // int numMuestras;
 
         //VARIABLES PARA TOMAR LOS VALORES QUE SE UTILIZAN PARA DIBUJAR EL PORCENTAJE DE ERROR
         int nMuestrasCogidas = 0;
@@ -108,10 +108,7 @@ namespace Simulador
             sl = new SLDocument(rutaArchivo);
 
             //Se encarga de guardar los datos del archivo leido en ArrayLists para trabajar con este en todo el codigo.
-            //  recogeDatosExcel(sl);
-
-
-
+        
             leerArchivo = new LeeArchivo(sl);
             extraerInformacion();
 
@@ -132,17 +129,11 @@ namespace Simulador
 
             //tomamos el total de las muestras
             muestrasTotales = leerArchivo.MuestrasTotales;
-
-            /*  for (int i = 1; i < muestrasTotales; i++)
-              {
-                  richSectores.AppendText("+:  " + Convert.ToString(piernaDerecha[i - 1]));
-              }
-            */
-            MessageBox.Show("muestras totales: "+ angulo.Count);
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+           // extraerInformacion();
             //toma los valores de los textView y si no estan vacios llama la funcion promedioPotenciaIdeal para que inicie
             //los calculos.
 
@@ -182,8 +173,7 @@ namespace Simulador
 
             int total = 0;
             int  totali = 0;
-            int e = 0;
-
+           
             //ahora ya no lee el archivo, sino que trabaja con el arrayList de cada uno....
 
             for (int i= 1; i <= muestrasTotales; i++) 
@@ -194,8 +184,8 @@ namespace Simulador
                 //     muestras_sobrantes++; // Toma la cantidad de valores que son para sacar el promedioPotenciaIdeal...
                Totalderecha += Convert.ToDecimal(piernaDerecha[i-1]); //Va sumando los valores encontrados
               //  richSectores.AppendText("\n+:  " + Convert.ToString(piernaDerecha[i - 1]));
-                TotalIzquierda += Convert.ToDecimal(piernaIzquierda[e]);
-                e++;
+                TotalIzquierda += Convert.ToDecimal(piernaIzquierda[i -1]);
+              
                 totali = i;
             }
             total = totali; //para comprobar si funciona (recorre las 7200)
@@ -217,7 +207,7 @@ namespace Simulador
             decimal fpromIzq = decimal.Round((TotalIzquierda / muestrasTotales), 2);//redondea los datos y lo guardan en la variable para enviarlos
             decimal fpromDere = decimal.Round((Totalderecha / muestrasTotales), 2);
             decimal fPromTOTAL = fpromIzq + fpromDere;
-            potenciaIdeal(fpromIzq, fpromDere, fPromTOTAL);//toma los datos y saca la potenciaReal
+            potenciaIdeal(fpromIzq, fpromDere, fPromTOTAL);//toma los datos y saca la potenciaIdeal
         }
 
         public void potenciaIdeal(decimal fPromIzq, decimal fPromD, decimal fPromCombinada)
@@ -264,7 +254,7 @@ namespace Simulador
             //SE TOMAN LOS DATOS Y SE REALIZAN LOS CALCULOS
             //los resultados se muestran en el rich.
 
-            richMuestraReal.AppendText("\n Muestras totales: " + nMuestrasTotales);
+            richMuestraReal.AppendText("\n Muestras totales: " + muestrasTotales);
             richMuestraReal.AppendText("\n Numero de muestras por pedalada(Sp): " + muestrasPorPedaladas); // La frecuencia con la que se tomaran las pruebas
 
             //Muestra los resultados
@@ -293,6 +283,7 @@ namespace Simulador
         {
             //VARIABLES
             // int fs = Convert.ToInt32(fs.Text); // Toma la frecuencia de muestreo de los datos
+          //  int numMuestras;//para tomar el numero de muestras
             SLDocument sl = new SLDocument(rutaArchivo);
             int Sp;
             int muestras_sobrantes = 0;
@@ -303,53 +294,45 @@ namespace Simulador
 
             try
             {
-                int iRow = 1;
-                while (!string.IsNullOrEmpty(sl.GetCellValueAsString(iRow, 1)))
-                {
-                    iRow++;
-                }
-                numMuestras = iRow - 1;// -1 parra corregir lo mencionado anteriormente...
+
 
                 Sp = (fs * 60) / Convert.ToInt32(editCadencia.Text.ToString()); // Sp es el número de muestras por pedalada.
-              
+
                 //Info del archivo y la frecuencia de muestreo
 
-                //Esta informacion solo se mostrara al dar clic en el boton calcular, de lo contrario es irrelevante.
-                nMuestrasTotales = numMuestras;
                 muestrasPorPedaladas = Sp;
 
                 //indica cada cuantos pruebas se tomaran:
-                int muestras_A_tomar = (muestrasTotales/Convert.ToInt32(editNumeroSectores.Text)) / Sp;
+                int muestras_A_tomar = muestrasTotales / Sp;
 
-                int iRow2 = 1;
-
+               // int iRow2 = 1;
                 nMuestrasCogidas = 0;
 
                 //realiza la busqueda de los datos...
-                while (!string.IsNullOrEmpty(sl.GetCellValueAsString(iRow2, 1)))
-                {
-                    decimal izquierda = sl.GetCellValueAsDecimal(iRow2, 2);
-                    decimal derecha = sl.GetCellValueAsDecimal(iRow2, 3);
-                    muestras_sobrantes++;
-                    iRow2++;
+                
+                //ahora ya no lee el archivo, sino que trabaja con el arrayList de cada uno....
 
-                    if (iRow2 % muestras_A_tomar == 0)
+                for (int i = 1; i <= muestrasTotales; i++)
+                {
+                    
+                    decimal derecha = Convert.ToDecimal(piernaDerecha[i - 1]);
+                    decimal izquierda = Convert.ToDecimal(piernaIzquierda[i - 1]);
+                    muestras_sobrantes++;
+                    //  if (muestras_sobrantes == muestras_A_tomar ) //toma no cada valor que indica el sp sino ese valor +1
+                    if (muestras_sobrantes == muestras_A_tomar)
                     {
                         //Se toma el valor siguiente al sp (cada cuantas muestras nos indicaron que se deben guardar anteriormente).
                         totalIzquierda += izquierda; //se van sumando a la variable izq y der
                         totalDerecha += derecha;
 
-                        //contador para saber cuantas muestras sobraron
                         muestras_sobrantes = 0; // vuelve a cero para reinicial el conteo despues de tomar el valor y volver a tomar cada cierto momento el valor.
                         nMuestrasCogidas++;
                     }
-
-                 
-
+                   
                 }
-
+            
                 //si no es igual a 0 al terminar significa que quedaron pruebas sin tomar
-                factorCorreccion = (decimal)numMuestras / (decimal)(numMuestras - muestras_sobrantes);
+                factorCorreccion = (decimal)muestrasTotales / (decimal)(muestrasTotales - muestras_sobrantes);
 
                 totalPiernaIzq_muestreo = totalIzquierda * factorCorreccion; //valores para luego utilizarlos en la funcion potenciaReal()
                 totalPiernaDer_muestreo = totalDerecha * factorCorreccion;
@@ -618,41 +601,9 @@ namespace Simulador
             return ok;
 
         }
-
-        /// <summary>
-        /// DIVIDIR MUESTRAS
-        /// Se encarga de indicar el # de muestras con la que se debe trabajarse en cada sector, tomando el valor que nos indica el usuario.
-        /// se lee el numero de muestras y al terminar el este valor se divide entre los sectores que quiere el usuario.
-        /// Este valor de retorno lo utilizamos luego a la hora de ir contando y sumando las pruebas en cada sector tomando como referencia la cantidad que nos 
-        /// indico esta funcion.
-        /// </summary>
-        /// <param name="sectores">sectores en los que se debe dividir la circunferencia</param>
-        /// <returns>Total de pruebas por sectorCom</returns>
+      
         public int dividirMuestras(int sectores)
         {
-            /*
-             * NOTA PARA MI:
-             * aqui tomamos el numero de sectores que nos indique y dividimos las pruebas en ese numero, 
-            luego se debe trabajar con ellas por separado y el resultado de estas se ingresara en un array
-            para luego segun lo que se indique por pantalla se sumen los sectores que quieran, esto ya 
-            trabajando con los valores en las posiciones que tenga el array. el array se debe incrementar segun
-            sea necesario.
-
-            De primeras usaria un arrayList para que se agregue todo lo necesario.
-            */
-
-
-            SLDocument sl = new SLDocument(rutaArchivo);
-            // Se realiza una lectura del archivo con las muestras para tomar la cantidad total.
-            int iRow = 1;
-            while (!string.IsNullOrEmpty(sl.GetCellValueAsString(iRow, 1)))
-            {
-                iRow++;
-            }
-
-            //int numMuestras = iRow - 1; //Al resultado final se le debe restar 1 porque cuando empezo el conteo era necesario que empezara en 1. 
-                                        //por lo que la cantidad total final si fueran 7200 al empezar en 1 serian 7201. restando 1 se obtiene el valor correcto.
-
             return  muestrasTotales / sectores;
 
         }

@@ -1,5 +1,7 @@
-﻿using SpreadsheetLight;
+﻿using Simulador.Clases;
+using SpreadsheetLight;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,28 +15,68 @@ namespace Simulador
 {
     public partial class Multigrafico : Form
     {
+
+        //DATOS DE LA CLASE LeeArchivo:
+        LeeArchivo leerArchivo;
+        ArrayList angulo;
+        ArrayList piernaIzquierda;
+        ArrayList piernaDerecha;
+        ArrayList piernaCombinada;
+        ArrayList velocidad;
+        int muestrasTotales = 0;
+
+        // ruta 
+        SLDocument sl;
+
+
         public string rutaArchivo = string.Empty; 
         //La ruta obtenida en el Form principal entra aqui
         public Multigrafico(Inicio.Ruta ruta)
         {
             InitializeComponent();
-           
+
             //se inicializa el chart con 0 valores cada que se abre esta pantalla
-                chartDerecha.Series["Derecha"].Points.AddXY(0, 0);
-                chartIzquierda.Series["Izquierda"].Points.AddXY(0, 0);
+            chartDerecha.Series["Derecha"].Points.AddXY(0,0);
+                chartIzquierda.Series["Izquierda"].Points.AddXY(0,0);
                 chartVelocidad.Series["Velocidad"].Points.AddXY(0, 0);
                 chartCombinacion.Series["Combinacion"].Points.AddXY(0, 0);
                 rutaArchivo = ruta.ruta;
                
                 limpiaChart();
-                //se llama cada funcion para cada grafica.
-                derecho(rutaArchivo);
+
+            // Indica el numero de pruebas que se debe tomar por sectores
+            sl = new SLDocument(rutaArchivo);
+
+            leerArchivo = new LeeArchivo(sl);
+            extraerInformacion();
+
+
+            //se llama cada funcion para cada grafica.
+            derecho(rutaArchivo);
                 combinacion(rutaArchivo);
                 izquierda(rutaArchivo);
-                velocidad(rutaArchivo);
+                velocidadG(rutaArchivo);
             
 
         }
+
+            /// <summary>
+        /// extraerInformacion
+        /// Trae los datos obtenidos de la clase LeeArchivo
+        /// </summary>
+        public void extraerInformacion()
+        {
+            //rellena los arrayList con cada campo
+            angulo = leerArchivo.Angulo;
+            piernaIzquierda = leerArchivo.PiernaIzquierda;
+            piernaDerecha = leerArchivo.PiernaDerecha;
+            piernaCombinada = leerArchivo.PiernaCombinada;
+            velocidad = leerArchivo.Velocidad;
+
+            //tomamos el total de las muestras
+            muestrasTotales = leerArchivo.MuestrasTotales;
+        }
+
 
         public void derecho(string rutaArchivo)
         {
@@ -78,7 +120,7 @@ namespace Simulador
             }
         }
 
-        public void velocidad(string rutaArchivo)
+        public void velocidadG(string rutaArchivo)
         {
             SLDocument sl = new SLDocument(rutaArchivo);
 

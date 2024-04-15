@@ -36,7 +36,7 @@ namespace Simulador.Clases
 
         /// <summary>
         /// LeerArchivo
-        /// toma la ruta del archivo y extrae los datos encontrados: angulo, pierna Izquierda, pierna Derecha y velocidad.
+        /// toma la ruta del archivo y extrae los datos encontrados: angulo, pierna Izquierda, pierna Derecha y velocidadG.
         /// </summary>
         /// <param name="sl">Ruta del archivo</param>
         public LeeArchivo( SLDocument sl) { 
