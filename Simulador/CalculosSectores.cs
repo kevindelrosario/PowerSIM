@@ -414,6 +414,8 @@ namespace Simulador
 
             int n_muestrasSector = 0;
 
+
+
             while (!string.IsNullOrEmpty(sl.GetCellValueAsString(iRow, 1)))
             {
                 // Vamos guardando las muestras válidfas hasta completar el sector:
@@ -842,8 +844,6 @@ namespace Simulador
             }
             return ok;
         }
-
-
 
         }
 }

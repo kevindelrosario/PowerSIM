@@ -52,7 +52,8 @@ namespace Simulador
 
 
             //se llama cada funcion para cada grafica.
-            derecho(rutaArchivo);
+            // derecho(rutaArchivo);
+            derecho2();
                 combinacion(rutaArchivo);
                 izquierda(rutaArchivo);
                 velocidadG(rutaArchivo);
@@ -92,7 +93,17 @@ namespace Simulador
                 iRow++;
             }
         }
+        public void derecho2()
+        {
 
+       //no se porque no funciona
+            for (int i = 1; i <= muestrasTotales; i++)
+            {
+               
+                chartDerecha.Series["Derecha"].Points.AddXY(Convert.ToDecimal(angulo[i-1]), Convert.ToDecimal(piernaDerecha[i - 1]) ) ;
+              
+            }
+        }
         public void combinacion(string rutaArchivo)
         {
             SLDocument sl = new SLDocument(rutaArchivo);
