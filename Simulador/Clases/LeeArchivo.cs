@@ -16,21 +16,22 @@ namespace Simulador.Clases
         private int muestrasTotales = 0; //Numero total de muestras
 
         //CAMPOS DEL EXCEL
-        private ArrayList angulo;
-        private ArrayList piernaIzquierda;
-        private ArrayList piernaDerecha;
-        private ArrayList velocidad;
-        private ArrayList piernaCombinada;
+        private List <decimal> angulo;
+        private List<decimal> piernaIzquierda;
+        private List<decimal> piernaDerecha;
+        private List<decimal> velocidad;
+        private List<decimal> piernaCombinada;
 
         //Para recorrer el archivo
         int iRow = 1;
 
-        public ArrayList Angulo { get => angulo; set => angulo = value; }
-        public ArrayList PiernaIzquierda { get => piernaIzquierda; set => piernaIzquierda = value; }
-        public ArrayList PiernaDerecha { get => piernaDerecha; set => piernaDerecha = value; }
-        public ArrayList Velocidad { get => velocidad; set => velocidad = value; }
-        public ArrayList PiernaCombinada { get => piernaCombinada; set => piernaCombinada = value; }
+        
         public int MuestrasTotales { get => muestrasTotales; set => muestrasTotales = value; }
+        public List<decimal> Angulo { get => angulo; set => angulo = value; }
+        public List<decimal> PiernaIzquierda { get => piernaIzquierda; set => piernaIzquierda = value; }
+        public List<decimal> PiernaDerecha { get => piernaDerecha; set => piernaDerecha = value; }
+        public List<decimal> Velocidad { get => velocidad; set => velocidad = value; }
+        public List<decimal> PiernaCombinada { get => piernaCombinada; set => piernaCombinada = value; }
 
 
 
@@ -39,9 +40,13 @@ namespace Simulador.Clases
         /// toma la ruta del archivo y extrae los datos encontrados: angulo, pierna Izquierda, pierna Derecha y velocidadG.
         /// </summary>
         /// <param name="sl">Ruta del archivo</param>
-        public LeeArchivo( SLDocument sl) { 
-        
-        this.sl = sl;
+        public LeeArchivo( SLDocument sl) {
+            angulo = new List<decimal>();
+            PiernaIzquierda = new List<decimal>();
+            PiernaDerecha = new List<decimal>();
+            PiernaCombinada = new List<decimal>();
+            Velocidad = new List<decimal>();
+            this.sl = sl;
         LEER_ARCHIVO(); //se encarga de leer el archivo y sacar los datos
 
         }   
@@ -52,21 +57,21 @@ namespace Simulador.Clases
 
         public void LEER_ARCHIVO()
         {
-            angulo = new ArrayList();
-            PiernaIzquierda = new ArrayList();
-            PiernaDerecha = new ArrayList();
-            PiernaCombinada = new ArrayList();
-            velocidad = new ArrayList();
+            
 
             while (!string.IsNullOrEmpty(sl.GetCellValueAsString(iRow, 1)))
             {
                 //Se van guardando los datos hasta que el muestras_sobrantes llegue al numero de pruebas que se debe ingresar por sectorCom
+                decimal Angulo = sl.GetCellValueAsDecimal(iRow, 1);
+                decimal Izquierda = sl.GetCellValueAsDecimal(iRow, 2);
+                decimal derecha = sl.GetCellValueAsDecimal(iRow, 3);
+                decimal velocidad = sl.GetCellValueAsDecimal(iRow, 4);
 
-                angulo.Add(sl.GetCellValueAsString(iRow, 1));
-                PiernaIzquierda.Add(sl.GetCellValueAsDecimal(iRow, 2));
-                PiernaDerecha.Add(sl.GetCellValueAsDecimal(iRow, 3));
-                PiernaCombinada.Add(sl.GetCellValueAsDecimal(iRow, 2) + sl.GetCellValueAsDecimal(iRow, 3));
-                velocidad.Add(sl.GetCellValueAsString(iRow, 4));
+                angulo.Add(Angulo);
+                PiernaIzquierda.Add(Izquierda);
+                PiernaDerecha.Add(derecha);
+                PiernaCombinada.Add(Izquierda + derecha);
+                Velocidad.Add(velocidad);
                 iRow++;
             }
             this.muestrasTotales = angulo.Count;

@@ -36,11 +36,11 @@ namespace Simulador
         public decimal totalPiernaDer = decimal.Zero;
         public decimal totalCombinada = decimal.Zero;
 
-        ArrayList angulo;
-        ArrayList piernaIzquierda;
-        ArrayList piernaDerecha;
-        ArrayList piernaCombinada;
-        ArrayList velocidad;
+        List<decimal> angulo;
+        List<decimal> piernaIzquierda;
+        List<decimal> piernaDerecha;
+        List<decimal> piernaCombinada;
+        List<decimal> velocidad;
         int muestrasTotales = 0;
 
 
@@ -699,9 +699,9 @@ namespace Simulador
 
         public void recogeDatos(SLDocument sl)
         {
-            piernaIzquierda = new ArrayList();
-            piernaDerecha = new ArrayList();
-            piernaCombinada = new ArrayList();
+            piernaIzquierda = new List<decimal>();
+            piernaDerecha = new List<decimal>();
+            piernaCombinada = new List<decimal>();
 
             while (!string.IsNullOrEmpty(sl.GetCellValueAsString(iRow, 1)))
             {

@@ -1,4 +1,5 @@
-﻿using SpreadsheetLight;
+﻿using Simulador.Clases;
+using SpreadsheetLight;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,7 +17,20 @@ namespace Simulador
    
     public partial class GraficaUnica : Form
     {
-       public string rutaArchivo = string.Empty;// Se inicializa la ruta en null para realizar las comprobaciones luego
+        //DATOS DE LA CLASE LeeArchivo:
+        LeeArchivo leerArchivo;
+        List<decimal> angulo;
+        List<decimal> piernaDerecha;
+        List<decimal> piernaIzquierda;
+        List<decimal> piernaCombinada;
+        List<decimal> velocidad;
+        int muestrasTotales = 0;
+
+        // ruta 
+        SLDocument sl;
+
+        int i = 1;
+        public string rutaArchivo = string.Empty;// Se inicializa la ruta en null para realizar las comprobaciones luego
         public GraficaUnica(Inicio.Ruta ruta)
         {
             InitializeComponent();
@@ -27,8 +41,23 @@ namespace Simulador
            chart1.Series["Combinada"].Points.AddXY(0, 0);
            rutaArchivo = ruta.ruta;// Se toma la ruta enviada del form inicial
 
-        }
+            sl = new SLDocument(rutaArchivo);
 
+            leerArchivo = new LeeArchivo(sl);
+            extraerInformacion();
+        }
+        public void extraerInformacion()
+        {
+            //rellena los arrayList con cada campo
+            angulo = leerArchivo.Angulo;
+            piernaIzquierda = leerArchivo.PiernaIzquierda;
+            piernaDerecha = leerArchivo.PiernaDerecha;
+            piernaCombinada = leerArchivo.PiernaCombinada;
+            velocidad = leerArchivo.Velocidad;
+
+            //tomamos el total de las muestras
+            muestrasTotales = leerArchivo.MuestrasTotales;
+        }
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -51,7 +80,7 @@ namespace Simulador
                 }
                 if (checkVelocidad.Checked == true)
                 {
-                    velocidad(rutaArchivo);
+                    velocidadG(rutaArchivo);
                 }
             }
             catch
@@ -70,66 +99,41 @@ namespace Simulador
 
         public void derecho(string rutaArchivo)
         {
-            //se crea un objeto SLDocument que toma la ruta del archivo a leer
-            SLDocument sl = new SLDocument(rutaArchivo);
-            int iRow = 1; //para indicar desde donde empezar a leer
-
-            //recorre y toma los valores del archivo excel hasta no encontrar ningun valor
-            while (!string.IsNullOrEmpty(sl.GetCellValueAsString(iRow, 1))) 
+            i = 1;
+            while (i <= angulo.Count)
             {
-                decimal angulo = sl.GetCellValueAsDecimal(iRow, 1); //toma los valores de la columna 1 (angulo)
-                decimal derecha = sl.GetCellValueAsDecimal(iRow, 3);//toma los valores de la columna 3 (derecha)
-                chart1.Series["Derecha"].Points.AddXY(angulo,derecha); //va dibujando en la grafica los valores
-                iRow++;//se suma un valor al iRow para ir indicando la posicion de la fila
-
+                chart1.Series["Derecha"].Points.AddXY(angulo[i - 1], piernaDerecha[i - 1]);
+                i++;
             }
         }
 
         public void combinacion(string rutaArchivo)
         {
-            SLDocument sl = new SLDocument(rutaArchivo);
-            int iRow = 1;
-            while (!string.IsNullOrEmpty(sl.GetCellValueAsString(iRow, 1)))
+            i = 1;
+            while (i <= angulo.Count)
             {
-                decimal angulo = sl.GetCellValueAsDecimal(iRow, 1);//toma los valores de la columna 1 (angulo)
-                //toma los valores de la columna 2y 3 para sumarlos y sacar la suma de ambas que sera la combinada
-                chart1.Series["Combinada"].Points.AddXY(angulo, sl.GetCellValueAsDecimal(iRow, 2) + sl.GetCellValueAsDecimal(iRow, 3));
-                iRow++; 
-
+                chart1.Series["Combinada"].Points.AddXY(angulo[i - 1], piernaCombinada[i - 1]);
+                i++;
             }
         }
 
         public void izquierda(string rutaArchivo)
         {
-            SLDocument sl = new SLDocument(rutaArchivo);
-
-            int iRow = 1;
-            while (!string.IsNullOrEmpty(sl.GetCellValueAsString(iRow, 1)))
+            i = 1;
+            while (i <= angulo.Count)
             {
-                decimal angulo = sl.GetCellValueAsDecimal(iRow, 1);//toma los valores de la columna 1 (angulo)
-                decimal izquierda = sl.GetCellValueAsDecimal(iRow, 2);//toma los valores de la columna 2 (Izquierda)
-
-               
-                         chart1.Series["Izquierda"].Points.AddXY(angulo, izquierda);
-                  
-              
-                iRow++;
-
+                chart1.Series["Izquierda"].Points.AddXY(angulo[i - 1], piernaIzquierda[i - 1]);
+                i++;
             }
         }
 
-        public void velocidad(string rutaArchivo)
+        public void velocidadG(string rutaArchivo)
         {
-            SLDocument sl = new SLDocument(rutaArchivo);
-
-            int iRow = 1;
-            while (!string.IsNullOrEmpty(sl.GetCellValueAsString(iRow, 1)))
+            i = 1;
+            while (i <= angulo.Count)
             {
-                decimal angulo = sl.GetCellValueAsDecimal(iRow, 1);
-                decimal velocidad = sl.GetCellValueAsDecimal(iRow, 4);
-                chart1.Series["Velocidad"].Points.AddXY(angulo, velocidad);
-                iRow++;
-
+                chart1.Series["Velocidad"].Points.AddXY(angulo[i - 1], velocidad[i - 1]);
+                i++;
             }
         }
 

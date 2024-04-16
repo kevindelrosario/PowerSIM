@@ -1,4 +1,5 @@
-﻿using Simulador.Clases;
+﻿using DocumentFormat.OpenXml.Spreadsheet;
+using Simulador.Clases;
 using SpreadsheetLight;
 using System;
 using System.Collections;
@@ -18,16 +19,17 @@ namespace Simulador
 
         //DATOS DE LA CLASE LeeArchivo:
         LeeArchivo leerArchivo;
-        ArrayList angulo;
-        ArrayList piernaIzquierda;
-        ArrayList piernaDerecha;
-        ArrayList piernaCombinada;
-        ArrayList velocidad;
+        List<decimal> angulo;
+        List<decimal> piernaDerecha;
+        List<decimal> piernaIzquierda;
+        List<decimal> piernaCombinada;
+        List<decimal> velocidad;
         int muestrasTotales = 0;
 
         // ruta 
         SLDocument sl;
 
+        int i = 1;
 
         public string rutaArchivo = string.Empty; 
         //La ruta obtenida en el Form principal entra aqui
@@ -47,13 +49,13 @@ namespace Simulador
             // Indica el numero de pruebas que se debe tomar por sectores
             sl = new SLDocument(rutaArchivo);
 
-            leerArchivo = new LeeArchivo(sl);
+           leerArchivo = new LeeArchivo(sl);
             extraerInformacion();
 
 
             //se llama cada funcion para cada grafica.
             // derecho(rutaArchivo);
-            derecho2();
+                derecha();
                 combinacion(rutaArchivo);
                 izquierda(rutaArchivo);
                 velocidadG(rutaArchivo);
@@ -73,77 +75,51 @@ namespace Simulador
             piernaDerecha = leerArchivo.PiernaDerecha;
             piernaCombinada = leerArchivo.PiernaCombinada;
             velocidad = leerArchivo.Velocidad;
-
+        
             //tomamos el total de las muestras
             muestrasTotales = leerArchivo.MuestrasTotales;
         }
 
-
-        public void derecho(string rutaArchivo)
+        public void derecha()
         {
-            //se lee el archivo y se dibuja la grafica
-            SLDocument sl = new SLDocument(rutaArchivo);
-            int iRow = 1;
-
-            while (!string.IsNullOrEmpty(sl.GetCellValueAsString(iRow, 1)))
+            i = 1;
+            while ( i <= angulo.Count)
             {
-                decimal angulo = sl.GetCellValueAsDecimal(iRow, 1);
-                decimal derecha = sl.GetCellValueAsDecimal(iRow, 3);
-                chartDerecha.Series["Derecha"].Points.AddXY(angulo, derecha);
-                iRow++;
+                chartDerecha.Series[0].Points.AddXY(angulo[i - 1], piernaDerecha[i - 1]);// rellena el chart
+                //le resta un valor para que no hayan fallos por la longitud de la i 
+                i++;
             }
-        }
-        public void derecho2()
-        {
-
-       //no se porque no funciona
-            for (int i = 1; i <= muestrasTotales; i++)
-            {
-               
-                chartDerecha.Series["Derecha"].Points.AddXY(Convert.ToDecimal(angulo[i-1]), Convert.ToDecimal(piernaDerecha[i - 1]) ) ;
-              
-            }
+           
         }
         public void combinacion(string rutaArchivo)
         {
-            SLDocument sl = new SLDocument(rutaArchivo);
-            int iRow = 1;
-            while (!string.IsNullOrEmpty(sl.GetCellValueAsString(iRow, 1)))
+            i = 1;
+            while (i <= angulo.Count)
             {
-                decimal angulo = sl.GetCellValueAsDecimal(iRow, 1);
-                chartCombinacion.Series["Combinacion"].Points.AddXY(angulo, sl.GetCellValueAsDecimal(iRow, 2) + sl.GetCellValueAsDecimal(iRow, 3));
-                iRow++;
+                chartCombinacion.Series[0].Points.AddXY(angulo[i - 1], piernaCombinada[i - 1]);
+                i++;
             }
         }
 
         public void izquierda(string rutaArchivo)
         {
-            SLDocument sl = new SLDocument(rutaArchivo);
-
-            int iRow = 1;
-            while (!string.IsNullOrEmpty(sl.GetCellValueAsString(iRow, 1)))
+            i = 1;
+            while (i <= angulo.Count)
             {
-                decimal angulo = sl.GetCellValueAsDecimal(iRow, 1);
-                decimal izquierda = sl.GetCellValueAsDecimal(iRow, 2);
-                chartIzquierda.Series["Izquierda"].Points.AddXY(angulo, izquierda);
-                iRow++;
-
+                chartIzquierda.Series[0].Points.AddXY(angulo[i - 1], piernaIzquierda[i - 1]);
+                i++;
             }
         }
 
         public void velocidadG(string rutaArchivo)
         {
-            SLDocument sl = new SLDocument(rutaArchivo);
-
-            int iRow = 1;
-            while (!string.IsNullOrEmpty(sl.GetCellValueAsString(iRow, 1)))
+            i = 1;
+            while (i <= angulo.Count)
             {
-                decimal angulo = sl.GetCellValueAsDecimal(iRow, 1);
-                decimal velocidad = sl.GetCellValueAsDecimal(iRow, 4);
-                chartVelocidad.Series["Velocidad"].Points.AddXY(angulo, velocidad);
-                iRow++;
-
+                chartVelocidad.Series[0].Points.AddXY(angulo[i - 1], velocidad[i - 1]);
+                i++;
             }
+
         }
         public void limpiaChart()
         {

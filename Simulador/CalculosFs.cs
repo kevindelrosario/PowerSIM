@@ -2,6 +2,7 @@
 using SpreadsheetLight;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Windows.Forms;
 namespace Simulador
 {
@@ -21,11 +22,11 @@ namespace Simulador
         //ARRAYLISTS para guardar los campos:
         LeeArchivo leerArchivo; //llama la clase
 
-        ArrayList angulo;
-        ArrayList piernaIzquierda;
-        ArrayList piernaDerecha;
-        ArrayList piernaCombinada;
-        ArrayList velocidad;
+        List<decimal> angulo;
+        List<decimal> piernaIzquierda;
+        List<decimal> piernaDerecha;
+        List<decimal> piernaCombinada;
+        List<decimal> velocidad;
         int muestrasTotales = 0; //para saber el total de muestras en el archivo:
       
 
@@ -244,8 +245,6 @@ namespace Simulador
 
 
             }
-
-
 
 
         }
