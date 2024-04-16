@@ -111,7 +111,6 @@ namespace Simulador
         
             leerArchivo = new LeeArchivo(sl);
             extraerInformacion();
-
         }
 
         /// <summary>

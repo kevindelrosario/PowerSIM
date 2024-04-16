@@ -18,22 +18,20 @@ namespace Simulador
     {
 
         //DATOS DE LA CLASE LeeArchivo:
-        LeeArchivo leerArchivo;
         List<decimal> angulo;
         List<decimal> piernaDerecha;
         List<decimal> piernaIzquierda;
         List<decimal> piernaCombinada;
         List<decimal> velocidad;
-        int muestrasTotales = 0;
+     
 
-        // ruta 
-        SLDocument sl;
+     
 
         int i = 1;
 
         public string rutaArchivo = string.Empty; 
         //La ruta obtenida en el Form principal entra aqui
-        public Multigrafico(Inicio.Ruta ruta)
+        public Multigrafico(Inicio.Ruta ruta,List<decimal> anguloI, List<decimal> PiernaDerechaI, List<decimal> piernaIzquierdaI, List<decimal> piernaCombinadaI, List<decimal> velocidadI)
         {
             InitializeComponent();
 
@@ -43,41 +41,36 @@ namespace Simulador
                 chartVelocidad.Series["Velocidad"].Points.AddXY(0, 0);
                 chartCombinacion.Series["Combinacion"].Points.AddXY(0, 0);
                 rutaArchivo = ruta.ruta;
-               
+                
                 limpiaChart();
 
-            // Indica el numero de pruebas que se debe tomar por sectores
-            sl = new SLDocument(rutaArchivo);
-
-           leerArchivo = new LeeArchivo(sl);
-            extraerInformacion();
+            extraerInformacion(anguloI, PiernaDerechaI, piernaIzquierdaI, piernaCombinadaI, velocidadI);
 
 
-            //se llama cada funcion para cada grafica.
-            // derecho(rutaArchivo);
+            
                 derecha();
-                combinacion(rutaArchivo);
-                izquierda(rutaArchivo);
-                velocidadG(rutaArchivo);
+                combinacion();
+                izquierda();
+                velocidadG();
             
 
         }
 
             /// <summary>
         /// extraerInformacion
-        /// Trae los datos obtenidos de la clase LeeArchivo
+       //recoge los datos enviados por la clase inicio
         /// </summary>
-        public void extraerInformacion()
+        public void extraerInformacion(List<decimal>anguloI, List<decimal> piernaDerechaI, List<decimal>PiernaIzquierdaI, List<decimal>piernaCombinadaI, List<decimal>velocidadI)
         {
             //rellena los arrayList con cada campo
-            angulo = leerArchivo.Angulo;
-            piernaIzquierda = leerArchivo.PiernaIzquierda;
-            piernaDerecha = leerArchivo.PiernaDerecha;
-            piernaCombinada = leerArchivo.PiernaCombinada;
-            velocidad = leerArchivo.Velocidad;
+            angulo = anguloI;
+            piernaIzquierda = PiernaIzquierdaI;
+            piernaDerecha = piernaDerechaI;
+            piernaCombinada = piernaCombinadaI;
+            velocidad = velocidadI;
         
             //tomamos el total de las muestras
-            muestrasTotales = leerArchivo.MuestrasTotales;
+           // muestrasTotales = leerArchivo.MuestrasTotales;
         }
 
         public void derecha()
@@ -91,7 +84,7 @@ namespace Simulador
             }
            
         }
-        public void combinacion(string rutaArchivo)
+        public void combinacion()
         {
             i = 1;
             while (i <= angulo.Count)
@@ -101,7 +94,7 @@ namespace Simulador
             }
         }
 
-        public void izquierda(string rutaArchivo)
+        public void izquierda()
         {
             i = 1;
             while (i <= angulo.Count)
@@ -111,7 +104,7 @@ namespace Simulador
             }
         }
 
-        public void velocidadG(string rutaArchivo)
+        public void velocidadG()
         {
             i = 1;
             while (i <= angulo.Count)

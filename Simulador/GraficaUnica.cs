@@ -18,20 +18,20 @@ namespace Simulador
     public partial class GraficaUnica : Form
     {
         //DATOS DE LA CLASE LeeArchivo:
-        LeeArchivo leerArchivo;
+      //  LeeArchivo leerArchivo;
         List<decimal> angulo;
         List<decimal> piernaDerecha;
         List<decimal> piernaIzquierda;
         List<decimal> piernaCombinada;
         List<decimal> velocidad;
-        int muestrasTotales = 0;
+      //  int muestrasTotales = 0;
 
         // ruta 
-        SLDocument sl;
+       // SLDocument sl;
 
         int i = 1;
         public string rutaArchivo = string.Empty;// Se inicializa la ruta en null para realizar las comprobaciones luego
-        public GraficaUnica(Inicio.Ruta ruta)
+        public GraficaUnica(Inicio.Ruta ruta, List<decimal> anguloI, List<decimal> PiernaDerechaI, List<decimal> piernaIzquierdaI, List<decimal> piernaCombinadaI, List<decimal> velocidadI)
         {
             InitializeComponent();
            //Se inicializan los valores del chart a 0
@@ -41,22 +41,27 @@ namespace Simulador
            chart1.Series["Combinada"].Points.AddXY(0, 0);
            rutaArchivo = ruta.ruta;// Se toma la ruta enviada del form inicial
 
-            sl = new SLDocument(rutaArchivo);
+           // sl = new SLDocument(rutaArchivo);
 
-            leerArchivo = new LeeArchivo(sl);
-            extraerInformacion();
+            //leerArchivo = new LeeArchivo(sl);
+            extraerInformacion(anguloI, PiernaDerechaI, piernaIzquierdaI, piernaCombinadaI, velocidadI);
         }
-        public void extraerInformacion()
+
+        /// <summary>
+        /// extraerInformacion
+        ///recoge los datos enviados por la clase inicio
+        /// </summary>
+        public void extraerInformacion(List<decimal> anguloI, List<decimal> piernaDerechaI, List<decimal> PiernaIzquierdaI, List<decimal> piernaCombinadaI, List<decimal> velocidadI)
         {
             //rellena los arrayList con cada campo
-            angulo = leerArchivo.Angulo;
-            piernaIzquierda = leerArchivo.PiernaIzquierda;
-            piernaDerecha = leerArchivo.PiernaDerecha;
-            piernaCombinada = leerArchivo.PiernaCombinada;
-            velocidad = leerArchivo.Velocidad;
+            angulo = anguloI;
+            piernaIzquierda = PiernaIzquierdaI;
+            piernaDerecha = piernaDerechaI;
+            piernaCombinada = piernaCombinadaI;
+            velocidad = velocidadI;
 
             //tomamos el total de las muestras
-            muestrasTotales = leerArchivo.MuestrasTotales;
+         //   muestrasTotales = leerArchivo.MuestrasTotales;
         }
 
         private void button1_Click(object sender, EventArgs e)

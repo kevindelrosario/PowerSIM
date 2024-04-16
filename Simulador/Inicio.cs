@@ -12,6 +12,7 @@ using SpreadsheetLight;
 using System.Windows;
 using DocumentFormat.OpenXml.Bibliography;
 using static Simulador.Inicio;
+using Simulador.Clases;
 
 namespace Simulador
 {
@@ -20,7 +21,20 @@ namespace Simulador
     public partial class Inicio : Form
     {
 
-       
+        //DATOS DE LA CLASE LeeArchivo:
+        //Aqui se rellenaran los datos que luego se enviaran a las demas pestañas, esto para corregir que se congele por un instante el software.
+        LeeArchivo leerArchivo;
+        List<decimal> angulo;
+        List<decimal> piernaDerecha;
+        List<decimal> piernaIzquierda;
+        List<decimal> piernaCombinada;
+        List<decimal> velocidad;
+        int muestrasTotales = 0;
+
+        // ruta 
+        SLDocument sl;
+
+
         public Inicio()
         {
             InitializeComponent();
@@ -48,8 +62,14 @@ namespace Simulador
             {
                 rutaArchivo = openFileDialog.FileName;
                 editRutaArchivo1.Text = rutaArchivo; // Igualado al editRutaArchibo para que se muestre la ruta por pantalla.
-             
-            
+
+
+                //TOMA TODA LA INFORMACION PARA PODER ENVIARLA A TODAS LAS PESTAÑAS...
+                sl = new SLDocument(rutaArchivo);
+                leerArchivo = new LeeArchivo(sl);
+                extraerInformacion();//rellenamos
+
+
             }
         }
 
@@ -65,8 +85,19 @@ namespace Simulador
         /***************************************FUNCIONES DE DIBUJADO Y LECTURA****************************************************/
         /**************************************************************************************************************************/
 
+        public void extraerInformacion()
+        {
+            //rellena los arrayList con cada campo
+            angulo = leerArchivo.Angulo;
+            piernaIzquierda = leerArchivo.PiernaIzquierda;
+            piernaDerecha = leerArchivo.PiernaDerecha;
+            piernaCombinada = leerArchivo.PiernaCombinada;
+            velocidad = leerArchivo.Velocidad;
 
-   
+            //tomamos el total de las muestras
+            muestrasTotales = leerArchivo.MuestrasTotales;
+        }
+
 
         /*****LLAMADAS A LAS OTRAS VENTANAS******/
         private void btUnico_Click(object sender, EventArgs e)
@@ -80,7 +111,7 @@ namespace Simulador
                 ruta.ruta = editRutaArchivo1.Text; //toma el valor que contiene el txt txtRutaArchivo1
               
                     //Si ya contiene la ruta de un archivo podra entrar al Form y ver los graficos
-                    openChildForm(new GraficaUnica(ruta));
+                    openChildForm(new GraficaUnica(ruta, angulo, piernaDerecha, piernaIzquierda, piernaCombinada, velocidad));
 
             }
            
@@ -96,7 +127,7 @@ namespace Simulador
             {
                 Ruta ruta;
                 ruta.ruta = editRutaArchivo1.Text;
-                openChildForm(new Multigrafico(ruta));
+                openChildForm(new Multigrafico(ruta,angulo, piernaDerecha,piernaIzquierda,piernaCombinada,velocidad));
             }
         }
 
