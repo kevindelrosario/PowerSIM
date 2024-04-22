@@ -30,9 +30,10 @@
         {
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.Button btRepresentarG;
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.Button button1;
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -58,6 +59,7 @@
             this.errorCampoVacio = new System.Windows.Forms.ErrorProvider(this.components);
             this.timerGraficaError = new System.Windows.Forms.Timer(this.components);
             btRepresentarG = new System.Windows.Forms.Button();
+            button1 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.barra)).BeginInit();
             this.panel2.SuspendLayout();
@@ -233,6 +235,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel2.BackColor = System.Drawing.Color.Gray;
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel2.Controls.Add(button1);
             this.panel2.Controls.Add(this.label8);
             this.panel2.Controls.Add(this.label7);
             this.panel2.Controls.Add(this.label6);
@@ -329,29 +332,29 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.chartErrores.BackColor = System.Drawing.Color.Snow;
             this.chartErrores.BorderlineColor = System.Drawing.Color.Black;
-            chartArea1.AxisX.InterlacedColor = System.Drawing.Color.Black;
-            chartArea1.AxisX.IntervalAutoMode = System.Windows.Forms.DataVisualization.Charting.IntervalAutoMode.VariableCount;
-            chartArea1.BackColor = System.Drawing.Color.Silver;
-            chartArea1.BackSecondaryColor = System.Drawing.Color.White;
-            chartArea1.BorderWidth = 2;
-            chartArea1.CursorX.LineColor = System.Drawing.Color.Black;
-            chartArea1.CursorX.SelectionColor = System.Drawing.Color.Gray;
-            chartArea1.Name = "ChartArea1";
-            this.chartErrores.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chartErrores.Legends.Add(legend1);
+            chartArea3.AxisX.InterlacedColor = System.Drawing.Color.Black;
+            chartArea3.AxisX.IntervalAutoMode = System.Windows.Forms.DataVisualization.Charting.IntervalAutoMode.VariableCount;
+            chartArea3.BackColor = System.Drawing.Color.Silver;
+            chartArea3.BackSecondaryColor = System.Drawing.Color.White;
+            chartArea3.BorderWidth = 2;
+            chartArea3.CursorX.LineColor = System.Drawing.Color.Black;
+            chartArea3.CursorX.SelectionColor = System.Drawing.Color.Gray;
+            chartArea3.Name = "ChartArea1";
+            this.chartErrores.ChartAreas.Add(chartArea3);
+            legend3.Name = "Legend1";
+            this.chartErrores.Legends.Add(legend3);
             this.chartErrores.Location = new System.Drawing.Point(193, -1);
             this.chartErrores.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.chartErrores.Name = "chartErrores";
             this.chartErrores.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Fire;
-            series1.BorderWidth = 2;
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series1.Color = System.Drawing.Color.Blue;
-            series1.LabelBorderWidth = 2;
-            series1.Legend = "Legend1";
-            series1.Name = "Combinada";
-            this.chartErrores.Series.Add(series1);
+            series3.BorderWidth = 2;
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series3.Color = System.Drawing.Color.Blue;
+            series3.LabelBorderWidth = 2;
+            series3.Legend = "Legend1";
+            series3.Name = "Combinada";
+            this.chartErrores.Series.Add(series3);
             this.chartErrores.Size = new System.Drawing.Size(956, 728);
             this.chartErrores.TabIndex = 0;
             this.chartErrores.Text = "chart1";
@@ -363,6 +366,20 @@
             // timerGraficaError
             // 
             this.timerGraficaError.Interval = 1000;
+            // 
+            // button1
+            // 
+            button1.BackColor = System.Drawing.Color.Cyan;
+            button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            button1.ForeColor = System.Drawing.Color.Black;
+            button1.Location = new System.Drawing.Point(42, 330);
+            button1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            button1.Name = "button1";
+            button1.Size = new System.Drawing.Size(108, 32);
+            button1.TabIndex = 9;
+            button1.Text = "+ Info";
+            button1.UseVisualStyleBackColor = false;
+            button1.Click += new System.EventHandler(this.button1_Click_1);
             // 
             // CalculosFs
             // 

@@ -41,3 +41,4 @@ C:\Personal KEVIN\TRABAJOS DE CLASE PARA PORTAFOLIO\Simulador\PowerSIM\Simulador
 C:\Personal KEVIN\TRABAJOS DE CLASE PARA PORTAFOLIO\Simulador\PowerSIM\Simulador\obj\Debug\Simulador.CalculosSectores.resources
 C:\Personal KEVIN\TRABAJOS DE CLASE PARA PORTAFOLIO\Simulador\PowerSIM\Simulador\obj\Debug\Simulador.CalculosFs.resources
 C:\Personal KEVIN\TRABAJOS DE CLASE PARA PORTAFOLIO\Simulador\PowerSIM\Simulador\obj\Debug\Simulador.Inicio.resources
+C:\Personal KEVIN\TRABAJOS DE CLASE PARA PORTAFOLIO\Simulador\PowerSIM\Simulador\obj\Debug\Simulador.InfoFs.resources

@@ -94,9 +94,9 @@ namespace Simulador
         ArrayList sectorIzq;
         ArrayList sectorDe;
 
-        int iRow = 1;
-        LeeArchivo leerArchivo;
-        public CalculosSectores(Inicio.Ruta ruta)
+       // int iRow = 1;
+       // LeeArchivo leerArchivo;
+        public CalculosSectores(Inicio.Ruta ruta, List<decimal> anguloI, List<decimal> PiernaDerechaI, List<decimal> piernaIzquierdaI, List<decimal> piernaCombinadaI, List<decimal> velocidadI, int muestrasTotalesI)
         {
 
             InitializeComponent();
@@ -105,29 +105,29 @@ namespace Simulador
             rutaArchivo = ruta.ruta;
 
             // Indica el numero de pruebas que se debe tomar por sectores
-            sl = new SLDocument(rutaArchivo);
+          //  sl = new SLDocument(rutaArchivo);
 
             //Se encarga de guardar los datos del archivo leido en ArrayLists para trabajar con este en todo el codigo.
         
-            leerArchivo = new LeeArchivo(sl);
-            extraerInformacion();
+          //  leerArchivo = new LeeArchivo(sl);
+            //Se encarga de guardar los datos del archivo leido en ArrayLists para trabajar con este en todo el codigo.
+            extraerInformacion(anguloI, PiernaDerechaI, piernaIzquierdaI, piernaCombinadaI, velocidadI, muestrasTotalesI);
         }
+
 
         /// <summary>
         /// extraerInformacion
-        /// Trae los datos obtenidos de la clase LeeArchivo
+        /// Lee todo el archivo y guarda los campos por arraysList para que se pueda utilizar en todo
         /// </summary>
-        public void extraerInformacion()
+        public void extraerInformacion(List<decimal> anguloI, List<decimal> piernaDerechaI, List<decimal> PiernaIzquierdaI, List<decimal> piernaCombinadaI, List<decimal> velocidadI, int muestrasTotalesI)
         {
             //rellena los arrayList con cada campo
-            angulo = leerArchivo.Angulo;
-            piernaIzquierda = leerArchivo.PiernaIzquierda;
-            piernaDerecha = leerArchivo.PiernaDerecha;
-            piernaCombinada = leerArchivo.PiernaCombinada;
-            velocidad = leerArchivo.Velocidad;
-
-            //tomamos el total de las muestras
-            muestrasTotales = leerArchivo.MuestrasTotales;
+            angulo = anguloI;
+            piernaIzquierda = PiernaIzquierdaI;
+            piernaDerecha = piernaDerechaI;
+            piernaCombinada = piernaCombinadaI;
+            velocidad = velocidadI;
+            muestrasTotales = muestrasTotalesI;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -298,7 +298,7 @@ namespace Simulador
                 Sp = (fs * 60) / Convert.ToInt32(editCadencia.Text.ToString()); // Sp es el número de muestras por pedalada.
 
                 //Info del archivo y la frecuencia de muestreo
-
+                
                 muestrasPorPedaladas = Sp;
 
                 //indica cada cuantos pruebas se tomaran:
@@ -415,13 +415,13 @@ namespace Simulador
 
 
 
-            while (!string.IsNullOrEmpty(sl.GetCellValueAsString(iRow, 1)))
+            for (int i = 1; i <= muestrasTotales; i++)
             {
                 // Vamos guardando las muestras válidfas hasta completar el sector:
-                if (iRow % espacioEntreMuestras == 0)
+                if (i % espacioEntreMuestras == 0)
                 {
-                    izquierdaIdeal += sl.GetCellValueAsDecimal(iRow, 2);
-                    derechaIdeal += sl.GetCellValueAsDecimal(iRow, 3);
+                    izquierdaIdeal += Convert.ToDecimal(piernaIzquierda[i - 1]);
+                    derechaIdeal += Convert.ToDecimal(piernaDerecha[i - 1]);
 
                     ////Se van guardando los datos hasta que el muestras_sobrantes llegue al numero de pruebas que se debe ingresar por sectorCom
                     //if (cont < nMuestras)
@@ -431,7 +431,7 @@ namespace Simulador
                     //    cont++;
                     n_muestrasSector++;
                 }
-                if (iRow % nMuestras == 0)
+                if (i % nMuestras == 0)
                 {
 
                     //Se saca el promedio al sumar todas y dividir entre la cantidad total
@@ -485,7 +485,7 @@ namespace Simulador
                     derechaIdeal = 0;
                     n_muestrasSector = 0;
                 }
-                iRow++;
+                
                
             }
 
@@ -696,30 +696,6 @@ namespace Simulador
         }
 
 
-        public void recogeDatos(SLDocument sl)
-        {
-            piernaIzquierda = new List<decimal>();
-            piernaDerecha = new List<decimal>();
-            piernaCombinada = new List<decimal>();
-
-            while (!string.IsNullOrEmpty(sl.GetCellValueAsString(iRow, 1)))
-            {
-                //Se van guardando los datos hasta que el muestras_sobrantes llegue al numero de pruebas que se debe ingresar por sectorCom
-
-                piernaIzquierda.Add( sl.GetCellValueAsDecimal(iRow, 2));
-                piernaDerecha.Add(sl.GetCellValueAsDecimal(iRow, 3));
-                piernaCombinada.Add(sl.GetCellValueAsDecimal(iRow, 2) + sl.GetCellValueAsDecimal(iRow, 3));
-                iRow++;  
-            }
-
-/*
-            for(int i = 1; i < iRow; i++)
-            {
-                richSectores.AppendText("+:  " + Convert.ToString(piernaDerecha[i-1]));
-            }*/
-
-        }
-
         public void graficarSectores(int nMuestras, int angInicio)
         {
             
@@ -738,22 +714,22 @@ namespace Simulador
             decimal izquierdaIdeal = 0;
             decimal derechaIdeal = 0;
 
-            int iRow = 1;
+           // int iRow = 1;
 
-            int numSectores = Convert.ToInt32(editMaximoSectorG.Text);
+           // int numSectores = Convert.ToInt32(editMaximoSectorG.Text);
 
-            while (!string.IsNullOrEmpty(sl.GetCellValueAsString(iRow, 1)))
+            //realiza la busqueda de los datos...
+            for (int i = 1; i <= muestrasTotales; i++)
             {
 
-
                 //Se van guardando los datos hasta que el muestras_sobrantes llegue al numero de pruebas que se debe ingresar por sectorCom
-                if (iRow % nMuestras == 0)
+                if (i % nMuestras == 0)
                 {
-                    izquierdaIdeal += sl.GetCellValueAsDecimal(iRow, 2);
-                    derechaIdeal += sl.GetCellValueAsDecimal(iRow, 3);
+                    izquierdaIdeal += piernaDerecha[i - 1];
+                    derechaIdeal += piernaIzquierda[i - 1];
                     cont++;
                 }
-                if (iRow == nMuestras)
+                if (i == nMuestras)
                 {
 
                     //Se saca el promedio al sumar todas y dividir entre la cantidad total
@@ -795,7 +771,7 @@ namespace Simulador
                     cont = 0;
                 }
 
-                iRow++;
+             //   iRow++;
 
             }
 
@@ -844,5 +820,134 @@ namespace Simulador
             return ok;
         }
 
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+
+            MessageBox.Show("Muestras a tomar por el angulo "+ dividirCircunferencia(Convert.ToInt32(editAnguloInicio.Text) ));
+
+            //Lleva los datos a la grafica
+            graficaAngulo((int)dividirCircunferencia(Convert.ToInt32(editAnguloInicio.Text)));
+
+            
         }
+
+        public int dividirCircunferencia(int angulo)
+        {
+            //toma el angulo que indica el usuario y lo envia para saber en que punto empezar
+            //devuelve ese punto para empezar a graficar
+            return  (angulo * muestrasTotales) / 360; ;
+            //formula: (grado * total valores en la circunferencia) / 360 = valores a tomar
+        }
+
+
+        public void graficaAngulo(int inicio)
+        {
+            chartAngulo.Series[0].Points.Clear();
+            //******************DIBUJA LA GRAFICA PASTEL**************
+            //***valor restante de la grafica
+            if (inicio > 0)
+            {
+                chartAngulo.Series[0].Points.AddXY("Sobrante", (muestrasTotales - inicio));
+            }
+            else
+            {
+                int inicioNaP = Math.Abs(inicio); //lo pasa a positivo para restar 
+                chartAngulo.Series[0].Points.AddXY("Sobrante", (muestrasTotales - inicioNaP)*-1);//lo pasa a negativo para graficar
+            }
+            // ***Parte tomada de la circunferencia segun el angulo que se nos indica.
+            chartAngulo.Series[0].Points.AddXY("inicio", inicio);
+
+
+            //Ingresa las muestras indicadas:
+            muestrasPorAngulo(inicio);
+        }
+
+        public void muestrasPorAngulo(int inicio)
+        {
+          
+            //*******GUARDAN LAS MUESTRAS DEL ANGULO DE INICIO INDICADO**********
+            List<decimal> mInicioDerecha = new List<decimal>();
+            List<decimal> mInicioIzquierda = new List<decimal>();
+            //no las utilizado aun...
+            List<decimal> mInicioVelocidad = new List<decimal>();
+            List<decimal> mInicioAngulo = new List<decimal>();
+            List<decimal> mInicioCombinada = new List<decimal>();
+
+
+            //*******GUARDAN LAS MUESTRAS SOBRANTES**********
+            List<decimal> mSobrantesDerecha = new List<decimal>();
+            List<decimal> mSobrantesIzquierda = new List<decimal>();
+            //no utilizadas aun...
+            List<decimal> mSobrantesVelocidad = new List<decimal>();
+            List<decimal> mSobrantesAngulo = new List<decimal>();
+            List<decimal> mSobrantesCombinada = new List<decimal>();
+
+            int e = 0;
+            int e2 = 0;
+            //cuando el angulos esta en positivo:
+
+            if(inicio > 0)
+            {
+                richSectores.AppendText("Sobrantes");
+                //toma los valores que no se utilizaron(en este caso de 0 hasta el valor anterior a donde inicia el angulo a guardar muestras):
+                for (int i = 1; i < inicio; i++)
+                {
+                    mSobrantesIzquierda.Add(piernaIzquierda[i - 1]);
+                    mSobrantesDerecha.Add(piernaDerecha[i - 1]);
+                    richSectores.AppendText("\n- #" + (i) + "  " + mSobrantesIzquierda[e2]);
+                    e2++;
+                }
+
+                richSectores.AppendText("\ngrado inicial");
+                //toma los valores desde el grado que se haya indicado hasta el final.
+                for (int i = inicio; i <= muestrasTotales; i++)
+                {
+                    //Agrega el valor del otro arrayList
+                    mInicioIzquierda.Add(piernaIzquierda[i - 1]); //tama desde el valor que inicia el angulo indicado y llega al final de la circunferencia. 
+                    mInicioDerecha.Add(piernaDerecha[i - 1]);
+                    richSectores.AppendText("\n- #" + (i) + "  " + mInicioIzquierda[e]);//para verificar que funciona.
+                    e++;
+                }
+
+            }
+            else
+            {
+                int nMuestras = muestrasTotales;
+
+
+                  int inicioNaP = Math.Abs(inicio);
+
+                e = 0;
+                e2 = 0;
+                richSectores.AppendText("\ngrado inicial");
+                //toma los valores desde el grado que se haya indicado hasta el final.
+                for (int i = nMuestras - 1 ; i >= inicioNaP-1; i--)
+                {
+                    //Agrega el valor del otro arrayList
+                    mInicioIzquierda.Add(piernaIzquierda[i]);
+                  //  mInicioDerecha.Add(piernaDerecha[i]);
+                    richSectores.AppendText("\n- #" + (nMuestras--) + "  " + mInicioIzquierda[e]);//para verificar que funciona.
+                    e++;
+                }
+
+                nMuestras = muestrasTotales;
+                /*   richSectores.AppendText("Sobrantes");
+                   //toma los valores que no se utilizaron(en este caso de 0 hasta el valor anterior a donde inicia el angulo a guardar muestras):
+                   for (int i = inicioNaP - 1; i < inicio; i++)
+                   {
+                       mSobrantesIzquierda.Add(piernaIzquierda[i - 1]);
+                       mSobrantesDerecha.Add(piernaDerecha[i - 1]);
+                       richSectores.AppendText("\n- #" + (i) + "  " + mSobrantesIzquierda[e2]);
+                       e2++;
+                   }
+                 */
+
+            }
+
+
+
+        }
+
+
+    }
 }

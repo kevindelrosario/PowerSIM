@@ -94,22 +94,26 @@ namespace Simulador
         //potencia
         Potencia potenciaClase = new Potencia(); //Clase potencia inicializada para utilizar sus metodos.
 
+        //INFORMACION PARA PESTAÑA infoFS:
 
+        // Crear una lista para almacenar los datos
+        List<Datos> info_fs = new List<Datos>();
 
-        public CalculosFs(Inicio.Ruta ruta)
+        public CalculosFs(Inicio.Ruta ruta, List<decimal> anguloI, List<decimal> PiernaDerechaI, List<decimal> piernaIzquierdaI, List<decimal> piernaCombinadaI, List<decimal> velocidadI, int muestrasTotalesI)
         {
             InitializeComponent();
             //Igualamos la ruta que se ingresa desde la pestaña inicio con la variable ruta de esta clase para trabajar con ella en esta pestaña. 
             rutaArchivo = ruta.ruta;
 
             // Indica el numero de pruebas que se debe tomar por sectores
-            sl = new SLDocument(rutaArchivo);
+         //   sl = new SLDocument(rutaArchivo);
 
 
-            leerArchivo = new LeeArchivo(sl);
+          //  leerArchivo = new LeeArchivo(sl);
 
             //Se encarga de guardar los datos del archivo leido en ArrayLists para trabajar con este en todo el codigo.
-            extraerInformacion();
+            extraerInformacion(anguloI, PiernaDerechaI, piernaIzquierdaI, piernaCombinadaI, velocidadI, muestrasTotalesI);
+
         }
 
 
@@ -120,21 +124,26 @@ namespace Simulador
         /// extraerInformacion
         /// Lee todo el archivo y guarda los campos por arraysList para que se pueda utilizar en todo
         /// </summary>
-      
-        public void extraerInformacion()
+        public void extraerInformacion(List<decimal> anguloI, List<decimal> piernaDerechaI, List<decimal> PiernaIzquierdaI, List<decimal> piernaCombinadaI, List<decimal> velocidadI, int muestrasTotalesI)
         {
             //rellena los arrayList con cada campo
-            angulo = leerArchivo.Angulo;
-            piernaIzquierda = leerArchivo.PiernaIzquierda;
-            piernaDerecha = leerArchivo.PiernaDerecha;
-            piernaCombinada = leerArchivo.PiernaCombinada;
-            velocidad = leerArchivo.Velocidad;
-
+            angulo = anguloI;
+            piernaIzquierda = PiernaIzquierdaI;
+            piernaDerecha = piernaDerechaI;
+            piernaCombinada = piernaCombinadaI;
+            velocidad = velocidadI;
+            muestrasTotales = muestrasTotalesI;
             //tomamos el total de las muestras
-            muestrasTotales = leerArchivo.MuestrasTotales;
+         //   muestrasTotales = leerArchivo.MuestrasTotales;
 
+            //lee todo el archivo
+          /*  for (int i = 1; i <= muestrasTotales; i++)
+            {
+                richPotencia.AppendText("-"+Convert.ToDecimal(piernaDerecha[i - 1])+"\n");
 
-        }
+            }*/
+
+            }
 
 
         /// <summary>
@@ -241,7 +250,7 @@ namespace Simulador
                             + "\n % Error combinada: " + calcularPorcentajeError(totalCombinada_real_pError, totalCombinada_ideal_pError)
                             );
 
-            //    MessageBox.Show("Muestras sin tomar: " + factorCorreccion);
+                MessageBox.Show("Muestras sin tomar: " + factorCorreccion);
 
 
             }
@@ -373,6 +382,11 @@ namespace Simulador
             decimal porErrorC = calcularPorcentajeError(totalCombinada_real_pError, totalCombinada_ideal_pError);
 
             chartErrores.Series["Combinada"].Points.AddXY(i, porErrorC);
+
+            // Agregar elementos a la lista
+            //para enviarla al final desde el otro boton (+info)
+            info_fs.Add(new Datos(i, totalCombinada_real_pError, totalCombinada_ideal_pError, porErrorC));
+       
         }
 
         //PRUEBA CON TIMER
@@ -414,30 +428,31 @@ namespace Simulador
                    // int iRow2 = 1;
                     nMuestrasCogidas = 0;
 
+              
                 //realiza la busqueda de los datos...
                 for (int i = 1; i <= muestrasTotales; i++)
                 {
-                    //decimal derecha = Convert.ToDecimal(piernaDerecha[i - 1]);
-                  //  decimal izquierda = Convert.ToDecimal(piernaIzquierda[i - 1]);
+                    decimal derecha = piernaDerecha[i - 1];
+                   decimal izquierda = piernaIzquierda[i - 1];
                     muestras_sobrantes++;
-                    //    iRow2++;
-
+                    //muestra++;
 
                     //  if (muestras_sobrantes == muestras_A_tomar ) //toma no cada valor que indica el sp sino ese valor +1
+                    
                     if (muestras_sobrantes == muestras_A_tomar )
                         {
                             //Se toma el valor siguiente al sp (cada cuantas muestras nos indicaron que se deben guardar anteriormente).
-                            totalIzquierda += Convert.ToDecimal(piernaIzquierda[i - 1]); //se van sumando a la variable izq y der
-                           totalDerecha += Convert.ToDecimal(piernaDerecha[i - 1]);
+                            totalIzquierda += izquierda; //se van sumando a la variable izq y der
+                           totalDerecha += derecha;
 
                             muestras_sobrantes = 0; // vuelve a cero para reinicial el conteo despues de tomar el valor y volver a tomar cada cierto momento el valor.
                             nMuestrasCogidas++;
+                           
                         }
                     }
 
-
                     //si no es igual a 0 al terminar significa que quedaron pruebas sin tomar
-                    factorCorreccion = (decimal)muestrasTotales / (decimal) (muestrasTotales - muestras_sobrantes); 
+                    factorCorreccion = (decimal)muestrasTotales / (decimal)(muestrasTotales - muestras_sobrantes); 
                     
 
                     totalPiernaIzq_muestreo = totalIzquierda * factorCorreccion; //valores para luego utilizarlos en la funcion potenciaReal()
@@ -537,13 +552,22 @@ namespace Simulador
                 ok = false;
                 errorCampoVacio.SetError(txtFsFinal, "Ingresa fs final.");
             }
+            if (Convert.ToInt32(txtFsInicio.Text) >= Convert.ToInt32(txtFsFinal.Text))
+            {
+                ok = false;
+                errorCampoVacio.SetError(txtFsInicio, "El fs inicial no puede ser mayor al final.");
+            }
 
             if (txtIncrementoFs.Text == "")
             {
                 ok = false;
                 errorCampoVacio.SetError(txtIncrementoFs, "Ingresa incremento.");
             }
-           
+            if (Convert.ToInt32(txtIncrementoFs.Text) <= 0)
+            {
+                ok = false;
+                errorCampoVacio.SetError(txtIncrementoFs, "Ingresa incremento mayor a 0");
+            }
             return ok;
         }
         /*****************LIMPIAR CAMPOS***************************/
@@ -559,6 +583,10 @@ namespace Simulador
             errorCampoVacio.SetError(txtIncrementoFs, "");
         }
 
-      
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            InfoFs info = new InfoFs(info_fs);
+           info.ShowDialog();
+        }
     }
 }

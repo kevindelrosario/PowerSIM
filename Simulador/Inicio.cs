@@ -138,7 +138,7 @@ namespace Simulador
             {
                 Ruta ruta;
                 ruta.ruta = editRutaArchivo1.Text;
-                openChildForm(new CalculosFs(ruta));
+                openChildForm(new CalculosFs(ruta,angulo, piernaDerecha, piernaIzquierda, piernaCombinada, velocidad, muestrasTotales));
             }
         }
 
@@ -149,7 +149,7 @@ namespace Simulador
             {
                 Ruta ruta;
                 ruta.ruta = editRutaArchivo1.Text; //toma la ruta del archivo seleccionado.
-                openChildForm(new CalculosSectores(ruta)); // abre la nueva pestaña y le ingresa esa ruta obtenida.
+                openChildForm(new CalculosSectores(ruta,angulo, piernaDerecha, piernaIzquierda, piernaCombinada, velocidad, muestrasTotales));
             }
         }
 
