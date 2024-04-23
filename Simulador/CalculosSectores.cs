@@ -94,8 +94,10 @@ namespace Simulador
         ArrayList sectorIzq;
         ArrayList sectorDe;
 
-       // int iRow = 1;
-       // LeeArchivo leerArchivo;
+
+      
+
+
         public CalculosSectores(Inicio.Ruta ruta, List<decimal> anguloI, List<decimal> PiernaDerechaI, List<decimal> piernaIzquierdaI, List<decimal> piernaCombinadaI, List<decimal> velocidadI, int muestrasTotalesI)
         {
 
@@ -734,19 +736,6 @@ namespace Simulador
 
                     //Se saca el promedio al sumar todas y dividir entre la cantidad total
 
-                    /***ANTES***/
-
-                    // decimal combinada = decimal.Round((izquierdaIdeal+derechaIdeal)/nMuestras,2);
-                    //  decimal Derecha = decimal.Round( derechaIdeal/ nMuestras, 2);
-                    //  decimal Izquierda = decimal.Round(izquierdaIdeal / nMuestras, 2);
-
-
-                    //extraerInformacion 1 con numero de sectores
-
-                    // decimal combP = decimal.Round((izquierdaIdeal + derechaIdeal) / numSectores, 2);
-                    // decimal dereP = decimal.Round(derechaIdeal / numSectores, 2);
-                    //decimal izqP = decimal.Round(izquierdaIdeal / numSectores, 2);
-
 
                     //extraerInformacion 2 con numero de muestras
                     decimal combP = decimal.Round(((izquierdaIdeal + derechaIdeal) / nMuestras), 2);
@@ -852,7 +841,7 @@ namespace Simulador
             else
             {
                 int inicioNaP = Math.Abs(inicio); //lo pasa a positivo para restar 
-                chartAngulo.Series[0].Points.AddXY("Sobrante", (muestrasTotales - inicioNaP)*-1);//lo pasa a negativo para graficar
+                chartAngulo.Series[0].Points.AddXY("Sobrante", (muestrasTotales - inicioNaP) *-1);//lo pasa a negativo para graficar
             }
             // ***Parte tomada de la circunferencia segun el angulo que se nos indica.
             chartAngulo.Series[0].Points.AddXY("inicio", inicio);
@@ -864,7 +853,6 @@ namespace Simulador
 
         public void muestrasPorAngulo(int inicio)
         {
-          
             //*******GUARDAN LAS MUESTRAS DEL ANGULO DE INICIO INDICADO**********
             List<decimal> mInicioDerecha = new List<decimal>();
             List<decimal> mInicioIzquierda = new List<decimal>();
@@ -881,24 +869,25 @@ namespace Simulador
             List<decimal> mSobrantesVelocidad = new List<decimal>();
             List<decimal> mSobrantesAngulo = new List<decimal>();
             List<decimal> mSobrantesCombinada = new List<decimal>();
-
-            int e = 0;
-            int e2 = 0;
+            richSectores.Clear();
+            int e ;
+            
             //cuando el angulos esta en positivo:
 
             if(inicio > 0)
             {
-                richSectores.AppendText("Sobrantes");
+                e = 0;
+                richSectores.AppendText("**********************SOBRANTES*******************");
                 //toma los valores que no se utilizaron(en este caso de 0 hasta el valor anterior a donde inicia el angulo a guardar muestras):
                 for (int i = 1; i < inicio; i++)
                 {
                     mSobrantesIzquierda.Add(piernaIzquierda[i - 1]);
                     mSobrantesDerecha.Add(piernaDerecha[i - 1]);
-                    richSectores.AppendText("\n- #" + (i) + "  " + mSobrantesIzquierda[e2]);
-                    e2++;
+                    richSectores.AppendText("\n- #" + (i) + "  " + mSobrantesIzquierda[e]);
+                    e++;
                 }
-
-                richSectores.AppendText("\ngrado inicial");
+                e = 0;
+                richSectores.AppendText("\n******************GRADO INICIAL****************");
                 //toma los valores desde el grado que se haya indicado hasta el final.
                 for (int i = inicio; i <= muestrasTotales; i++)
                 {
@@ -909,6 +898,7 @@ namespace Simulador
                     e++;
                 }
 
+
             }
             else
             {
@@ -918,29 +908,28 @@ namespace Simulador
                   int inicioNaP = Math.Abs(inicio);
 
                 e = 0;
-                e2 = 0;
-                richSectores.AppendText("\ngrado inicial");
+                richSectores.AppendText("\n******************GRADO INICIAL****************");
                 //toma los valores desde el grado que se haya indicado hasta el final.
-                for (int i = nMuestras - 1 ; i >= inicioNaP-1; i--)
+                for (int i = nMuestras - 1 ; i >= (muestrasTotales-inicioNaP)-1; i--)
                 {
                     //Agrega el valor del otro arrayList
                     mInicioIzquierda.Add(piernaIzquierda[i]);
-                  //  mInicioDerecha.Add(piernaDerecha[i]);
+                    mInicioDerecha.Add(piernaDerecha[i]);
                     richSectores.AppendText("\n- #" + (nMuestras--) + "  " + mInicioIzquierda[e]);//para verificar que funciona.
                     e++;
                 }
-
-                nMuestras = muestrasTotales;
-                /*   richSectores.AppendText("Sobrantes");
+                e = 0;
+                 nMuestras = (muestrasTotales - inicioNaP)-1 ;
+                   richSectores.AppendText("**********************SOBRANTES*******************");
                    //toma los valores que no se utilizaron(en este caso de 0 hasta el valor anterior a donde inicia el angulo a guardar muestras):
-                   for (int i = inicioNaP - 1; i < inicio; i++)
+                   for (int i = nMuestras; i > 0; i--)
                    {
-                       mSobrantesIzquierda.Add(piernaIzquierda[i - 1]);
-                       mSobrantesDerecha.Add(piernaDerecha[i - 1]);
-                       richSectores.AppendText("\n- #" + (i) + "  " + mSobrantesIzquierda[e2]);
-                       e2++;
+                       mSobrantesIzquierda.Add(piernaIzquierda[i-1]);
+                     //  mSobrantesDerecha.Add(piernaDerecha[i-1]);
+                       richSectores.AppendText("\n- #" + (i) + "  " + mSobrantesIzquierda[e]);
+                       e++;
                    }
-                 */
+                 
 
             }
 
