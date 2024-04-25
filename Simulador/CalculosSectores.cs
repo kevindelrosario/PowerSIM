@@ -176,12 +176,7 @@ namespace Simulador
 
             for (int i= 1; i <= muestrasTotales; i++) 
             {
-               // decimal izquierda = sl.GetCellValueAsDecimal(iRow, 2);
-            //    decimal derecha = sl.GetCellValueAsDecimal(iRow, 3);
-           //     iRow++;
-                //     muestras_sobrantes++; // Toma la cantidad de valores que son para sacar el promedioPotenciaIdeal...
-               Totalderecha += Convert.ToDecimal(piernaDerecha[i-1]); //Va sumando los valores encontrados
-              //  richSectores.AppendText("\n+:  " + Convert.ToString(piernaDerecha[i - 1]));
+                Totalderecha += Convert.ToDecimal(piernaDerecha[i-1]); //Va sumando los valores encontrados
                 TotalIzquierda += Convert.ToDecimal(piernaIzquierda[i -1]);
               
                 totali = i;
