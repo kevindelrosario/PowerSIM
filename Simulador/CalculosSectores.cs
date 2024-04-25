@@ -1,18 +1,9 @@
-﻿using DocumentFormat.OpenXml.Bibliography;
-using DocumentFormat.OpenXml.Spreadsheet;
-using Simulador.Clases;
+﻿using Simulador.Clases;
 using SpreadsheetLight;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Windows.Forms.ComponentModel.Com2Interop;
 
 namespace Simulador
 {
@@ -95,7 +86,13 @@ namespace Simulador
         ArrayList sectorDe;
 
 
-      
+        //*******GUARDAN LAS MUESTRAS DEL ANGULO DE INICIO INDICADO**********
+        List<decimal> mInicioDerecha;
+        List<decimal> mInicioIzquierda;
+        //no las utilizado aun...
+        List<decimal> mInicioVelocidad;
+        List<decimal> mInicioAngulo;
+        List<decimal> mInicioCombinada;
 
 
         public CalculosSectores(Inicio.Ruta ruta, List<decimal> anguloI, List<decimal> PiernaDerechaI, List<decimal> piernaIzquierdaI, List<decimal> piernaCombinadaI, List<decimal> velocidadI, int muestrasTotalesI)
@@ -190,18 +187,6 @@ namespace Simulador
                 totali = i;
             }
             total = totali; //para comprobar si funciona (recorre las 7200)
-
-
-            // while (!string.IsNullOrEmpty(sl.GetCellValueAsString(iRow, 1)))
-            // {
-            //     decimal izquierda = sl.GetCellValueAsDecimal(iRow, 2);
-            //     decimal derecha = sl.GetCellValueAsDecimal(iRow, 3);
-            //     iRow++;
-            ////     muestras_sobrantes++; // Toma la cantidad de valores que son para sacar el promedioPotenciaIdeal...
-            //     Totalderecha += derecha; //Va sumando los valores encontrados
-            //     TotalIzquierda += izquierda;
-            // }
-
 
 
 
@@ -359,15 +344,23 @@ namespace Simulador
 
             if (verificarCampoConf() && validarCamposCalculosPotencia())
             {
-              
-                    //tomamos los datos de configuracion:
-                    int numSectores = Convert.ToInt32(editNumeroSectores.Text);
-                    int anguloInicio = Convert.ToInt32(editAnguloInicio.Text);
+               //Muestras que se saltaran por el angulo de inicio indicado
+                MessageBox.Show("Muestras a tomar por el angulo " + dividirCircunferencia(Convert.ToInt32(editAnguloInicio.Text)));
 
-                    //Comprobamos cuantas pruebas debe haber por sectores.
-                    // MessageBox.Show("resultado de la division: " + dividirMuestras(numSectores));
+                //Lleva los datos a la grafica
+           //     graficaAngulo((int)dividirCircunferencia(Convert.ToInt32(editAnguloInicio.Text)));
 
-                    dividirSectores(dividirMuestras(numSectores), anguloInicio); //Entra: cantidad de pruebas por sectores y el sectore de inicio        
+                
+                //tomamos los datos de configuracion:
+                int numSectores = Convert.ToInt32(editNumeroSectores.Text);
+                int anguloInicio = Convert.ToInt32(editAnguloInicio.Text);
+                //Ingresa las muestras indicadas:
+                muestrasPorAngulo((int)dividirCircunferencia(Convert.ToInt32(editAnguloInicio.Text)));
+            
+                //Comprobamos cuantas pruebas debe haber por sectores.
+                // MessageBox.Show("resultado de la division: " + dividirMuestras(numSectores));
+
+                dividirSectores(dividirMuestras(numSectores), anguloInicio); //Entra: cantidad de pruebas por sectores y el sectore de inicio        
                 
                 
             }
@@ -400,8 +393,8 @@ namespace Simulador
 
             //int cont = 0; //para reinicial el conteo de las pruebas
             //              //variables para potencia Ideal
-            decimal izquierdaIdeal = 0;
-            decimal derechaIdeal = 0;
+            decimal izquierdaReal = 0;
+            decimal derechaReal = 0;
 
            // int iRow = 1;
 
@@ -416,20 +409,33 @@ namespace Simulador
             int n_muestrasSector = 0;
 
 
+          
+            chartAngulo.Series[0].Points.Clear();
+            // Calcular el ángulo equivalente en el rango de 0 a 360 grados
+            int startAngle;
+
+            startAngle = AdjustAngle(angInicio-90);
+
+            chartAngulo.Series[0]["PieStartAngle"] = startAngle.ToString();
 
             for (int i = 1; i <= muestrasTotales; i++)
             {
                 // Vamos guardando las muestras válidfas hasta completar el sector:
                 if (i % espacioEntreMuestras == 0)
                 {
-                    izquierdaIdeal += Convert.ToDecimal(piernaIzquierda[i - 1]);
-                    derechaIdeal += Convert.ToDecimal(piernaDerecha[i - 1]);
+                    //anterior:
+                   // izquierdaReal += Convert.ToDecimal(piernaIzquierda[i - 1]);
+                  //  derechaReal += Convert.ToDecimal(piernaDerecha[i - 1]);
+
+                    //segun angulo de inicio:
+                    izquierdaReal += Convert.ToDecimal(mInicioIzquierda[i - 1]);
+                    derechaReal += Convert.ToDecimal(mInicioDerecha[i - 1]);
 
                     ////Se van guardando los datos hasta que el muestras_sobrantes llegue al numero de pruebas que se debe ingresar por sectorCom
                     //if (cont < nMuestras)
                     //{
-                    //    izquierdaIdeal += sl.GetCellValueAsDecimal(iRow, 2);
-                    //    derechaIdeal += sl.GetCellValueAsDecimal(iRow, 3);
+                    //    izquierdaReal += sl.GetCellValueAsDecimal(iRow, 2);
+                    //    derechaReal += sl.GetCellValueAsDecimal(iRow, 3);
                     //    cont++;
                     n_muestrasSector++;
                 }
@@ -442,9 +448,9 @@ namespace Simulador
 
                     //extraerInformacion (VERIFICAR SI ES CORRECTA LA FORMA DE SACAR EL PROMEDIO)
 
-                    decimal combP = decimal.Round(((izquierdaIdeal + derechaIdeal) / n_muestrasSector), 2); //puede que tenga que dividir entre numero de sectores
-                    decimal dereP = decimal.Round((derechaIdeal / n_muestrasSector), 2);
-                    decimal izqP = decimal.Round((izquierdaIdeal / n_muestrasSector), 2);
+                    decimal combP = decimal.Round(((izquierdaReal + derechaReal) / n_muestrasSector), 2); //puede que tenga que dividir entre numero de sectores
+                    decimal dereP = decimal.Round((derechaReal / n_muestrasSector), 2);
+                    decimal izqP = decimal.Round((izquierdaReal / n_muestrasSector), 2);
 
 
 
@@ -480,11 +486,11 @@ namespace Simulador
                     //    + " / " + potenciaClase.balanceDeError(Derecha, combinada) + "\n\n");
 
                     //LLAMADA A LA FUNCION QUE DIBUJA EN LA GRAFICA
+                   
+                    chartAngulo.Series[0].Points.AddXY(sectorCom.Count, nMuestras);
 
-
-
-                    izquierdaIdeal = 0;
-                    derechaIdeal = 0;
+                    izquierdaReal = 0;
+                    derechaReal = 0;
                     n_muestrasSector = 0;
                 }
                 
@@ -511,7 +517,16 @@ namespace Simulador
 
         }
 
+        private int AdjustAngle(int angle)
+        {
+            // Ajustar el ángulo dentro del rango de 0 a 360 grados
+            while (angle < 0)
+            {
+                angle += 360;
+            }
 
+            return angle % 360;
+        }
         public bool verificarCampoConf()
         {
             bool ok = true;
@@ -833,6 +848,10 @@ namespace Simulador
         {
             chartAngulo.Series[0].Points.Clear();
             //******************DIBUJA LA GRAFICA PASTEL**************
+          //  chartAngulo.Series[0]["PieStartAngle"] = "0";
+            // ***Parte tomada de la circunferencia segun el angulo que se nos indica.
+            chartAngulo.Series[0].Points.AddXY("inicio", inicio);
+
             //***valor restante de la grafica
             if (inicio > 0)
             {
@@ -841,95 +860,101 @@ namespace Simulador
             else
             {
                 int inicioNaP = Math.Abs(inicio); //lo pasa a positivo para restar 
-                chartAngulo.Series[0].Points.AddXY("Sobrante", (muestrasTotales - inicioNaP) *-1);//lo pasa a negativo para graficar
+                chartAngulo.Series[0].Points.AddXY("Sobrante", (muestrasTotales - inicioNaP));//lo pasa a negativo para graficar
             }
-            // ***Parte tomada de la circunferencia segun el angulo que se nos indica.
-            chartAngulo.Series[0].Points.AddXY("inicio", inicio);
+          
 
-
-            //Ingresa las muestras indicadas:
-            muestrasPorAngulo(inicio);
+          
         }
 
         public void muestrasPorAngulo(int inicio)
         {
             //*******GUARDAN LAS MUESTRAS DEL ANGULO DE INICIO INDICADO**********
-            List<decimal> mInicioDerecha = new List<decimal>();
-            List<decimal> mInicioIzquierda = new List<decimal>();
+            mInicioDerecha = new List<decimal>();
+            mInicioIzquierda = new List<decimal>();
             //no las utilizado aun...
-            List<decimal> mInicioVelocidad = new List<decimal>();
-            List<decimal> mInicioAngulo = new List<decimal>();
-            List<decimal> mInicioCombinada = new List<decimal>();
+            mInicioVelocidad = new List<decimal>();
+            mInicioAngulo = new List<decimal>();
+            mInicioCombinada = new List<decimal>();
 
-
-            //*******GUARDAN LAS MUESTRAS SOBRANTES**********
-            List<decimal> mSobrantesDerecha = new List<decimal>();
-            List<decimal> mSobrantesIzquierda = new List<decimal>();
-            //no utilizadas aun...
-            List<decimal> mSobrantesVelocidad = new List<decimal>();
-            List<decimal> mSobrantesAngulo = new List<decimal>();
-            List<decimal> mSobrantesCombinada = new List<decimal>();
+         
             richSectores.Clear();
-            int e ;
+           // int e ;
             
             //cuando el angulos esta en positivo:
 
             if(inicio > 0)
             {
-                e = 0;
-                richSectores.AppendText("**********************SOBRANTES*******************");
-                //toma los valores que no se utilizaron(en este caso de 0 hasta el valor anterior a donde inicia el angulo a guardar muestras):
-                for (int i = 1; i < inicio; i++)
-                {
-                    mSobrantesIzquierda.Add(piernaIzquierda[i - 1]);
-                    mSobrantesDerecha.Add(piernaDerecha[i - 1]);
-                    richSectores.AppendText("\n- #" + (i) + "  " + mSobrantesIzquierda[e]);
-                    e++;
-                }
-                e = 0;
-                richSectores.AppendText("\n******************GRADO INICIAL****************");
+            //    e = 0;
+            //    richSectores.AppendText("\n******************GRADO INICIAL****************");
                 //toma los valores desde el grado que se haya indicado hasta el final.
                 for (int i = inicio; i <= muestrasTotales; i++)
                 {
                     //Agrega el valor del otro arrayList
                     mInicioIzquierda.Add(piernaIzquierda[i - 1]); //tama desde el valor que inicia el angulo indicado y llega al final de la circunferencia. 
                     mInicioDerecha.Add(piernaDerecha[i - 1]);
-                    richSectores.AppendText("\n- #" + (i) + "  " + mInicioIzquierda[e]);//para verificar que funciona.
-                    e++;
+                  //  richSectores.AppendText("\n- #" + (i) + "  " + mInicioIzquierda[e]);//para verificar que funciona.
+                //    e++;
+
+                }
+                //     richSectores.AppendText("**********************SOBRANTES*******************");
+                //toma los valores que no se utilizaron(en este caso de 0 hasta el valor anterior a donde inicia el angulo a guardar muestras):
+                for (int i = 1; i < inicio; i++)
+                {
+                    
+                    mInicioIzquierda.Add(piernaIzquierda[i - 1]);
+                    mInicioDerecha.Add(piernaDerecha[i - 1]);
+              //      richSectores.AppendText("\n- #" + (i) + "  " + mInicioIzquierda[e]);
+            //        e++;
                 }
 
 
+            }else if (inicio == 0)
+            {
+        
+           //     richSectores.AppendText("\n******************GRADO INICIAL****************");
+                //toma los valores desde el grado que se haya indicado hasta el final.
+                for (int i = 1; i < muestrasTotales+1; i++)
+                {
+                    //Agrega el valor del otro arrayList
+                    mInicioIzquierda.Add(piernaIzquierda[i-1]); //tama desde el valor que inicia el angulo indicado y llega al final de la circunferencia. 
+                    mInicioDerecha.Add(piernaDerecha[i-1]);
+               //     richSectores.AppendText("\n- #" + (i) + "  " + mInicioIzquierda[e]);//para verificar que funciona.
+               //     e++;
+                }
             }
             else
             {
-                int nMuestras = muestrasTotales;
+             //   int nMuestras = muestrasTotales;
 
 
-                  int inicioNaP = Math.Abs(inicio);
+                  int inicioNaP = Math.Abs(inicio); //lo pasa a positivo 
+                int gradoInicio = muestrasTotales - inicioNaP; // se resta el valor y desde el resultado que nos indique se empieza a contar.
 
-                e = 0;
+               // e = 0;
                 richSectores.AppendText("\n******************GRADO INICIAL****************");
                 //toma los valores desde el grado que se haya indicado hasta el final.
-                for (int i = nMuestras - 1 ; i >= (muestrasTotales-inicioNaP)-1; i--)
+                for (int i = gradoInicio; i <= muestrasTotales; i++)
                 {
+                    //se recorre el array desde el valor indicado hasta el final del arrayList 
+
                     //Agrega el valor del otro arrayList
-                    mInicioIzquierda.Add(piernaIzquierda[i]);
-                    mInicioDerecha.Add(piernaDerecha[i]);
-                    richSectores.AppendText("\n- #" + (nMuestras--) + "  " + mInicioIzquierda[e]);//para verificar que funciona.
-                    e++;
+                    mInicioIzquierda.Add(piernaIzquierda[i - 1]); //tama desde el valor que inicia el angulo indicado y llega al final de la circunferencia. 
+                    mInicioDerecha.Add(piernaDerecha[i - 1]);
+             //       richSectores.AppendText("\n- #" + (i) + "  " + mInicioIzquierda[e]);//para verificar que funciona.
+            //        e++;
                 }
-                e = 0;
-                 nMuestras = (muestrasTotales - inicioNaP)-1 ;
-                   richSectores.AppendText("**********************SOBRANTES*******************");
-                   //toma los valores que no se utilizaron(en este caso de 0 hasta el valor anterior a donde inicia el angulo a guardar muestras):
-                   for (int i = nMuestras; i > 0; i--)
-                   {
-                       mSobrantesIzquierda.Add(piernaIzquierda[i-1]);
-                     //  mSobrantesDerecha.Add(piernaDerecha[i-1]);
-                       richSectores.AppendText("\n- #" + (i) + "  " + mSobrantesIzquierda[e]);
-                       e++;
-                   }
-                 
+           //     richSectores.AppendText("**********************SOBRANTES*******************");
+                //toma los valores que no se utilizaron(en este caso de 0 hasta el valor anterior a donde inicia el angulo a guardar muestras):
+              
+                for (int i = 1; i < gradoInicio; i++)
+                {
+                 //Recorre desde el inicio hasta un valor menos al resultado de la resta que se realizo arriba.
+                    mInicioIzquierda.Add(piernaIzquierda[i - 1]);
+                    mInicioDerecha.Add(piernaDerecha[i - 1]);
+              //      richSectores.AppendText("\n- #" + (i) + "  " + mInicioIzquierda[e]);
+              //      e++;
+                }
 
             }
 
