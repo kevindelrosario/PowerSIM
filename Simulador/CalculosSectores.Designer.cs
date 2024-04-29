@@ -36,7 +36,6 @@
             System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.btnAnguloInicio = new System.Windows.Forms.Button();
             this.btCalcularConfi = new System.Windows.Forms.Button();
             this.editAnguloInicio = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
@@ -83,7 +82,6 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.Desktop;
-            this.panel1.Controls.Add(this.btnAnguloInicio);
             this.panel1.Controls.Add(this.btCalcularConfi);
             this.panel1.Controls.Add(this.editAnguloInicio);
             this.panel1.Controls.Add(this.label8);
@@ -106,17 +104,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(290, 896);
             this.panel1.TabIndex = 0;
-            // 
-            // btnAnguloInicio
-            // 
-            this.btnAnguloInicio.BackColor = System.Drawing.Color.Gold;
-            this.btnAnguloInicio.Location = new System.Drawing.Point(99, 691);
-            this.btnAnguloInicio.Name = "btnAnguloInicio";
-            this.btnAnguloInicio.Size = new System.Drawing.Size(75, 23);
-            this.btnAnguloInicio.TabIndex = 16;
-            this.btnAnguloInicio.Text = "Prueba";
-            this.btnAnguloInicio.UseVisualStyleBackColor = false;
-            this.btnAnguloInicio.Click += new System.EventHandler(this.button1_Click_1);
             // 
             // btCalcularConfi
             // 
@@ -145,7 +132,7 @@
             this.label8.ForeColor = System.Drawing.Color.White;
             this.label8.Location = new System.Drawing.Point(89, 549);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(108, 32);
+            this.label8.Size = new System.Drawing.Size(115, 34);
             this.label8.TabIndex = 13;
             this.label8.Text = "Angulo de inicio \r\nde sectorización:";
             // 
@@ -163,7 +150,7 @@
             this.label7.ForeColor = System.Drawing.Color.White;
             this.label7.Location = new System.Drawing.Point(65, 494);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(132, 16);
+            this.label7.Size = new System.Drawing.Size(140, 17);
             this.label7.TabIndex = 11;
             this.label7.Text = "Numero de sectores:";
             // 
@@ -174,7 +161,7 @@
             this.label6.ForeColor = System.Drawing.Color.Gold;
             this.label6.Location = new System.Drawing.Point(12, 440);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(244, 44);
+            this.label6.Size = new System.Drawing.Size(255, 48);
             this.label6.TabIndex = 10;
             this.label6.Text = "Configuración de sectores\r\n de cálculo:";
             this.label6.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -186,7 +173,7 @@
             this.label5.ForeColor = System.Drawing.Color.Gold;
             this.label5.Location = new System.Drawing.Point(12, 27);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(241, 22);
+            this.label5.Size = new System.Drawing.Size(249, 24);
             this.label5.TabIndex = 9;
             this.label5.Text = "POTENCIA REAL / IDEAL";
             // 
@@ -204,7 +191,7 @@
             this.label4.ForeColor = System.Drawing.Color.White;
             this.label4.Location = new System.Drawing.Point(96, 198);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(68, 16);
+            this.label4.Size = new System.Drawing.Size(71, 17);
             this.label4.TabIndex = 7;
             this.label4.Text = "Cadencia:";
             // 
@@ -222,7 +209,7 @@
             this.label3.ForeColor = System.Drawing.Color.White;
             this.label3.Location = new System.Drawing.Point(89, 74);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(80, 16);
+            this.label3.Size = new System.Drawing.Size(86, 17);
             this.label3.TabIndex = 5;
             this.label3.Text = "Fuerza pico:";
             // 
@@ -245,7 +232,7 @@
             this.label2.ForeColor = System.Drawing.Color.White;
             this.label2.Location = new System.Drawing.Point(59, 265);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(155, 16);
+            this.label2.Size = new System.Drawing.Size(165, 17);
             this.label2.TabIndex = 3;
             this.label2.Text = "Frecuencia de Muestreo:";
             // 
@@ -256,7 +243,7 @@
             this.label1.ForeColor = System.Drawing.Color.White;
             this.label1.Location = new System.Drawing.Point(76, 135);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(113, 16);
+            this.label1.Size = new System.Drawing.Size(121, 17);
             this.label1.TabIndex = 2;
             this.label1.Text = "Longitud de biela:";
             // 
@@ -432,7 +419,7 @@
             this.label13.ForeColor = System.Drawing.Color.Black;
             this.label13.Location = new System.Drawing.Point(641, 450);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(101, 16);
+            this.label13.Size = new System.Drawing.Size(107, 17);
             this.label13.TabIndex = 18;
             this.label13.Text = "Sector inicial:";
             // 
@@ -444,7 +431,7 @@
             this.label12.ForeColor = System.Drawing.Color.Black;
             this.label12.Location = new System.Drawing.Point(641, 387);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(147, 32);
+            this.label12.Size = new System.Drawing.Size(154, 34);
             this.label12.TabIndex = 17;
             this.label12.Text = "Numero de sectores\r\nmaximo:";
             // 
@@ -559,7 +546,6 @@
         private System.Windows.Forms.Button btGraficarSectorizacion;
         private System.Windows.Forms.TextBox editInicioSectorG;
         private System.Windows.Forms.TextBox editMaximoSectorG;
-        private System.Windows.Forms.Button btnAnguloInicio;
         private System.Windows.Forms.DataVisualization.Charting.Chart chartAngulo;
         private System.Windows.Forms.Panel panel3;
     }
