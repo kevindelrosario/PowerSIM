@@ -285,7 +285,7 @@ namespace Simulador
 
                 //indica cada cuantos pruebas se tomaran:
                 int muestras_A_tomar = muestrasTotales / Sp;
-
+                MessageBox.Show("Muestras a tomar: "+ muestras_A_tomar);
                // int iRow2 = 1;
                 nMuestrasCogidas = 0;
 
@@ -365,6 +365,8 @@ namespace Simulador
             }
         }
 
+
+
         /// <summary>
         /// SECTORES
         /// Se encarga de tomar el numero de muestras por sectorCom y guardar los datos segun el numero de sectores que se indiquen.
@@ -374,9 +376,9 @@ namespace Simulador
         {
             tomaDatos();
             richSectores.Clear();
-            sectorCom = new ArrayList();
-            sectorIzq = new ArrayList();
-            sectorDe = new ArrayList();
+          //  sectorCom = new ArrayList();
+          //  sectorIzq = new ArrayList();
+          //  sectorDe = new ArrayList();
 
             decimal sumaSectorDe = 0;
             decimal sumaSectorIz = 0;
@@ -410,7 +412,7 @@ namespace Simulador
             int startAngle;
 
             startAngle = AdjustAngle(angInicio-90);
-
+            //PieStartAngle sirve para indicar el grado desde donde debe empezar 
             chartAngulo.Series[0]["PieStartAngle"] = startAngle.ToString();
 
             for (int i = 1; i <= muestrasTotales; i++)
@@ -448,12 +450,6 @@ namespace Simulador
                     decimal izqP = decimal.Round((izquierdaReal / n_muestrasSector), 2);
 
 
-
-                    // fuerzaPico = Convert.ToDecimal(editFuerzaPico.Text.ToString());
-                    //  cadencia = Convert.ToDecimal(editCadencia.Text.ToString());
-                    //  longitudBiela = Convert.ToDecimal(editLongBiela.Text.ToString());
-
-
                     decimal combinada = potenciaClase.calculaPotencia(combP, fuerzaPico,cadencia,longitudBiela);
                     decimal Derecha = potenciaClase.calculaPotencia(dereP, fuerzaPico, cadencia, longitudBiela);
                     decimal Izquierda = potenciaClase.calculaPotencia(izqP, fuerzaPico, cadencia, longitudBiela);
@@ -475,11 +471,7 @@ namespace Simulador
 
                     //*******************OJO AQUIIIIII abajo ALGO ESTA MAL************************
 
-                    //cada pierna debe entrar a la funcion y ambas con el resultado de la combinada
-                    //richSectores.AppendText("\n ------ Balance Izq/dere: "
-                    //    + potenciaClase.balanceDeError(Izquierda, combinada)
-                    //    + " / " + potenciaClase.balanceDeError(Derecha, combinada) + "\n\n");
-
+                   
                     //LLAMADA A LA FUNCION QUE DIBUJA EN LA GRAFICA
                    
                     chartAngulo.Series[0].Points.AddXY(sectorCom.Count, nMuestras);
@@ -507,9 +499,40 @@ namespace Simulador
                 "\n*** Derecha: " + decimal.Round(sumaSectorDe / numSectores, 2)
                + "\n*** Izquierda: " + decimal.Round(sumaSectorIz / numSectores, 2)
                 + "\n*** Combinada: " + decimal.Round(sumaSectorCom / numSectores, 2) + "\n"
-            + "*** Balance izq/der: " + decimal.Round(potenciaClase.balanceDeError(sumaSectorIz, sumaSectorCom),1) + " / " + decimal.Round(potenciaClase.balanceDeError(sumaSectorDe, sumaSectorCom),1) + "\n\n"); ; 
+            + "*** Balance izq/der: " + decimal.Round(potenciaClase.balanceDeError(sumaSectorIz, sumaSectorCom),1) + " / " + decimal.Round(potenciaClase.balanceDeError(sumaSectorDe, sumaSectorCom),1) + "\n\n"); ;
 
+           porcentajeErrorPotencias();
+            richSectores.AppendText("Porcentaje de error:\n" +
+                "- % Error combinada: "+ potenciaClase.calcularPorcentajeError(decimal.Round(sumaSectorCom / numSectores, 2), totalCombinada_ideal_pError)
+                +"\n"+ "- % Error Derecha: "+ potenciaClase.calcularPorcentajeError(decimal.Round(sumaSectorDe / numSectores, 2), totalPiernaD_ideal_pError)
+                 + "\n" + "- % Error Izquierda: " + potenciaClase.calcularPorcentajeError(decimal.Round(sumaSectorIz / numSectores, 2), totalPiernaIzq_ideal_pError));
+        }
+        public void porcentajeErrorPotencias()
+        {
+            decimal combinada = 0;
+            decimal Totalderecha = 0;
+            decimal TotalIzquierda = 0;
+          
+            //ahora ya no lee el archivo, sino que trabaja con el arrayList de cada uno....
 
+            for (int i = 1; i <= muestrasTotales; i++)
+            {
+                combinada += Convert.ToDecimal(piernaCombinada[i - 1]);
+                Totalderecha += Convert.ToDecimal(piernaDerecha[i - 1]); //Va sumando los valores encontrados
+                TotalIzquierda += Convert.ToDecimal(piernaIzquierda[i - 1]);
+            }
+            decimal fpromComb = decimal.Round((combinada / muestrasTotales), 2);//redondea los datos y lo guardan en la variable para enviarlos
+
+            decimal fpromIzq = decimal.Round((TotalIzquierda / muestrasTotales), 2);//redondea los datos y lo guardan en la variable para enviarlos
+
+            decimal fpromDer = decimal.Round((Totalderecha / muestrasTotales), 2);//redondea los datos y lo guardan en la variable para enviarlos
+
+         
+
+             totalPiernaD_ideal_pError = potenciaClase.calculaPotencia(fpromDer, fuerzaPico, cadencia, longitudBiela);
+            totalPiernaIzq_ideal_pError = potenciaClase.calculaPotencia(fpromIzq, fuerzaPico, cadencia, longitudBiela);
+            totalCombinada_ideal_pError = potenciaClase.calculaPotencia(fpromComb, fuerzaPico, cadencia, longitudBiela);
+          
         }
 
         private int AdjustAngle(int angle)
@@ -555,13 +578,7 @@ namespace Simulador
                     errorConfi.SetError(editNumeroSectores, "Numero maximo de sectores: 12");
                 }
             }
-/*
-            if (!divisor360(Convert.ToInt32(editNumeroSectores.Text)))
-            {
-                ok = false;
-                errorConfi.SetError(editNumeroSectores, "El numero de sector debe ser divisor de 360.");
-            }
-*/
+
             //angulo
             if (editAnguloInicio.Text == "")
             {
@@ -701,97 +718,105 @@ namespace Simulador
                 int sectorMaximo = Convert.ToInt32(editMaximoSectorG.Text);
                 int sectorInicial = Convert.ToInt32(editInicioSectorG.Text);
 
-                int numMuestras = dividirMuestras(sectorMaximo); 
+               // int numMuestras = dividirMuestras(sectorMaximo); 
 
-                graficarSectores(numMuestras, sectorInicial);
+                graficarSectores(sectorInicial, sectorMaximo);
             }
         }
 
 
-        public void graficarSectores(int nMuestras, int angInicio)
+        public void graficarSectores( int angInicio, int agMaximo)
         {
             
             tomaDatos();
             ArrayList sectorCom = new ArrayList();
-            ArrayList sectorIzq = new ArrayList();
-            ArrayList sectorDe = new ArrayList();
 
-
-
-            // Indica el numero de pruebas que se debe tomar por sectores
-            SLDocument sl = new SLDocument(rutaArchivo);
-
-            int cont = 0; //para reinicial el conteo de las pruebas
-                          //variables para potencia Ideal
-            decimal izquierdaIdeal = 0;
-            decimal derechaIdeal = 0;
-
-           // int iRow = 1;
-
-           // int numSectores = Convert.ToInt32(editMaximoSectorG.Text);
-
-            //realiza la busqueda de los datos...
-            for (int i = 1; i <= muestrasTotales; i++)
+            for(int i = angInicio; i <= agMaximo; i++)
             {
-
-                //Se van guardando los datos hasta que el muestras_sobrantes llegue al numero de pruebas que se debe ingresar por sectorCom
-                if (i % nMuestras == 0)
+                if ((divisor360(i)) && (i %2 ==0))
                 {
-                    izquierdaIdeal += piernaDerecha[i - 1];
-                    derechaIdeal += piernaIzquierda[i - 1];
-                    cont++;
+                    //hasta aqui funciona correctamente...
+                    MessageBox.Show("Es divisor: "+ i);
+
+
+
+
                 }
-                if (i == nMuestras)
-                {
-
-                    //Se saca el promedio al sumar todas y dividir entre la cantidad total
-
-
-                    //extraerInformacion 2 con numero de muestras
-                    decimal combP = decimal.Round(((izquierdaIdeal + derechaIdeal) / nMuestras), 2);
-                    decimal dereP = decimal.Round((derechaIdeal / nMuestras), 2);
-                    decimal izqP = decimal.Round((izquierdaIdeal / nMuestras), 2);
-                  
-                    // fuerzaPico = Convert.ToDecimal(editFuerzaPico.Text.ToString());
-                    //  cadencia = Convert.ToDecimal(editCadencia.Text.ToString());
-                    //  longitudBiela = Convert.ToDecimal(editLongBiela.Text.ToString());
-
-                    decimal combinada = potenciaClase.calculaPotencia(combP, fuerzaPico, cadencia, longitudBiela);
-                    decimal Derecha = potenciaClase.calculaPotencia(dereP, fuerzaPico, cadencia, longitudBiela);
-                    decimal Izquierda = potenciaClase.calculaPotencia(izqP, fuerzaPico, cadencia, longitudBiela);
-
-
-
-                    sectorCom.Add(combinada);
-                    sectorDe.Add(Derecha);
-                    sectorIzq.Add(Izquierda);
-
-
-                    cont = 0;
-                }
-
-             //   iRow++;
-
             }
+           
 
-            chartSectorizacion.Series["sectores"].Points.Clear();
+            /*
+                 int cont = 0; //para reinicial el conteo de las pruebas
+                               //variables para potencia Ideal
+                 decimal izquierdaIdeal = 0;
+                 decimal derechaIdeal = 0;
 
-            //Segun el angulo de inicio que se indique se empezaran a graficar los valores que haya dentro del arrayList.
-           // chartSectorizacion.ChartAreas[0].AxisY.Interval = 1;
-            for (int i = angInicio; i <= sectorCom.Count; i++)
-            {
-                //i = angulo - 1 poque asi los angulos no empizan desde el cero.
+                // int iRow = 1;
+
+                // int numSectores = Convert.ToInt32(editMaximoSectorG.Text);
+
+                 //realiza la busqueda de los datos...
+                 for (int i = 1; i <= muestrasTotales; i++)
+                 {
+
+                     //Se van guardando los datos hasta que el muestras_sobrantes llegue al numero de pruebas que se debe ingresar por sectorCom
+                     if (i % nMuestras == 0)
+                     {
+                         izquierdaIdeal += piernaDerecha[i - 1];
+                         derechaIdeal += piernaIzquierda[i - 1];
+                         cont++;
+                     }
+                     if (i == nMuestras)
+                     {
+
+                         //Se saca el promedio al sumar todas y dividir entre la cantidad total
 
 
-                //  decimal porErrorC = calcularPorcentajeError(totalCombinada_real_pError, totalCombinada_ideal_pError);
+                         //extraerInformacion 2 con numero de muestras
+                         decimal combP = decimal.Round(((izquierdaIdeal + derechaIdeal) / nMuestras), 2);
+                         decimal dereP = decimal.Round((derechaIdeal / nMuestras), 2);
+                         decimal izqP = decimal.Round((izquierdaIdeal / nMuestras), 2);
 
-                decimal sumaSectorCom = Convert.ToDecimal(sectorCom[i - 1]);
-                chartSectorizacion.Series["sectores"].Points.AddXY( i, sumaSectorCom); // se debe cambiar el valor a grafical por el correcto (Error Potencia)
+                         // fuerzaPico = Convert.ToDecimal(editFuerzaPico.Text.ToString());
+                         //  cadencia = Convert.ToDecimal(editCadencia.Text.ToString());
+                         //  longitudBiela = Convert.ToDecimal(editLongBiela.Text.ToString());
+
+                         decimal combinada = potenciaClase.calculaPotencia(combP, fuerzaPico, cadencia, longitudBiela);
+                         decimal Derecha = potenciaClase.calculaPotencia(dereP, fuerzaPico, cadencia, longitudBiela);
+                         decimal Izquierda = potenciaClase.calculaPotencia(izqP, fuerzaPico, cadencia, longitudBiela);
 
 
 
-            }
+                         sectorCom.Add(combinada);
+                         sectorDe.Add(Derecha);
+                         sectorIzq.Add(Izquierda);
 
+
+                         cont = 0;
+                     }
+
+                  //   iRow++;
+
+                 }
+
+                 chartSectorizacion.Series["sectores"].Points.Clear();
+
+                 //Segun el angulo de inicio que se indique se empezaran a graficar los valores que haya dentro del arrayList.
+                // chartSectorizacion.ChartAreas[0].AxisY.Interval = 1;
+                 for (int i = angInicio; i <= sectorCom.Count; i++)
+                 {
+                     //i = angulo - 1 poque asi los angulos no empizan desde el cero.
+
+
+                     //  decimal porErrorC = calcularPorcentajeError(totalCombinada_real_pError, totalCombinada_ideal_pError);
+
+                     decimal sumaSectorCom = Convert.ToDecimal(sectorCom[i - 1]);
+                     chartSectorizacion.Series["sectores"].Points.AddXY( i, sumaSectorCom); // se debe cambiar el valor a grafical por el correcto (Error Potencia)
+
+
+
+                 }
+                 */
 
         }
 
