@@ -44,13 +44,13 @@
             // 
             // button1
             // 
-            this.button1.BackColor = System.Drawing.Color.Black;
+            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.button1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Location = new System.Drawing.Point(0, 669);
+            this.button1.ForeColor = System.Drawing.Color.Black;
+            this.button1.Location = new System.Drawing.Point(0, 661);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(518, 29);
+            this.button1.Size = new System.Drawing.Size(518, 37);
             this.button1.TabIndex = 2;
             this.button1.Text = "Cerrar";
             this.button1.UseVisualStyleBackColor = false;

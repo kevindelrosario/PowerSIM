@@ -29,12 +29,13 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.Button button1;
             this.panel1 = new System.Windows.Forms.Panel();
             this.btCalcularConfi = new System.Windows.Forms.Button();
             this.editGradoInicial = new System.Windows.Forms.TextBox();
@@ -63,6 +64,8 @@
             this.richMuestraReal = new System.Windows.Forms.RichTextBox();
             this.chartSectorizacion = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.txtGrafi = new System.Windows.Forms.Label();
+            this.gradoInicialGrafica = new System.Windows.Forms.TextBox();
             this.chartAngulo = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.label13 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
@@ -70,8 +73,7 @@
             this.editInicioSectorG = new System.Windows.Forms.TextBox();
             this.editMaximoSectorG = new System.Windows.Forms.TextBox();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.gradoInicialGrafica = new System.Windows.Forms.TextBox();
-            this.txtGrafi = new System.Windows.Forms.Label();
+            button1 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorCampoVacio)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorConfi)).BeginInit();
@@ -134,7 +136,7 @@
             this.label8.ForeColor = System.Drawing.Color.White;
             this.label8.Location = new System.Drawing.Point(89, 549);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(115, 34);
+            this.label8.Size = new System.Drawing.Size(108, 32);
             this.label8.TabIndex = 13;
             this.label8.Text = "Grado de inicio \r\nde sectorización:";
             // 
@@ -152,7 +154,7 @@
             this.label7.ForeColor = System.Drawing.Color.White;
             this.label7.Location = new System.Drawing.Point(65, 494);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(140, 17);
+            this.label7.Size = new System.Drawing.Size(132, 16);
             this.label7.TabIndex = 11;
             this.label7.Text = "Numero de sectores:";
             // 
@@ -163,7 +165,7 @@
             this.label6.ForeColor = System.Drawing.Color.Gold;
             this.label6.Location = new System.Drawing.Point(12, 440);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(255, 48);
+            this.label6.Size = new System.Drawing.Size(244, 44);
             this.label6.TabIndex = 10;
             this.label6.Text = "Configuración de sectores\r\n de cálculo:";
             this.label6.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -175,7 +177,7 @@
             this.label5.ForeColor = System.Drawing.Color.Gold;
             this.label5.Location = new System.Drawing.Point(12, 27);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(249, 24);
+            this.label5.Size = new System.Drawing.Size(241, 22);
             this.label5.TabIndex = 9;
             this.label5.Text = "POTENCIA REAL / IDEAL";
             // 
@@ -193,7 +195,7 @@
             this.label4.ForeColor = System.Drawing.Color.White;
             this.label4.Location = new System.Drawing.Point(96, 198);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(71, 17);
+            this.label4.Size = new System.Drawing.Size(68, 16);
             this.label4.TabIndex = 7;
             this.label4.Text = "Cadencia:";
             // 
@@ -211,7 +213,7 @@
             this.label3.ForeColor = System.Drawing.Color.White;
             this.label3.Location = new System.Drawing.Point(89, 74);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(86, 17);
+            this.label3.Size = new System.Drawing.Size(80, 16);
             this.label3.TabIndex = 5;
             this.label3.Text = "Fuerza pico:";
             // 
@@ -234,7 +236,7 @@
             this.label2.ForeColor = System.Drawing.Color.White;
             this.label2.Location = new System.Drawing.Point(59, 265);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(165, 17);
+            this.label2.Size = new System.Drawing.Size(155, 16);
             this.label2.TabIndex = 3;
             this.label2.Text = "Frecuencia de Muestreo:";
             // 
@@ -245,7 +247,7 @@
             this.label1.ForeColor = System.Drawing.Color.White;
             this.label1.Location = new System.Drawing.Point(76, 135);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(121, 17);
+            this.label1.Size = new System.Drawing.Size(113, 16);
             this.label1.TabIndex = 2;
             this.label1.Text = "Longitud de biela:";
             // 
@@ -355,20 +357,20 @@
             this.chartSectorizacion.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea2.Name = "ChartArea1";
-            this.chartSectorizacion.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.chartSectorizacion.Legends.Add(legend2);
+            chartArea4.Name = "ChartArea1";
+            this.chartSectorizacion.ChartAreas.Add(chartArea4);
+            legend4.Name = "Legend1";
+            this.chartSectorizacion.Legends.Add(legend4);
             this.chartSectorizacion.Location = new System.Drawing.Point(641, 12);
             this.chartSectorizacion.Name = "chartSectorizacion";
-            series2.BorderWidth = 2;
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series2.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-            series2.LabelBorderWidth = 2;
-            series2.Legend = "Legend1";
-            series2.Name = "sectores";
-            this.chartSectorizacion.Series.Add(series2);
+            series4.BorderWidth = 2;
+            series4.ChartArea = "ChartArea1";
+            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series4.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            series4.LabelBorderWidth = 2;
+            series4.Legend = "Legend1";
+            series4.Name = "sectores";
+            this.chartSectorizacion.Series.Add(series4);
             this.chartSectorizacion.Size = new System.Drawing.Size(626, 294);
             this.chartSectorizacion.TabIndex = 8;
             this.chartSectorizacion.Text = "chart1";
@@ -379,6 +381,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel2.BackColor = System.Drawing.Color.Gray;
+            this.panel2.Controls.Add(button1);
             this.panel2.Controls.Add(this.txtGrafi);
             this.panel2.Controls.Add(this.gradoInicialGrafica);
             this.panel2.Controls.Add(this.chartAngulo);
@@ -393,24 +396,45 @@
             this.panel2.Size = new System.Drawing.Size(1279, 449);
             this.panel2.TabIndex = 9;
             // 
+            // txtGrafi
+            // 
+            this.txtGrafi.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.txtGrafi.AutoSize = true;
+            this.txtGrafi.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtGrafi.ForeColor = System.Drawing.Color.Black;
+            this.txtGrafi.Location = new System.Drawing.Point(891, 325);
+            this.txtGrafi.Name = "txtGrafi";
+            this.txtGrafi.Size = new System.Drawing.Size(99, 16);
+            this.txtGrafi.TabIndex = 20;
+            this.txtGrafi.Text = "Grado inicial:";
+            // 
+            // gradoInicialGrafica
+            // 
+            this.gradoInicialGrafica.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.gradoInicialGrafica.Location = new System.Drawing.Point(858, 347);
+            this.gradoInicialGrafica.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.gradoInicialGrafica.Name = "gradoInicialGrafica";
+            this.gradoInicialGrafica.Size = new System.Drawing.Size(187, 22);
+            this.gradoInicialGrafica.TabIndex = 19;
+            // 
             // chartAngulo
             // 
             this.chartAngulo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.chartAngulo.BackColor = System.Drawing.Color.DimGray;
-            chartArea1.Name = "ChartArea1";
-            this.chartAngulo.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chartAngulo.Legends.Add(legend1);
+            chartArea3.Name = "ChartArea1";
+            this.chartAngulo.ChartAreas.Add(chartArea3);
+            legend3.Name = "Legend1";
+            this.chartAngulo.Legends.Add(legend3);
             this.chartAngulo.Location = new System.Drawing.Point(3, 0);
             this.chartAngulo.Name = "chartAngulo";
             this.chartAngulo.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.None;
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Pie;
-            series1.IsValueShownAsLabel = true;
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.chartAngulo.Series.Add(series1);
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Pie;
+            series3.IsValueShownAsLabel = true;
+            series3.Legend = "Legend1";
+            series3.Name = "Series1";
+            this.chartAngulo.Series.Add(series3);
             this.chartAngulo.Size = new System.Drawing.Size(609, 449);
             this.chartAngulo.TabIndex = 10;
             this.chartAngulo.Text = "chart1";
@@ -423,7 +447,7 @@
             this.label13.ForeColor = System.Drawing.Color.Black;
             this.label13.Location = new System.Drawing.Point(638, 325);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(107, 17);
+            this.label13.Size = new System.Drawing.Size(101, 16);
             this.label13.TabIndex = 18;
             this.label13.Text = "Sector inicial:";
             // 
@@ -435,7 +459,7 @@
             this.label12.ForeColor = System.Drawing.Color.Black;
             this.label12.Location = new System.Drawing.Point(638, 371);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(154, 34);
+            this.label12.Size = new System.Drawing.Size(147, 32);
             this.label12.TabIndex = 17;
             this.label12.Text = "Numero de sectores\r\nmaximo:";
             // 
@@ -487,26 +511,19 @@
             this.panel3.Size = new System.Drawing.Size(1279, 357);
             this.panel3.TabIndex = 10;
             // 
-            // gradoInicialGrafica
+            // button1
             // 
-            this.gradoInicialGrafica.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.gradoInicialGrafica.Location = new System.Drawing.Point(858, 347);
-            this.gradoInicialGrafica.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.gradoInicialGrafica.Name = "gradoInicialGrafica";
-            this.gradoInicialGrafica.Size = new System.Drawing.Size(187, 22);
-            this.gradoInicialGrafica.TabIndex = 19;
-            // 
-            // txtGrafi
-            // 
-            this.txtGrafi.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.txtGrafi.AutoSize = true;
-            this.txtGrafi.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtGrafi.ForeColor = System.Drawing.Color.Black;
-            this.txtGrafi.Location = new System.Drawing.Point(891, 325);
-            this.txtGrafi.Name = "txtGrafi";
-            this.txtGrafi.Size = new System.Drawing.Size(105, 17);
-            this.txtGrafi.TabIndex = 20;
-            this.txtGrafi.Text = "Grado inicial:";
+            button1.BackColor = System.Drawing.Color.Cyan;
+            button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            button1.ForeColor = System.Drawing.Color.Black;
+            button1.Location = new System.Drawing.Point(1067, 375);
+            button1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            button1.Name = "button1";
+            button1.Size = new System.Drawing.Size(108, 32);
+            button1.TabIndex = 21;
+            button1.Text = "+ Info";
+            button1.UseVisualStyleBackColor = false;
+            button1.Click += new System.EventHandler(this.button1_Click_2);
             // 
             // CalculosSectores
             // 

@@ -450,9 +450,10 @@ namespace Simulador
                            
                         }
                     }
+                //promediar x muestras_A_tomar
 
-                    //si no es igual a 0 al terminar significa que quedaron pruebas sin tomar
-                    factorCorreccion = (decimal)muestrasTotales / (decimal)(muestrasTotales - muestras_sobrantes); 
+                //si no es igual a 0 al terminar significa que quedaron pruebas sin tomar
+                factorCorreccion = (decimal)muestrasTotales / (decimal)(muestrasTotales - muestras_sobrantes); 
                     
 
                     totalPiernaIzq_muestreo = totalIzquierda * factorCorreccion; //valores para luego utilizarlos en la funcion potenciaReal()
@@ -460,7 +461,7 @@ namespace Simulador
 
                 totalPiernaIzq_muestreo = totalPiernaIzq_muestreo / (decimal) nMuestrasCogidas;
                 totalPiernaDer_muestreo = totalPiernaDer_muestreo / (decimal) nMuestrasCogidas;
-                totalCombinada_muestreo = (totalIzquierda+totalDerecha) / (decimal)nMuestrasCogidas;
+                totalCombinada_muestreo = (totalIzquierda+totalDerecha) * factorCorreccion / (decimal)nMuestrasCogidas ;
 
             }
             catch

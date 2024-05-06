@@ -78,6 +78,7 @@
       <DependentUpon>CalculosSectores.cs</DependentUpon>
     </Compile>
     <Compile Include="Clases\Datos.cs" />
+    <Compile Include="Clases\DatosSectores.cs" />
     <Compile Include="Clases\LeeArchivo.cs" />
     <Compile Include="Clases\Potencia.cs" />
     <Compile Include="InfoFs.cs">
@@ -85,6 +86,12 @@
     </Compile>
     <Compile Include="InfoFs.Designer.cs">
       <DependentUpon>InfoFs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InfoSectores.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InfoSectores.Designer.cs">
+      <DependentUpon>InfoSectores.cs</DependentUpon>
     </Compile>
     <Compile Include="Inicio.cs">
       <SubType>Form</SubType>
@@ -115,6 +122,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="InfoFs.resx">
       <DependentUpon>InfoFs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InfoSectores.resx">
+      <DependentUpon>InfoSectores.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Inicio.resx">
       <DependentUpon>Inicio.cs</DependentUpon>
