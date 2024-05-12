@@ -16,13 +16,10 @@ namespace Simulador
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-<<<<<<< HEAD
-           //  Application.Run(new Inicio());
+
+          //   Application.Run(new Inicio());
            Application.Run(new Preubas());
-=======
-             Application.Run(new Inicio());
-            // Application.Run(new prueba());
->>>>>>> f0b69c1f810f5a6ec8ec2a47735ec431931d7cca
+
         }
     }
 }
