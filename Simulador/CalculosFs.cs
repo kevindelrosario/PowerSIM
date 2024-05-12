@@ -1,4 +1,5 @@
-﻿using Simulador.Clases;
+﻿using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
+using Simulador.Clases;
 using SpreadsheetLight;
 using System;
 using System.Collections;
@@ -18,9 +19,9 @@ namespace Simulador
 
         // ruta 
 
-        SLDocument sl;
+       
         //ARRAYLISTS para guardar los campos:
-        LeeArchivo leerArchivo; //llama la clase
+    
 
         List<decimal> angulo;
         List<decimal> piernaIzquierda;
@@ -127,7 +128,7 @@ namespace Simulador
         public void extraerInformacion(List<decimal> anguloI, List<decimal> piernaDerechaI, List<decimal> PiernaIzquierdaI, List<decimal> piernaCombinadaI, List<decimal> velocidadI, int muestrasTotalesI)
         {
             //rellena los arrayList con cada campo
-            angulo = anguloI;
+          //  angulo = anguloI;
             piernaIzquierda = PiernaIzquierdaI;
             piernaDerecha = piernaDerechaI;
             piernaCombinada = piernaCombinadaI;
@@ -250,13 +251,26 @@ namespace Simulador
                             + "\n % Error combinada: " + calcularPorcentajeError(totalCombinada_real_pError, totalCombinada_ideal_pError)
                             );
 
-                MessageBox.Show("Muestras sin tomar: " + factorCorreccion);
+                MessageBox.Show("Muestras x frecuencia: " + factorCorreccion);
+                MessageBox.Show("Muestras cogidas: " + nMuestrasCogidas);
 
-
+             //   MostrarValoresEnRichTextBox();
             }
 
 
         }
+        private void MostrarValoresEnRichTextBox()
+        {
+            // Limpiar el RichTextBox antes de agregar los nuevos valores
+            
+
+            // Iterar a través de los valores del ArrayList y agregarlos al RichTextBox
+            for (int j = 1; j <= muestrasTotales; j++)
+            {
+               
+                richMuestreo.AppendText(angulo[j-1] +"\n");
+            }
+            }
 
         /*********************************************************************/
         /*********************************************************************/
@@ -396,11 +410,12 @@ namespace Simulador
         public void calculaFuerzasPromediadas(int fs)
         {
             //VARIABLES
-          // int fs = Convert.ToInt32(fs.Text); // Toma la frecuencia de muestreo de los datos
-          //  int numMuestras;//para tomar el numero de muestras
-         
+            // int fs = Convert.ToInt32(fs.Text); // Toma la frecuencia de muestreo de los datos
+            //  int numMuestras;//para tomar el numero de muestras
+
             int Sp;
-            int muestras_sobrantes = 0;
+            int muestras_conteo = 0;
+            int sigue_conteo = 1;
             //variables para sumar los valores totales de cada pierna
             decimal totalIzquierda = 0;
             decimal totalDerecha = 0;
@@ -424,44 +439,64 @@ namespace Simulador
 
                     //indica cada cuantos pruebas se tomaran:
                     int muestras_A_tomar = muestrasTotales / Sp;
+                    int vueltas = muestrasTotales / Sp;
+                    
 
                    // int iRow2 = 1;
                     nMuestrasCogidas = 0;
 
-              
-                //realiza la busqueda de los datos...
-                for (int i = 1; i <= muestrasTotales; i++)
+                //Toma el total de pruebas como referencia para saber cuantas muestras debe haber al final.
+                //para saber donde deterlo.
+                int v2 = 0;
+                for (int i = 1; i <= vueltas; i++)
                 {
-                    decimal derecha = piernaDerecha[i - 1];
-                   decimal izquierda = piernaIzquierda[i - 1];
-                    muestras_sobrantes++;
-                    //muestra++;
 
-                    //  if (muestras_sobrantes == muestras_A_tomar ) //toma no cada valor que indica el sp sino ese valor +1
-                    
-                    if (muestras_sobrantes == muestras_A_tomar )
-                        {
-                            //Se toma el valor siguiente al sp (cada cuantas muestras nos indicaron que se deben guardar anteriormente).
-                            totalIzquierda += izquierda; //se van sumando a la variable izq y der
-                           totalDerecha += derecha;
+                    // decimal derecha = piernaDerecha[i - 1];
+                    //decimal izquierda = piernaIzquierda[i - 1];
+                    // muestras_conteo++;
+                    nMuestrasCogidas= i;
+                  
+                    //se encarga de recorrer y guardar las muestras.
+                        for (int j = 1; j <= muestrasTotales; j++) { 
+                       
+                        decimal derecha = piernaDerecha[j-1 ];
+                        decimal izquierda = piernaIzquierda[j -1 ];
 
-                            muestras_sobrantes = 0; // vuelve a cero para reinicial el conteo despues de tomar el valor y volver a tomar cada cierto momento el valor.
-                            nMuestrasCogidas++;
+
+                        //realiza los saltos y toma las muestras.
+                        //  for (int e = 1; e <= muestras_A_tomar; e++)
+                        // {
+
+                        if (muestras_conteo == muestras_A_tomar)
+                            {
+                                    
+                                    totalIzquierda += izquierda; //se van sumando a la variable izq y der
+                                  totalDerecha += derecha;
+                            //  angulo.Add(j-1);
                            
+                         
+                            muestras_conteo = sigue_conteo; //debe empezar desde el ultimo valor
+                            v2++;
                         }
-                    }
-                //promediar x muestras_A_tomar
-
-                //si no es igual a 0 al terminar significa que quedaron pruebas sin tomar
-                factorCorreccion = (decimal)muestrasTotales / (decimal)(muestrasTotales - muestras_sobrantes); 
                     
+                        muestras_conteo++;
+                    }
 
-                    totalPiernaIzq_muestreo = totalIzquierda * factorCorreccion; //valores para luego utilizarlos en la funcion potenciaReal()
-                    totalPiernaDer_muestreo = totalDerecha * factorCorreccion;
+                    sigue_conteo += 1;
+                    muestras_A_tomar += 1;
+                }
 
-                totalPiernaIzq_muestreo = totalPiernaIzq_muestreo / (decimal) nMuestrasCogidas;
-                totalPiernaDer_muestreo = totalPiernaDer_muestreo / (decimal) nMuestrasCogidas;
-                totalCombinada_muestreo = (totalIzquierda+totalDerecha) * factorCorreccion / (decimal)nMuestrasCogidas ;
+                //promediar x muestras_A_tomar
+               
+                //si no es igual a 0 al terminar significa que quedaron pruebas sin tomar
+                factorCorreccion = v2;
+
+                    totalPiernaIzq_muestreo = totalIzquierda / muestras_A_tomar; //valores para luego utilizarlos en la funcion potenciaReal()
+                    totalPiernaDer_muestreo = totalDerecha / muestras_A_tomar;
+
+               // totalPiernaIzq_muestreo = totalPiernaIzq_muestreo / (decimal) nMuestrasCogidas;
+              //  totalPiernaDer_muestreo = totalPiernaDer_muestreo / (decimal) nMuestrasCogidas;
+                totalCombinada_muestreo = (totalIzquierda+totalDerecha) / vueltas;
 
             }
             catch
