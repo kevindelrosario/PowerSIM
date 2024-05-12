@@ -89,3 +89,5 @@ C:\Personal KEVIN\TRABAJOS DE CLASE PARA PORTAFOLIO\PowerSIM\Simulador\obj\Debug
 C:\Personal KEVIN\TRABAJOS DE CLASE PARA PORTAFOLIO\PowerSIM\Simulador\obj\Debug\Simulador.exe
 C:\Personal KEVIN\TRABAJOS DE CLASE PARA PORTAFOLIO\PowerSIM\Simulador\obj\Debug\Simulador.pdb
 C:\Personal KEVIN\TRABAJOS DE CLASE PARA PORTAFOLIO\PowerSIM\Simulador\obj\Debug\Simulador.InfoSectores.resources
+C:\Users\kevin\OneDrive\Escritorio\Proyecto final\PowerSIM\Simulador\obj\Debug\Simulador.InfoSectores.resources
+C:\Users\kevin\OneDrive\Escritorio\Proyecto final\PowerSIM\Simulador\obj\Debug\Simulador.Preubas.resources
