@@ -17,20 +17,13 @@ namespace Simulador
         {
             InitializeComponent();
 
-
-            // Ejemplo de uso
-            ArrayList numeros = new ArrayList() { 1, 2, 3, 4, 5, 6 ,7,8,9,10,11,12,13,14,15,16,17,18};
-            int saltos = 5;
-            ArrayList nuevoArrayList = ObtenerNuevoArrayList(numeros, saltos);
-
-            // Mostrar el nuevo ArrayList en un RichTextBox
-            MostrarEnRichTextBox(nuevoArrayList);
         }
 
 
-        static ArrayList ObtenerNuevoArrayList(ArrayList numeros, int saltos)
+        static List<decimal> ObtenerNuevoArrayList(List<decimal> numeros, int saltos)
         {
-            ArrayList nuevoArrayList = new ArrayList();
+            List<decimal> nuevoArrayList = new List<decimal>();
+      //      ArrayList nuevoArrayList = new ArrayList();
             int indiceInicial = -1;
             int contador = 0;
             int contador2 = 0;
@@ -53,19 +46,33 @@ namespace Simulador
             return nuevoArrayList;
         }
 
-        public void MostrarEnRichTextBox(ArrayList lista)
+        public void MostrarEnRichTextBox(List<decimal> lista, int saltos)
         {
-            
+            richTextBox1.Clear();
+            decimal promedio = 0;
             // Agregar los elementos de la lista al RichTextBox
             foreach (var item in lista)
             {
+                promedio += Convert.ToDecimal(item);
                 richTextBox1.AppendText(item.ToString() + "\n");
-            }
 
-         
+            }
+            promedio = decimal.Round(promedio / saltos, 2);
+            //richTextBox1.AppendText("Promedio: \n" + promedio);
+            MessageBox.Show("promedio: " + promedio);
+
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
 
+            // Ejemplo de uso
+           List<decimal> numeros = new List<decimal> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18 };
+            int saltos = Convert.ToInt32(textBox1.Text);
 
+           List <decimal> nuevoArrayList = ObtenerNuevoArrayList(numeros, saltos);
+            // Mostrar el nuevo ArrayList en un RichTextBox
+            MostrarEnRichTextBox(nuevoArrayList, saltos);
+        }
     }
 }

@@ -269,10 +269,8 @@ namespace Simulador
           //  int numMuestras;//para tomar el numero de muestras
             SLDocument sl = new SLDocument(rutaArchivo);
             int Sp;
-            int muestras_sobrantes = 0;
             //variables para sumar los valores totales de cada pierna
-            decimal totalIzquierda = 0;
-            decimal totalDerecha = 0;
+ 
 
 
             try
@@ -286,44 +284,52 @@ namespace Simulador
                 muestrasPorPedaladas = Sp;
 
                 //indica cada cuantos pruebas se tomaran:
-                int muestras_A_tomar = muestrasTotales / Sp;
-                MessageBox.Show("Muestras a tomar: "+ muestras_A_tomar);
-               // int iRow2 = 1;
-                nMuestrasCogidas = 0;
+              //  int muestras_A_tomar = muestrasTotales / Sp;
 
+               // MessageBox.Show("Muestras a tomar: "+ muestras_A_tomar);
+                int vueltas = muestrasTotales / Sp;
+
+
+                List<decimal> piernaDerechaNuevo = ObtenerNuevoArrayList(piernaDerecha, vueltas);
+                List<decimal> piernaIzquierdaNuevo = ObtenerNuevoArrayList(piernaIzquierda, vueltas);
+                List<decimal> piernaCombinadaNuevo = ObtenerNuevoArrayList(piernaCombinada, vueltas);
                 //realiza la busqueda de los datos...
-                
+
                 //ahora ya no lee el archivo, sino que trabaja con el arrayList de cada uno....
 
-                for (int i = 1; i <= muestrasTotales; i++)
-                {
-                    
-                    decimal derecha = Convert.ToDecimal(piernaDerecha[i - 1]);
-                    decimal izquierda = Convert.ToDecimal(piernaIzquierda[i - 1]);
-                    muestras_sobrantes++;
-                    //  if (muestras_sobrantes == muestras_A_tomar ) //toma no cada valor que indica el sp sino ese valor +1
-                    if (muestras_sobrantes == muestras_A_tomar)
-                    {
-                        //Se toma el valor siguiente al sp (cada cuantas muestras nos indicaron que se deben guardar anteriormente).
-                        totalIzquierda += izquierda; //se van sumando a la variable izq y der
-                        totalDerecha += derecha;
+                //for (int i = 1; i <= muestrasTotales; i++)
+                //{
 
-                        muestras_sobrantes = 0; // vuelve a cero para reinicial el conteo despues de tomar el valor y volver a tomar cada cierto momento el valor.
-                        nMuestrasCogidas++;
-                    }
-                   
-                }
-            
-                //si no es igual a 0 al terminar significa que quedaron pruebas sin tomar
-                factorCorreccion = (decimal)muestrasTotales / (decimal)(muestrasTotales - muestras_sobrantes);
+                //    decimal derecha = Convert.ToDecimal(piernaDerecha[i - 1]);
+                //    decimal izquierda = Convert.ToDecimal(piernaIzquierda[i - 1]);
+                //    muestras_sobrantes++;
+                //    //  if (muestras_sobrantes == muestras_A_tomar ) //toma no cada valor que indica el sp sino ese valor +1
+                //    if (muestras_sobrantes == muestras_A_tomar)
+                //    {
+                //        //Se toma el valor siguiente al sp (cada cuantas muestras nos indicaron que se deben guardar anteriormente).
+                //        totalIzquierda += izquierda; //se van sumando a la variable izq y der
+                //        totalDerecha += derecha;
 
-                totalPiernaIzq_muestreo = totalIzquierda * factorCorreccion; //valores para luego utilizarlos en la funcion potenciaReal()
-                totalPiernaDer_muestreo = totalDerecha * factorCorreccion;
+                //        muestras_sobrantes = 0; // vuelve a cero para reinicial el conteo despues de tomar el valor y volver a tomar cada cierto momento el valor.
+                //        nMuestrasCogidas++;
+                //    }
 
-                //valores para luego utilizarlos en la funcion potenciaReal()
-                totalPiernaIzq_muestreo = totalPiernaIzq_muestreo / (decimal)nMuestrasCogidas;
-                totalPiernaDer_muestreo = totalPiernaDer_muestreo / (decimal)nMuestrasCogidas;
-                totalCombinada_muestreo = (totalIzquierda + totalDerecha) / (decimal)nMuestrasCogidas;
+                //}
+
+                ////si no es igual a 0 al terminar significa que quedaron pruebas sin tomar
+                //factorCorreccion = (decimal)muestrasTotales / (decimal)(muestrasTotales - muestras_sobrantes);
+
+                //totalPiernaIzq_muestreo = totalIzquierda * factorCorreccion; //valores para luego utilizarlos en la funcion potenciaReal()
+                //totalPiernaDer_muestreo = totalDerecha * factorCorreccion;
+
+                ////valores para luego utilizarlos en la funcion potenciaReal()
+                //totalPiernaIzq_muestreo = totalPiernaIzq_muestreo / (decimal)nMuestrasCogidas;
+                //totalPiernaDer_muestreo = totalPiernaDer_muestreo / (decimal)nMuestrasCogidas;
+                //totalCombinada_muestreo = (totalIzquierda + totalDerecha) / (decimal)nMuestrasCogidas;
+
+                totalPiernaIzq_muestreo = promediarMuestras(piernaIzquierdaNuevo, vueltas); //valores para luego utilizarlos en la funcion potenciaReal()
+                totalPiernaDer_muestreo = promediarMuestras(piernaDerechaNuevo, vueltas);
+                totalCombinada_muestreo = promediarMuestras(piernaCombinadaNuevo, vueltas);
             }
             catch
             {
@@ -332,7 +338,60 @@ namespace Simulador
 
 
         }
+        /// <summary>
+        /// ObtenerNuevoArrayList:
+        /// Realiza los saltos indicados y los guardar en un arrayList
+        /// </summary>
+        /// <param name="numeros"></param>
+        /// <param name="saltos"></param>
+        /// <returns></returns>
+        static List<decimal> ObtenerNuevoArrayList(List<decimal> numeros, int saltos)
+        {
+            List<decimal> nuevoArrayList = new List<decimal>();
+            //      ArrayList nuevoArrayList = new ArrayList();
+            int indiceInicial = -1;
+            int contador = 0;
+            int contador2 = 0;
 
+
+            while (contador < saltos)
+            {
+                for (int i = indiceInicial; i < numeros.Count; i++)
+                {
+                    if (contador == saltos)
+                    {
+                        nuevoArrayList.Add(numeros[i]);
+                        contador = 0;
+                    }
+                    contador++;
+                }
+                contador2++;
+            }
+
+            return nuevoArrayList;
+        }
+        /// <summary>
+        /// promediarMuestras
+        /// </summary>
+        /// Devuelve el promedio de la frecuencia de muestreo
+        /// <param name="lista"></param>
+        /// <param name="saltos"></param>
+        /// <returns></returns>
+        public decimal promediarMuestras(List<decimal> lista, int saltos)
+        {
+            //   richTextBox1.Clear();
+            decimal promedio = 0;
+            // Agregar los elementos de la lista al RichTextBox
+            foreach (decimal item in lista)
+            {
+                promedio += Convert.ToDecimal(item);
+
+            }
+            promedio = decimal.Round(promedio / saltos, 2);
+            //richTextBox1.AppendText("Promedio: \n" + promedio);
+            return promedio;
+
+        }
 
         private void btCalcularConfi_Click(object sender, EventArgs e)
         {
@@ -681,12 +740,12 @@ namespace Simulador
                 ok = false;
                 errorCampoVacio.SetError(editCadencia, "Ingresa la Cadencia.");
             }
-            if (editMuestreo.Text == "" || Convert.ToInt32(editMuestreo.Text.ToString()) < 3)
+          /*  if (editMuestreo.Text == "" || Convert.ToInt32(editMuestreo.Text.ToString()) < 3)
             {
                 ok = false;
                 errorCampoVacio.SetError(editMuestreo, "El valor fs debe ser mayor a 2.");
             }
-
+          */
             return ok;
         }
 
