@@ -65,14 +65,56 @@ namespace Simulador
 
         private void button1_Click(object sender, EventArgs e)
         {
-
+            int saltos = Convert.ToInt32(textBox1.Text);
+            /* intento 1
             // Ejemplo de uso
            List<decimal> numeros = new List<decimal> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18 };
             int saltos = Convert.ToInt32(textBox1.Text);
 
            List <decimal> nuevoArrayList = ObtenerNuevoArrayList(numeros, saltos);
             // Mostrar el nuevo ArrayList en un RichTextBox
-            MostrarEnRichTextBox(nuevoArrayList, saltos);
+            MostrarEnRichTextBox(nuevoArrayList, saltos);*/
+
+
+
+            // Ejemplo de uso
+            List<int> inputList = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18 };
+
+            // int saltos = 2;
+
+            List<int> result = CircularRead(inputList, saltos);
+
+            richTextBox1.AppendText("\n\nInput List: " + string.Join(", ", inputList));
+             richTextBox1.AppendText("\nResult List: " + string.Join(", ", result));
+            richTextBox1.AppendText("\ntotal: " + result.Count);
         }
+
+
+        public static List<int> CircularRead(List<int> inputList, int saltos)
+        {
+            // Nuevo List para almacenar los resultados
+            List<int> resultList = new List<int>();
+           
+            int index = 0;
+            int cont = 0;
+            // Recorremos el List de entrada en un bucle circular
+            while(cont < saltos)
+            {
+                for (int i = -1; i < inputList.Count; i++)
+                {
+                    if (index == saltos)
+                    {
+                        resultList.Add(inputList[i]);
+                        index = 0;
+                    }
+                    index++;
+                
+                }
+                cont++;
+            }
+           
+            return resultList;
+        }
+
     }
 }

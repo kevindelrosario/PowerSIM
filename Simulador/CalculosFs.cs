@@ -24,6 +24,7 @@ namespace Simulador
     
 
         List<decimal> angulo;
+        List<int> posiciones;
         List<decimal> piernaIzquierda;
         List<decimal> piernaDerecha;
         List<decimal> piernaCombinada;
@@ -430,9 +431,16 @@ namespace Simulador
                     int vueltas = muestrasTotales / Sp;
                     
 
-                List<decimal> piernaDerechaNuevo = ObtenerNuevoArrayList(piernaDerecha, vueltas);
+                List<decimal> piernaDerechaNuevo = CircularRead(piernaDerecha, vueltas);
                 List<decimal> piernaIzquierdaNuevo = ObtenerNuevoArrayList(piernaIzquierda, vueltas);
                 List<decimal> piernaCombinadaNuevo = ObtenerNuevoArrayList(piernaCombinada, vueltas);
+
+                richMuestreo.Clear();
+                for (int i = 0; i < piernaDerechaNuevo.Count; i++)
+                {
+                    richMuestreo.AppendText(piernaDerechaNuevo[i].ToString()+"\n");
+                }
+                
 
              //   MessageBox.Show("promedio: " + promediarMuestras(piernaDerechaNuevo, vueltas));
 
@@ -481,7 +489,7 @@ namespace Simulador
                 //promediar x muestras_A_tomar
 
                 //si no es igual a 0 al terminar significa que quedaron pruebas sin tomar
-                   factorCorreccion = piernaDerecha.Count;
+                   factorCorreccion = piernaDerechaNuevo.Count;
 
 
                 //MOSTRAS MUESTRAS PROMEDIADAS:
@@ -506,9 +514,10 @@ namespace Simulador
         /// <param name="numeros"></param>
         /// <param name="saltos"></param>
         /// <returns></returns>
-        static List<decimal> ObtenerNuevoArrayList(List<decimal> numeros, int saltos)
+         List<decimal> ObtenerNuevoArrayList(List<decimal> numeros, int saltos)
         {
             List<decimal> nuevoArrayList = new List<decimal>();
+           // posiciones = new List<int>();
             //      ArrayList nuevoArrayList = new ArrayList();
             int indiceInicial = -1;
             int contador = 0;
@@ -519,8 +528,10 @@ namespace Simulador
             {
                 for (int i = indiceInicial; i < numeros.Count; i++)
                 {
+                 
                     if (contador == saltos)
                     {
+                  //      posiciones.Add(i);
                         nuevoArrayList.Add(numeros[i]);
                         contador = 0;
                     }
@@ -531,14 +542,49 @@ namespace Simulador
 
             return nuevoArrayList;
         }
-        /// <summary>
-        /// promediarMuestras
-        /// </summary>
-        /// Devuelve el promedio de la frecuencia de muestreo
-        /// <param name="lista"></param>
-        /// <param name="saltos"></param>
-        /// <returns></returns>
-        public decimal promediarMuestras(List<decimal> lista, int saltos)
+
+
+
+        public static List<decimal> CircularRead(List<decimal> muestras, int saltos)
+        {
+            // Nuevo List para almacenar los resultados
+            List<decimal> resultList = new List<decimal>();
+            int index = 0;
+            int cont = 0;
+
+            // Recorremos el List de entrada en un bucle circular
+            while (cont < saltos)
+            {
+                for (int i = -1; i < muestras.Count; i++)
+                {
+                    if (index == saltos)
+                    {
+                        resultList.Add(muestras[i]);
+                        index = 0;
+                    }
+                    index++;
+
+                }
+                cont++;
+            }
+
+            return resultList;
+        }
+
+    
+
+
+
+
+
+    /// <summary>
+    /// promediarMuestras
+    /// </summary>
+    /// Devuelve el promedio de la frecuencia de muestreo
+    /// <param name="lista"></param>
+    /// <param name="saltos"></param>
+    /// <returns></returns>
+    public decimal promediarMuestras(List<decimal> lista, int saltos)
         {
             //   richTextBox1.Clear();
             decimal promedio = 0;

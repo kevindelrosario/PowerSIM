@@ -18,7 +18,7 @@ namespace Simulador
             Application.SetCompatibleTextRenderingDefault(false);
 
              Application.Run(new Inicio());
-        //   Application.Run(new Preubas());
+             //Application.Run(new Preubas());
 
         }
     }

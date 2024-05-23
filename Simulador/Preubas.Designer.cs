@@ -38,7 +38,7 @@ namespace Simulador
             // 
             this.richTextBox1.Location = new System.Drawing.Point(129, 35);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(265, 373);
+            this.richTextBox1.Size = new System.Drawing.Size(618, 373);
             this.richTextBox1.TabIndex = 0;
             this.richTextBox1.Text = "";
             // 
@@ -63,7 +63,7 @@ namespace Simulador
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(419, 450);
+            this.ClientSize = new System.Drawing.Size(833, 450);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.richTextBox1);
