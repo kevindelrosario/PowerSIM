@@ -1,4 +1,5 @@
-﻿using Simulador.Clases;
+﻿using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
+using Simulador.Clases;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -18,6 +19,7 @@ namespace Simulador
 
         public InfoFs(List<Datos> info_fs_e)
         {
+        
             InitializeComponent();
            info_fs = info_fs_e;
             escribe();

@@ -25,7 +25,7 @@ namespace Simulador.Clases
         // Método para convertir los datos a una cadena de texto
         public override string ToString()
         {
-            return $"Fs: {fs}\n Total Combinada Real: {totalCombReal}\n Total Combinada Ideal: {totalCombIdeal} " +
+            return $"Fs: {fs}\n Total Combinada Ideal: {totalCombIdeal} \n Total Combinada Real: {totalCombReal} " +
                 $"\nError de potencia: {errorPotencia}\n";
         }
     }

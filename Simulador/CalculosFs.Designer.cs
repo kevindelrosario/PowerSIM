@@ -58,7 +58,6 @@
             this.chartErrores = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.errorCampoVacio = new System.Windows.Forms.ErrorProvider(this.components);
             this.timerGraficaError = new System.Windows.Forms.Timer(this.components);
-            this.richMuestreo = new System.Windows.Forms.RichTextBox();
             btRepresentarG = new System.Windows.Forms.Button();
             button1 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
@@ -227,7 +226,7 @@
             // 
             // richPotencia
             // 
-            this.richPotencia.Location = new System.Drawing.Point(13, 314);
+            this.richPotencia.Location = new System.Drawing.Point(13, 401);
             this.richPotencia.Margin = new System.Windows.Forms.Padding(4);
             this.richPotencia.Name = "richPotencia";
             this.richPotencia.Size = new System.Drawing.Size(401, 309);
@@ -236,7 +235,7 @@
             // 
             // richInfo
             // 
-            this.richInfo.Location = new System.Drawing.Point(13, 200);
+            this.richInfo.Location = new System.Drawing.Point(57, 271);
             this.richInfo.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.richInfo.Name = "richInfo";
             this.richInfo.Size = new System.Drawing.Size(301, 88);
@@ -382,21 +381,12 @@
             // 
             this.timerGraficaError.Interval = 1000;
             // 
-            // richMuestreo
-            // 
-            this.richMuestreo.Location = new System.Drawing.Point(12, 658);
-            this.richMuestreo.Name = "richMuestreo";
-            this.richMuestreo.Size = new System.Drawing.Size(402, 205);
-            this.richMuestreo.TabIndex = 8;
-            this.richMuestreo.Text = "";
-            // 
             // CalculosFs
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(1571, 896);
-            this.Controls.Add(this.richMuestreo);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.richInfo);
             this.Controls.Add(this.richPotencia);
@@ -442,6 +432,5 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.ErrorProvider errorCampoVacio;
         private System.Windows.Forms.Timer timerGraficaError;
-        private System.Windows.Forms.RichTextBox richMuestreo;
     }
 }
