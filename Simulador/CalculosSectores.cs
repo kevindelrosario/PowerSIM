@@ -47,8 +47,8 @@ namespace Simulador
         //Variables para tomar los valores de muestreo que entran al realizar los calculos de potencia ideal y real.
         //Se utilizan luego para guardar los datos de muestreo y para luego mostrarlo al realizarse el calculo de potencia(real/ideal)
         public decimal nMuestrasTotales = decimal.Zero;
-        public decimal muestrasPorPedaladas = decimal.Zero;
-
+        public decimal saltos = decimal.Zero;
+        public int resul_sp = 0;
 
         /****************RESULTADO DE POTENCIA IDEAL************************************/
         public decimal pTotal_pIzquierda_ideal = decimal.Zero; //Aqui se guardara el resultado que se obtenga para poder trabajar con el sin problema por toda la clase
@@ -238,7 +238,8 @@ namespace Simulador
             //los resultados se muestran en el rich.
 
             richMuestraReal.AppendText("\n Muestras totales: " + muestrasTotales);
-            richMuestraReal.AppendText("\n Numero de muestras por pedalada(Sp): " + muestrasPorPedaladas); // La frecuencia con la que se tomaran las pruebas
+            richMuestraReal.AppendText("\n Frecuencia(Sp): " + resul_sp); // La frecuencia con la que se tomaran las pruebas
+            richMuestraReal.AppendText("\n Saltos entre muestras: " + saltos);
 
             //Muestra los resultados
             richReal.AppendText("\n" + " potencia pierna izquierda: " + potenciaClase.calculaPotencia(fIzqui, fuerzaPico, cadencia, longitudBiela));
@@ -267,109 +268,91 @@ namespace Simulador
             //VARIABLES
             // int fs = Convert.ToInt32(fs.Text); // Toma la frecuencia de muestreo de los datos
           //  int numMuestras;//para tomar el numero de muestras
-            SLDocument sl = new SLDocument(rutaArchivo);
+           
             int Sp;
             //variables para sumar los valores totales de cada pierna
- 
+
+            decimal totalIzquierda = 0;
+            decimal totalDerecha = 0;
 
 
             try
             {
 
 
-                Sp = (fs * 60) / Convert.ToInt32(editCadencia.Text.ToString()); // Sp es el número de muestras por pedalada.
-
+                Sp = (fs * 60) / Convert.ToInt32(editCadencia.Text.ToString());// La frecuencia con la que se tomaran las pruebas
+                resul_sp = Sp;
                 //Info del archivo y la frecuencia de muestreo
-                
-                muestrasPorPedaladas = Sp;
+
 
                 //indica cada cuantos pruebas se tomaran:
-              //  int muestras_A_tomar = muestrasTotales / Sp;
+                int muestras_A_tomar = muestrasTotales / Sp;
+                int muestras_sobrantes = 0;
+                // MessageBox.Show("Muestras a tomar: "+ muestras_A_tomar);
+                saltos = muestras_A_tomar;
+                //Se iran sumando los promedios de cada salto
+                decimal suma_promedio_i = 0;
+                decimal suma_promedio_D = 0;
 
-               // MessageBox.Show("Muestras a tomar: "+ muestras_A_tomar);
-                int vueltas = muestrasTotales / Sp;
+                int cont = 0;
+
+                for (int iteracion = 0; iteracion < Sp; iteracion++)
+                {
+                    for (int i = 1 + iteracion; i <= muestrasTotales; i++)
+                    {
+
+                        decimal derecha = Convert.ToDecimal(piernaDerecha[i - 1]);
+                        decimal izquierda = Convert.ToDecimal(piernaIzquierda[i - 1]);
+                        muestras_sobrantes++;
+                        //  if (muestras_sobrantes == muestras_A_tomar ) //toma no cada valor que indica el resul_sp sino ese valor +1
+                        if (muestras_sobrantes == muestras_A_tomar)
+                        {
+                            //Se toma el valor siguiente al resul_sp (cada cuantas muestras nos indicaron que se deben guardar anteriormente).
+                            totalIzquierda += izquierda; //se van sumando a la variable izq y der
+                            totalDerecha += derecha;
+
+                            muestras_sobrantes = 0; // vuelve a cero para reinicial el conteo despues de tomar el valor y volver a tomar cada cierto momento el valor.
+                            nMuestrasCogidas++;
+                            cont++;
+                        }
+
+                    }
+                    //  muestras_A_tomar ++;
+
+                    //promediar y guardar en variable
+
+                    suma_promedio_i += totalIzquierda / cont;
+                    suma_promedio_D += totalDerecha / cont;
+                    cont = 0;
+                    // regresa a 0 para seguir sumando
+                    totalIzquierda = 0;
+                    totalDerecha = 0;
 
 
-                List<decimal> piernaDerechaNuevo = ObtenerNuevoArrayList(piernaDerecha, vueltas);
-                List<decimal> piernaIzquierdaNuevo = ObtenerNuevoArrayList(piernaIzquierda, vueltas);
-                List<decimal> piernaCombinadaNuevo = ObtenerNuevoArrayList(piernaCombinada, vueltas);
-                //realiza la busqueda de los datos...
-
-                //ahora ya no lee el archivo, sino que trabaja con el arrayList de cada uno....
-
-                //for (int i = 1; i <= muestrasTotales; i++)
-                //{
-
-                //    decimal derecha = Convert.ToDecimal(piernaDerecha[i - 1]);
-                //    decimal izquierda = Convert.ToDecimal(piernaIzquierda[i - 1]);
-                //    muestras_sobrantes++;
-                //    //  if (muestras_sobrantes == muestras_A_tomar ) //toma no cada valor que indica el sp sino ese valor +1
-                //    if (muestras_sobrantes == muestras_A_tomar)
-                //    {
-                //        //Se toma el valor siguiente al sp (cada cuantas muestras nos indicaron que se deben guardar anteriormente).
-                //        totalIzquierda += izquierda; //se van sumando a la variable izq y der
-                //        totalDerecha += derecha;
-
-                //        muestras_sobrantes = 0; // vuelve a cero para reinicial el conteo despues de tomar el valor y volver a tomar cada cierto momento el valor.
-                //        nMuestrasCogidas++;
-                //    }
-
-                //}
-
-                ////si no es igual a 0 al terminar significa que quedaron pruebas sin tomar
-                //factorCorreccion = (decimal)muestrasTotales / (decimal)(muestrasTotales - muestras_sobrantes);
-
-                //totalPiernaIzq_muestreo = totalIzquierda * factorCorreccion; //valores para luego utilizarlos en la funcion potenciaReal()
-                //totalPiernaDer_muestreo = totalDerecha * factorCorreccion;
-
-                ////valores para luego utilizarlos en la funcion potenciaReal()
-                //totalPiernaIzq_muestreo = totalPiernaIzq_muestreo / (decimal)nMuestrasCogidas;
-                //totalPiernaDer_muestreo = totalPiernaDer_muestreo / (decimal)nMuestrasCogidas;
-                //totalCombinada_muestreo = (totalIzquierda + totalDerecha) / (decimal)nMuestrasCogidas;
-
-                totalPiernaIzq_muestreo = promediarMuestras(piernaIzquierdaNuevo, vueltas); //valores para luego utilizarlos en la funcion potenciaReal()
-                totalPiernaDer_muestreo = promediarMuestras(piernaDerechaNuevo, vueltas);
-                totalCombinada_muestreo = promediarMuestras(piernaCombinadaNuevo, vueltas);
+                }
+                //MOSTRAS MUESTRAS PROMEDIADAS:
+                totalPiernaIzq_muestreo = suma_promedio_i / Sp;
+                totalPiernaDer_muestreo = suma_promedio_D / Sp;
+                totalCombinada_muestreo = (suma_promedio_i + suma_promedio_D) / Sp;
             }
             catch
             {
                 MessageBox.Show("Error con alguno de los valores numericos.");
             }
 
+            ////si no es igual a 0 al terminar significa que quedaron pruebas sin tomar
+            //factorCorreccion = (decimal)muestrasTotales / (decimal)(muestrasTotales - muestras_sobrantes);
+
+            //totalPiernaIzq_muestreo = totalIzquierda * factorCorreccion; //valores para luego utilizarlos en la funcion potenciaReal()
+            //totalPiernaDer_muestreo = totalDerecha * factorCorreccion;
+
+            ////valores para luego utilizarlos en la funcion potenciaReal()
+            //totalPiernaIzq_muestreo = totalPiernaIzq_muestreo / (decimal)nMuestrasCogidas;
+            //totalPiernaDer_muestreo = totalPiernaDer_muestreo / (decimal)nMuestrasCogidas;
+            //totalCombinada_muestreo = (totalIzquierda + totalDerecha) / (decimal)nMuestrasCogidas;
 
         }
-        /// <summary>
-        /// ObtenerNuevoArrayList:
-        /// Realiza los saltos indicados y los guardar en un arrayList
-        /// </summary>
-        /// <param name="numeros"></param>
-        /// <param name="saltos"></param>
-        /// <returns></returns>
-        static List<decimal> ObtenerNuevoArrayList(List<decimal> numeros, int saltos)
-        {
-            List<decimal> nuevoArrayList = new List<decimal>();
-            //      ArrayList nuevoArrayList = new ArrayList();
-            int indiceInicial = -1;
-            int contador = 0;
-            int contador2 = 0;
-
-
-            while (contador < saltos)
-            {
-                for (int i = indiceInicial; i < numeros.Count; i++)
-                {
-                    if (contador == saltos)
-                    {
-                        nuevoArrayList.Add(numeros[i]);
-                        contador = 0;
-                    }
-                    contador++;
-                }
-                contador2++;
-            }
-
-            return nuevoArrayList;
-        }
+   
         /// <summary>
         /// promediarMuestras
         /// </summary>
@@ -769,7 +752,6 @@ namespace Simulador
         {
             borrarMensajeErrorGraficaSectores();
             borrarMensajeErrorCalculos();
-            chartSectorizacion.Series["sectores"].Points.Clear();
           
             if (validarCamposCalculosPotencia() && verificarCampoGrafica()) //verificamos que los campos cumplan los requisitos.
             {

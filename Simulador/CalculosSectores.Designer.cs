@@ -29,13 +29,13 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.Button button1;
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btCalcularConfi = new System.Windows.Forms.Button();
             this.editGradoInicial = new System.Windows.Forms.TextBox();
@@ -82,6 +82,21 @@
             ((System.ComponentModel.ISupportInitialize)(this.chartAngulo)).BeginInit();
             this.panel3.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // button1
+            // 
+            button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            button1.BackColor = System.Drawing.Color.Cyan;
+            button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            button1.ForeColor = System.Drawing.Color.Black;
+            button1.Location = new System.Drawing.Point(1076, 385);
+            button1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            button1.Name = "button1";
+            button1.Size = new System.Drawing.Size(108, 32);
+            button1.TabIndex = 21;
+            button1.Text = "+ Info";
+            button1.UseVisualStyleBackColor = false;
+            button1.Click += new System.EventHandler(this.button1_Click_2);
             // 
             // panel1
             // 
@@ -270,7 +285,7 @@
             // richReal
             // 
             this.richReal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
-            this.richReal.Location = new System.Drawing.Point(916, 183);
+            this.richReal.Location = new System.Drawing.Point(440, 192);
             this.richReal.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.richReal.Name = "richReal";
             this.richReal.Size = new System.Drawing.Size(328, 163);
@@ -288,17 +303,17 @@
             // richIdeal
             // 
             this.richIdeal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
-            this.richIdeal.Location = new System.Drawing.Point(496, 96);
+            this.richIdeal.Location = new System.Drawing.Point(60, 192);
             this.richIdeal.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.richIdeal.Name = "richIdeal";
-            this.richIdeal.Size = new System.Drawing.Size(362, 160);
+            this.richIdeal.Size = new System.Drawing.Size(362, 165);
             this.richIdeal.TabIndex = 2;
             this.richIdeal.Text = "";
             // 
             // richSectores
             // 
             this.richSectores.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
-            this.richSectores.Location = new System.Drawing.Point(60, 45);
+            this.richSectores.Location = new System.Drawing.Point(846, 71);
             this.richSectores.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.richSectores.Name = "richSectores";
             this.richSectores.Size = new System.Drawing.Size(368, 301);
@@ -311,7 +326,7 @@
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label9.ForeColor = System.Drawing.Color.Gold;
-            this.label9.Location = new System.Drawing.Point(654, 56);
+            this.label9.Location = new System.Drawing.Point(224, 164);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(59, 18);
             this.label9.TabIndex = 4;
@@ -323,7 +338,7 @@
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold);
             this.label10.ForeColor = System.Drawing.Color.Gold;
-            this.label10.Location = new System.Drawing.Point(1064, 56);
+            this.label10.Location = new System.Drawing.Point(570, 45);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(55, 18);
             this.label10.TabIndex = 5;
@@ -335,7 +350,7 @@
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold);
             this.label11.ForeColor = System.Drawing.Color.Gold;
-            this.label11.Location = new System.Drawing.Point(168, 9);
+            this.label11.Location = new System.Drawing.Point(966, 27);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(147, 36);
             this.label11.TabIndex = 6;
@@ -345,10 +360,10 @@
             // richMuestraReal
             // 
             this.richMuestraReal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
-            this.richMuestraReal.Location = new System.Drawing.Point(916, 96);
+            this.richMuestraReal.Location = new System.Drawing.Point(440, 75);
             this.richMuestraReal.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.richMuestraReal.Name = "richMuestraReal";
-            this.richMuestraReal.Size = new System.Drawing.Size(328, 56);
+            this.richMuestraReal.Size = new System.Drawing.Size(328, 76);
             this.richMuestraReal.TabIndex = 7;
             this.richMuestraReal.Text = "";
             // 
@@ -357,20 +372,20 @@
             this.chartSectorizacion.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea4.Name = "ChartArea1";
-            this.chartSectorizacion.ChartAreas.Add(chartArea4);
-            legend4.Name = "Legend1";
-            this.chartSectorizacion.Legends.Add(legend4);
+            chartArea2.Name = "ChartArea1";
+            this.chartSectorizacion.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.chartSectorizacion.Legends.Add(legend2);
             this.chartSectorizacion.Location = new System.Drawing.Point(641, 12);
             this.chartSectorizacion.Name = "chartSectorizacion";
-            series4.BorderWidth = 2;
-            series4.ChartArea = "ChartArea1";
-            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series4.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-            series4.LabelBorderWidth = 2;
-            series4.Legend = "Legend1";
-            series4.Name = "sectores";
-            this.chartSectorizacion.Series.Add(series4);
+            series2.BorderWidth = 2;
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series2.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            series2.LabelBorderWidth = 2;
+            series2.Legend = "Legend1";
+            series2.Name = "sectores";
+            this.chartSectorizacion.Series.Add(series2);
             this.chartSectorizacion.Size = new System.Drawing.Size(626, 294);
             this.chartSectorizacion.TabIndex = 8;
             this.chartSectorizacion.Text = "chart1";
@@ -422,19 +437,19 @@
             this.chartAngulo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.chartAngulo.BackColor = System.Drawing.Color.DimGray;
-            chartArea3.Name = "ChartArea1";
-            this.chartAngulo.ChartAreas.Add(chartArea3);
-            legend3.Name = "Legend1";
-            this.chartAngulo.Legends.Add(legend3);
+            chartArea1.Name = "ChartArea1";
+            this.chartAngulo.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chartAngulo.Legends.Add(legend1);
             this.chartAngulo.Location = new System.Drawing.Point(3, 0);
             this.chartAngulo.Name = "chartAngulo";
             this.chartAngulo.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.None;
-            series3.ChartArea = "ChartArea1";
-            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Pie;
-            series3.IsValueShownAsLabel = true;
-            series3.Legend = "Legend1";
-            series3.Name = "Series1";
-            this.chartAngulo.Series.Add(series3);
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Pie;
+            series1.IsValueShownAsLabel = true;
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.chartAngulo.Series.Add(series1);
             this.chartAngulo.Size = new System.Drawing.Size(609, 449);
             this.chartAngulo.TabIndex = 10;
             this.chartAngulo.Text = "chart1";
@@ -468,7 +483,7 @@
             this.btGraficarSectorizacion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btGraficarSectorizacion.BackColor = System.Drawing.Color.Gold;
             this.btGraficarSectorizacion.ForeColor = System.Drawing.Color.Black;
-            this.btGraficarSectorizacion.Location = new System.Drawing.Point(875, 375);
+            this.btGraficarSectorizacion.Location = new System.Drawing.Point(875, 385);
             this.btGraficarSectorizacion.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btGraficarSectorizacion.Name = "btGraficarSectorizacion";
             this.btGraficarSectorizacion.Size = new System.Drawing.Size(156, 30);
@@ -510,20 +525,6 @@
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(1279, 357);
             this.panel3.TabIndex = 10;
-            // 
-            // button1
-            // 
-            button1.BackColor = System.Drawing.Color.Cyan;
-            button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            button1.ForeColor = System.Drawing.Color.Black;
-            button1.Location = new System.Drawing.Point(1067, 375);
-            button1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            button1.Name = "button1";
-            button1.Size = new System.Drawing.Size(108, 32);
-            button1.TabIndex = 21;
-            button1.Text = "+ Info";
-            button1.UseVisualStyleBackColor = false;
-            button1.Click += new System.EventHandler(this.button1_Click_2);
             // 
             // CalculosSectores
             // 

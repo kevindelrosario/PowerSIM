@@ -1,8 +1,5 @@
-﻿using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
-using Simulador.Clases;
-using SpreadsheetLight;
+﻿using Simulador.Clases;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Windows.Forms;
 namespace Simulador
@@ -79,7 +76,7 @@ namespace Simulador
        // public decimal nMuestrasTotales = decimal.Zero;
         public decimal saltos = decimal.Zero;
 
-
+        public int resul_sp = 0;
         //Variables para tomar el valor total de cada pierna de la funcion  "calculaFuerzasPromediadas()" (segun la frecuencia de muestreo).
         //para realizar los calculos de la potencia real, teniendo en cuenta que este valor no es de todos los datos, sino que es de las que nos indique el fs
 
@@ -217,9 +214,9 @@ namespace Simulador
 
                 //Info del archivo y la frecuencia de muestreo
                 richInfo.AppendText("\n Muestras totales: " + muestrasTotales);
-                richInfo.AppendText("\n Numero de muestras por pedalada(Sp): " + saltos); // La frecuencia con la que se tomaran las pruebas
+                richInfo.AppendText("\n Frecuencia(Sp): " + resul_sp); // La frecuencia con la que se tomaran las pruebas
+                richInfo.AppendText("\n Saltos entre muestras: " + saltos);
 
-              
                 promedioPotenciaIdeal(); // Lleva a la funcion de sacar promedioPotenciaIdeal y cuando se realiza este llama a la funcion de potenciaReal
 
                 //los resultados de la POTENCIA IDEAL se muestran en el rich.
@@ -419,15 +416,16 @@ namespace Simulador
 
 
                 Sp = (fs * 60) / Convert.ToInt32(editCadencia.Text.ToString()); //Indicamos cada cuanto debe realizar el salto para tomar el valor siguiente.
-
+                resul_sp = Sp;
                 //Info del archivo y la frecuencia de muestreo
 
                 //Esta informacion solo se mostrara al dar clic en el boton calcular, de lo contrario es irrelevante.
 
-                saltos = Sp;
+               
 
                 //indica cada cuantos pruebas se tomaran:
                 int muestras_A_tomar = muestrasTotales / Sp;
+                saltos = muestras_A_tomar;
                 //int vueltas = muestrasTotales / Sp;
 
                 int muestras_sobrantes = 0;
@@ -448,10 +446,10 @@ namespace Simulador
                         decimal derecha = Convert.ToDecimal(piernaDerecha[i-1]);
                         decimal izquierda = Convert.ToDecimal(piernaIzquierda[i-1]);
                         muestras_sobrantes++;
-                        //  if (muestras_sobrantes == muestras_A_tomar ) //toma no cada valor que indica el sp sino ese valor +1
+                        //  if (muestras_sobrantes == muestras_A_tomar ) //toma no cada valor que indica el resul_sp sino ese valor +1
                         if (muestras_sobrantes == muestras_A_tomar)
                         {
-                            //Se toma el valor siguiente al sp (cada cuantas muestras nos indicaron que se deben guardar anteriormente).
+                            //Se toma el valor siguiente al resul_sp (cada cuantas muestras nos indicaron que se deben guardar anteriormente).
                             totalIzquierda += izquierda; //se van sumando a la variable izq y der
                             totalDerecha += derecha;
 
